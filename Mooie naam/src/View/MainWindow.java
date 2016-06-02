@@ -8,7 +8,7 @@ import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame implements ActionListener{
 	
 	/**
 	 * 
@@ -48,6 +48,12 @@ public class MainWindow extends JFrame{
 		JButton btnGegOpvragen = new JButton("Gegevens opvragen");
 		btnGegOpvragen.setToolTipText("Klik om verschillende overzichten te kunnen bekijken");
 		panel.add(btnGegOpvragen);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -1,2 +1,20 @@
 # mooie-naam
-<p style="background-color: #FF33AA"> HGELO </p>
+Mooie-Naam!
+===================
+
+
+##School project
+
+Connect!
+
+----------
+
+
+##Documents
+
+#### <i class="icon-file"></i> Find our documentation on ....?
+
+> **Note:**
+
+> - Mooie-naam heeft een internet connectie nodig
+> - Java is __required__

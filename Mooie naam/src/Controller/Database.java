@@ -39,20 +39,28 @@ public class Database {
 		}		
 	}
 	
-	public void executeStatement(String statement, String row) {
+	public ResultSet executeStatement(String statement) {
+		ResultSet rs = null;
 		try {
 			stat = con.createStatement();
-			ResultSet rs = stat.executeQuery(statement);
-			
-			while(rs.next()) {
-				System.out.println(rs.getString(row));
-			}
-			
-			rs.close();
-			stat.close();
+			rs = stat.executeQuery(statement);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return rs;
+	}
+	
+	public int executeInsertStatement(String statement) {
+		try {
+			stat = con.createStatement();
+			stat.executeUpdate(statement);
+			System.out.println("Inserted information");
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
 	}
 }

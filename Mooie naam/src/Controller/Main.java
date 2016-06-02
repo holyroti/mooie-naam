@@ -1,6 +1,7 @@
 package Controller;
 
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import View.MainWindow;
 
@@ -25,7 +26,11 @@ public class Main{
 				break;
 		}
 		
-		Student s = new Student(0);
-		s.zoekStudent(db);
+		Student s = new Student(db);
+//		ArrayList<String> list = new ArrayList<>();
+//		list.add("Name");
+//		list.add("CountryCode");
+//		list.add("Population");
+//		s.zoekStudent(list);
 	}
 }

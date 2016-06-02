@@ -23,7 +23,7 @@ public class StudentenOpties extends JPanel {
 	private JLabel lblId;
 	
 	public StudentenOpties(){
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		rBtnV = new JRadioButton();
 		rBtnM = new JRadioButton();
 		chckbxNaam = new JCheckBox();

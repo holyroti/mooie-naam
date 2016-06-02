@@ -26,10 +26,6 @@ public class MainWindow extends JFrame implements ActionListener{
 		panel.setLayout(new GridLayout(5, 1, 0, 0));
 		
 		JButton btnExcStuIn = new JButton("Buitenlandse student invoeren");
-		btnExcStuIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnExcStuIn.setToolTipText("Klik om een nieuwe buitenlandse student met zijn gegevens in te voeren");
 		panel.add(btnExcStuIn);
 		

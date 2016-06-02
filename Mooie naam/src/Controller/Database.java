@@ -8,6 +8,9 @@ public class Database {
 	private String url;
 	private String user;
 	private String pass;
+	private Connection con;
+	private Statement stat;
+	
 	public int state;
 	
 	public Database(String url, String user, String pass) {
@@ -20,22 +23,36 @@ public class Database {
 		connectDB();
 	}
 	
-	private int connectDB(){
-		
+	private void connectDB(){
 		try{
 			Class.forName(JDBC_DRIVER);
-			Connection con = DriverManager.getConnection(url, user, pass);
-			System.out.println("con");
+			con = DriverManager.getConnection(url, user, pass);
+			state = 0;
 		} catch (SQLException e) {
 			e.getStackTrace();
 			System.out.println("State" + e.getSQLState());
-			return state = 1;
+			state = 1;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return state = 2;
+			state = 2;
+		}		
+	}
+	
+	public void executeStatement(String statement, String row) {
+		try {
+			stat = con.createStatement();
+			ResultSet rs = stat.executeQuery(statement);
+			
+			while(rs.next()) {
+				System.out.println(rs.getString(row));
+			}
+			
+			rs.close();
+			stat.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		return state = 0;
 	}
 }

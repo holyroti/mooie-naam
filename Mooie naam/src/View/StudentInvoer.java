@@ -4,6 +4,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.GridLayout;
 
 public class StudentInvoer extends JPanel {
 	private JTextField txtFieldId;
@@ -21,23 +25,31 @@ public class StudentInvoer extends JPanel {
 	private JButton btnCancel;
 
 	public StudentInvoer() {
-		txtFieldId = new JTextField();
-		txtFieldNaam = new JTextField();
-		txtFieldGeslacht = new JTextField();
-		txtFieldEmailadres = new JTextField();
-		txtFieldOpleiding = new JTextField();
-		add(txtFieldEmailadres);
-		add(btnCancel);
-		add(btnOk);
-		add(txtFieldGeslacht);
-		add(txtFieldId);
-		add(txtFieldNaam);
-		add(txtFieldOpleiding);
+		setLayout(new GridLayout(0, 2, 0, 30));
+		labelId = new JLabel();
+		labelNaam = new JLabel();
+		labelGeslacht = new JLabel();
+		labelEmailadres = new JLabel();
+		labelOpleiding = new JLabel();
 		add(labelEmailadres);
+		txtFieldId = new JTextField();
+		add(txtFieldId);
 		add(labelGeslacht);
+		txtFieldEmailadres = new JTextField();
+		add(txtFieldEmailadres);
 		add(labelId);
+		txtFieldGeslacht = new JTextField();
+		add(txtFieldGeslacht);
 		add(labelNaam);
+		txtFieldOpleiding = new JTextField();
+		add(txtFieldOpleiding);
 		add(labelOpleiding);
+		txtFieldNaam = new JTextField();
+		add(txtFieldNaam);
+		btnOk = new JButton("Ok");
+		add(btnOk);
+		btnCancel = new JButton("Cancel");
+		add(btnCancel);
 
 	}
 

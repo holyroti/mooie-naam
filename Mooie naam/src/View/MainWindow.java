@@ -10,6 +10,11 @@ import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MainWindow(){
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		

@@ -15,6 +15,7 @@ public class StudentInvoer extends JPanel {
 	private JTextField txtFieldGeslacht;
 	private JTextField txtFieldEmailadres;
 	private JTextField txtFieldOpleiding;
+	
 	private JLabel labelId;
 	private JLabel labelNaam;
 	private JLabel labelGeslacht;
@@ -26,11 +27,11 @@ public class StudentInvoer extends JPanel {
 
 	public StudentInvoer() {
 		setLayout(new GridLayout(0, 2, 0, 30));
-		labelId = new JLabel();
-		labelNaam = new JLabel();
-		labelGeslacht = new JLabel();
-		labelEmailadres = new JLabel();
-		labelOpleiding = new JLabel();
+		labelId = new JLabel("ID:");
+		labelNaam = new JLabel("Naam:");
+		labelGeslacht = new JLabel("Geslacht:");
+		labelEmailadres = new JLabel("Emailadres");
+		labelOpleiding = new JLabel("Opleiding");
 		add(labelEmailadres);
 		txtFieldId = new JTextField();
 		add(txtFieldId);

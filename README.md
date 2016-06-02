@@ -1,2 +1,2 @@
 # mooie-naam
-<p style="color: #FF33AA"> HGELO </p>
+<p style="background-color: #FF33AA"> HGELO </p>

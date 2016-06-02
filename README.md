@@ -1,4 +1,3 @@
-# mooie-naam
 Mooie-Naam!
 ===================
 

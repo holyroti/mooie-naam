@@ -52,9 +52,11 @@ public class Student {
                 invoer.getBtnOk().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        if(!invoer.getTxtFieldEmailadres().getText().isEmpty() && !invoer.getTxtFieldGeslacht().getText().isEmpty() && !invoer.getTxtFieldId().getText().isEmpty() && !invoer.getTxtFieldNaam().getText().isEmpty() && !invoer.getTxtFieldOpleiding().getText().isEmpty()){
+                        if(!invoer.getTxtFieldEmailadres().getText().isEmpty() && !invoer.getTxtFieldGeslacht().getText().isEmpty() && !invoer.getTxtFieldId().getText().isEmpty() && !invoer.getTxtFieldVoornaam().getText().isEmpty() && !invoer.getTxtFieldAchternaam().getText().isEmpty() && !invoer.getTxtFieldOpleiding().getText().isEmpty()){
                         db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + Integer.parseInt(invoer.getTxtFieldId().getText()) + ","
-                                + "'" + invoer.getTxtFieldNaam().getText() + "'" + ","
+                                + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + ","
+                                + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + ","
+                                + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + ","
                                 + "'" + invoer.getTxtFieldGeslacht().getText() + "'" + ","
                                 + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + ","
                                 + "'" + invoer.getTxtFieldOpleiding().getText() + "'" + ","

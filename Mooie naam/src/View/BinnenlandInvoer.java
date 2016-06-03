@@ -11,33 +11,85 @@ import java.awt.GridLayout;
 
 public class BinnenlandInvoer extends JPanel {
 	private JTextField txtFieldId;
-	private JTextField txtFieldNaam;
+	private JTextField txtFieldVoornaam;
+	private JTextField txtFieldTussenvoegsel;
+	private JTextField txtFieldAchternaam;
 	private JTextField txtFieldGeslacht;
 	private JTextField txtFieldEmailadres;
 	private JTextField txtFieldOpleiding = new JTextField();
 
 	private JLabel labelId;
-	private JLabel labelNaam;
+	private JLabel labelVoornaam;
+	private JLabel labelTussenvoegsel;
+	private JLabel labelAchternaam;
 	private JLabel labelGeslacht;
 	private JLabel labelEmailadres;
 	private JLabel labelOpleiding = new JLabel("Opleiding");;
+
+	public JTextField getTxtFieldVoornaam() {
+		return txtFieldVoornaam;
+	}
+
+	public void setTxtFieldVoornaam(JTextField txtFieldVoornaam) {
+		this.txtFieldVoornaam = txtFieldVoornaam;
+	}
+
+	public JTextField getTxtFieldTussenvoegsel() {
+		return txtFieldTussenvoegsel;
+	}
+
+	public void setTxtFieldTussenvoegsel(JTextField txtFieldTussenvoegsel) {
+		this.txtFieldTussenvoegsel = txtFieldTussenvoegsel;
+	}
+
+	public JTextField getTxtFieldAchternaam() {
+		return txtFieldAchternaam;
+	}
+
+	public void setTxtFieldAchternaam(JTextField txtFieldAchternaam) {
+		this.txtFieldAchternaam = txtFieldAchternaam;
+	}
+
+	public void setTxtFieldId(JTextField txtFieldId) {
+		this.txtFieldId = txtFieldId;
+	}
+
+	public void setTxtFieldGeslacht(JTextField txtFieldGeslacht) {
+		this.txtFieldGeslacht = txtFieldGeslacht;
+	}
+
+	public void setTxtFieldEmailadres(JTextField txtFieldEmailadres) {
+		this.txtFieldEmailadres = txtFieldEmailadres;
+	}
+
+	public void setTxtFieldOpleiding(JTextField txtFieldOpleiding) {
+		this.txtFieldOpleiding = txtFieldOpleiding;
+	}
 
 	private JButton btnOk;
 	private JButton btnCancel;
 
 	public BinnenlandInvoer() {
-		setLayout(new GridLayout(0, 2, 0, 30));
-		labelId = new JLabel("ID:");
-		labelNaam = new JLabel("Naam:");
-		labelGeslacht = new JLabel("Geslacht:");
+		setLayout(new GridLayout(0, 2, 0, 10));
+		labelId = new JLabel("ID");
+		labelVoornaam = new JLabel("Voornaam");
+		labelTussenvoegsel = new JLabel("Tussenvoegsel");
+		labelAchternaam = new JLabel("Achternaam");
+		labelGeslacht = new JLabel("Geslacht");
 		labelEmailadres = new JLabel("Emailadres");
-		txtFieldNaam = new JTextField();
+		txtFieldVoornaam = new JTextField();
+		txtFieldTussenvoegsel = new JTextField();
+		txtFieldAchternaam = new JTextField();
 		txtFieldGeslacht = new JTextField();
 		txtFieldEmailadres = new JTextField();
 		txtFieldId = new JTextField();
 		txtFieldOpleiding = new JTextField();
-		add(labelNaam);
-		add(txtFieldNaam);
+		add(labelVoornaam);
+		add(txtFieldVoornaam);
+		add(labelTussenvoegsel);
+		add(txtFieldTussenvoegsel);
+		add(labelAchternaam);
+		add(txtFieldAchternaam);
 		add(labelGeslacht);
 		add(txtFieldGeslacht);
 
@@ -67,7 +119,7 @@ public class BinnenlandInvoer extends JPanel {
 	 * @return the txtFieldNaam
 	 */
 	public JTextField getTxtFieldNaam() {
-		return txtFieldNaam;
+		return txtFieldVoornaam;
 	}
 
 	/**
@@ -102,7 +154,7 @@ public class BinnenlandInvoer extends JPanel {
 	 * @return the labelNaam
 	 */
 	public JLabel getLabelNaam() {
-		return labelNaam;
+		return labelVoornaam;
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class ExchangeInvoer extends BinnenlandInvoer {
 		super.remove(super.getBtnOk());
 		super.remove(super.getBtnCancel());
 		GridLayout gridLayout = (GridLayout) getLayout();
-		gridLayout.setVgap(10);
+		gridLayout.setVgap(5);
 		lblLandvanherkomst = new JLabel("Land van herkosmt");
 		lblWoonplaats = new JLabel("Woonplaats");
 		txtFieldAdres = new JTextField();

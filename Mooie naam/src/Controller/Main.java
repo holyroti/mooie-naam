@@ -28,7 +28,7 @@ public class Main{
 				break;
 		}
 		
-		Student s = new Student(db, 1);
+		Student s = new Student(db, 0);
 //		ArrayList<String> list = new ArrayList<>();
 //		list.add("Name");
 //		list.add("CountryCode");

@@ -32,26 +32,115 @@ public class StudentInvoer extends JPanel {
 		labelGeslacht = new JLabel("Geslacht:");
 		labelEmailadres = new JLabel("Emailadres");
 		labelOpleiding = new JLabel("Opleiding");
+                txtFieldNaam = new JTextField();
+                txtFieldGeslacht = new JTextField();
+                txtFieldEmailadres = new JTextField();
+                txtFieldId = new JTextField();
+                txtFieldOpleiding = new JTextField();
+                add(labelNaam);
+                add(txtFieldNaam);
+                add(labelGeslacht);
+                add(txtFieldGeslacht);
+                
 		add(labelEmailadres);
-		txtFieldId = new JTextField();
+                add(txtFieldEmailadres);
+                add(labelOpleiding);
+                add(txtFieldOpleiding);
+		
+                
+                add(labelId);
 		add(txtFieldId);
-		add(labelGeslacht);
-		txtFieldEmailadres = new JTextField();
-		add(txtFieldEmailadres);
-		add(labelId);
-		txtFieldGeslacht = new JTextField();
-		add(txtFieldGeslacht);
-		add(labelNaam);
-		txtFieldOpleiding = new JTextField();
-		add(txtFieldOpleiding);
-		add(labelOpleiding);
-		txtFieldNaam = new JTextField();
-		add(txtFieldNaam);
+		
+		
 		btnOk = new JButton("Ok");
 		add(btnOk);
 		btnCancel = new JButton("Cancel");
 		add(btnCancel);
 
 	}
+
+    /**
+     * @return the txtFieldId
+     */
+    public JTextField getTxtFieldId() {
+        return txtFieldId;
+    }
+
+    /**
+     * @return the txtFieldNaam
+     */
+    public JTextField getTxtFieldNaam() {
+        return txtFieldNaam;
+    }
+
+    /**
+     * @return the txtFieldGeslacht
+     */
+    public JTextField getTxtFieldGeslacht() {
+        return txtFieldGeslacht;
+    }
+
+    /**
+     * @return the txtFieldEmailadres
+     */
+    public JTextField getTxtFieldEmailadres() {
+        return txtFieldEmailadres;
+    }
+
+    /**
+     * @return the txtFieldOpleiding
+     */
+    public JTextField getTxtFieldOpleiding() {
+        return txtFieldOpleiding;
+    }
+
+    /**
+     * @return the labelId
+     */
+    public JLabel getLabelId() {
+        return labelId;
+    }
+
+    /**
+     * @return the labelNaam
+     */
+    public JLabel getLabelNaam() {
+        return labelNaam;
+    }
+
+    /**
+     * @return the labelGeslacht
+     */
+    public JLabel getLabelGeslacht() {
+        return labelGeslacht;
+    }
+
+    /**
+     * @return the labelEmailadres
+     */
+    public JLabel getLabelEmailadres() {
+        return labelEmailadres;
+    }
+
+    /**
+     * @return the labelOpleiding
+     */
+    public JLabel getLabelOpleiding() {
+        return labelOpleiding;
+    }
+
+    /**
+     * @return the btnOk
+     */
+    public JButton getBtnOk() {
+        return btnOk;
+    }
+
+    /**
+     * @return the btnCancel
+     */
+    public JButton getBtnCancel() {
+        return btnCancel;
+    }
 
 }

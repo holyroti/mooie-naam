@@ -8,17 +8,27 @@ import javax.swing.JSplitPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class MainWindow extends JFrame implements ActionListener{
+public class MainWindow extends JFrame{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JButton btnHhsStuIn;
+	private JSplitPane splitPane;
+
+	public JSplitPane getSplitPane() {
+		return splitPane;
+	}
+
+	public JButton getBtnHhsStuIn() {
+		return btnHhsStuIn;
+	}
 
 	public MainWindow(){
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JSplitPane splitPane = new JSplitPane();
+		splitPane = new JSplitPane();
 		getContentPane().add(splitPane);
 		
 		JPanel panel = new JPanel();
@@ -29,7 +39,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		btnExcStuIn.setToolTipText("Klik om een nieuwe buitenlandse student met zijn gegevens in te voeren");
 		panel.add(btnExcStuIn);
 		
-		JButton btnHhsStuIn = new JButton("Binnenlandse student invoeren");
+		btnHhsStuIn = new JButton("Binnenlandse student invoeren");
 		btnHhsStuIn.setToolTipText("Klik om een nieuwe binnenlandse student met zijn gegevens in te voeren");
 		panel.add(btnHhsStuIn);
 		
@@ -44,12 +54,6 @@ public class MainWindow extends JFrame implements ActionListener{
 		JButton btnGegOpvragen = new JButton("Gegevens opvragen");
 		btnGegOpvragen.setToolTipText("Klik om verschillende overzichten te kunnen bekijken");
 		panel.add(btnGegOpvragen);
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 }

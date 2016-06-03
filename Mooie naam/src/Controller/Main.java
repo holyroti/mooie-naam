@@ -9,12 +9,13 @@ public class Main{
 	
 	public static void main (String[] args){
 		MainWindow window = new MainWindow();
+		
 		window.setVisible(true);
-		window.setSize(300, 300);
+		window.setSize(1280, 720);
 		window.setDefaultCloseOperation(1);
 		window.setLocationRelativeTo(null);
 		
-		Database db = new Database("jdbc:mysql://localhost/world", "root", "qwerty123");
+		Database db = new Database("jdbc:mysql://meru.hhs.nl/15025713", "15025713", "raiHepha3j");
 		switch (db.state) {
 		case 0: System.out.println("Sucessvolle connectie");
 				break;
@@ -26,7 +27,8 @@ public class Main{
 				break;
 		}
 		
-		Student s = new Student(db);
+                InvoerStudent invoer = new InvoerStudent(window, db);
+//		Student s = new Student(db);
 //		ArrayList<String> list = new ArrayList<>();
 //		list.add("Name");
 //		list.add("CountryCode");

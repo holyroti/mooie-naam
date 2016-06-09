@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import View.BinnenlandInvoer;
+import View.ExchangeInvoer;
 
 public class Student {
 	private String student;
@@ -18,11 +19,12 @@ public class Student {
 		
 		switch(type){
 		case 0: student = "HHS_student";
+				maakBinnenlandStudent();
 				break;
 		case 1: student = "EXC_student";
+				maakExchangeStudent();
 				break;
 		}
-		maakBinnenlandStudent();
 	}
 	
 	public void zoekStudent(ArrayList<String> row) {
@@ -40,13 +42,11 @@ public class Student {
 //			e.printStackTrace();
 //		}
 	}
-	
-	//needs an frame
-	//werkt in theorie, maar genereert error omdat de test datbase die ik (arjun) gebruik teveel entries heeft
+
 	private void maakBinnenlandStudent(){	
-		Main.mainWindow.getBtnHhsStuIn().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
+//		Main.mainWindow.getBtnStudent().addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent arg0) {
                 BinnenlandInvoer invoer = new BinnenlandInvoer();
                 Main.mainWindow.getSplitPane().setRightComponent(invoer);
                 invoer.getBtnOk().addActionListener(new ActionListener() {
@@ -67,11 +67,12 @@ public class Student {
                         }
                     }
                 });
-            }
-        });
+//            }
+//        });
 	}
 	
 	private void maakExchangeStudent() {
-		
+		ExchangeInvoer invoer = new ExchangeInvoer();
+		Main.mainWindow.getSplitPane().setRightComponent(invoer);
 	}
 }

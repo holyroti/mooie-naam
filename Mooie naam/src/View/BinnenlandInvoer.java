@@ -16,7 +16,8 @@ public class BinnenlandInvoer extends JPanel {
 	private JTextField txtFieldAchternaam;
 	private JTextField txtFieldGeslacht;
 	private JTextField txtFieldEmailadres;
-	private JTextField txtFieldOpleiding = new JTextField();
+	private JTextField txtFieldOpleiding;
+	private JTextField txtFieldUniversiteit;
 
 	private JLabel labelId;
 	private JLabel labelVoornaam;
@@ -24,7 +25,8 @@ public class BinnenlandInvoer extends JPanel {
 	private JLabel labelAchternaam;
 	private JLabel labelGeslacht;
 	private JLabel labelEmailadres;
-	private JLabel labelOpleiding = new JLabel("Opleiding");;
+	private JLabel labelOpleiding;
+	private JLabel labelUniversiteit;
 
 	public JTextField getTxtFieldVoornaam() {
 		return txtFieldVoornaam;
@@ -71,12 +73,13 @@ public class BinnenlandInvoer extends JPanel {
 
 	public BinnenlandInvoer() {
 		setLayout(new GridLayout(0, 2, 0, 10));
-		labelId = new JLabel("ID");
 		labelVoornaam = new JLabel("Voornaam");
 		labelTussenvoegsel = new JLabel("Tussenvoegsel");
 		labelAchternaam = new JLabel("Achternaam");
 		labelGeslacht = new JLabel("Geslacht");
 		labelEmailadres = new JLabel("Emailadres");
+		labelOpleiding = new JLabel("Opleiding");
+		labelUniversiteit = new JLabel("Universiteit");
 		txtFieldVoornaam = new JTextField();
 		txtFieldTussenvoegsel = new JTextField();
 		txtFieldAchternaam = new JTextField();
@@ -84,6 +87,8 @@ public class BinnenlandInvoer extends JPanel {
 		txtFieldEmailadres = new JTextField();
 		txtFieldId = new JTextField();
 		txtFieldOpleiding = new JTextField();
+		txtFieldUniversiteit = new JTextField();
+		
 		add(labelVoornaam);
 		add(txtFieldVoornaam);
 		add(labelTussenvoegsel);
@@ -92,14 +97,12 @@ public class BinnenlandInvoer extends JPanel {
 		add(txtFieldAchternaam);
 		add(labelGeslacht);
 		add(txtFieldGeslacht);
-
 		add(labelEmailadres);
 		add(txtFieldEmailadres);
 		add(labelOpleiding);
 		add(txtFieldOpleiding);
-
-		add(labelId);
-		add(txtFieldId);
+		add(labelUniversiteit);
+		add(txtFieldUniversiteit);
 
 		btnOk = new JButton("Ok");
 		add(btnOk);

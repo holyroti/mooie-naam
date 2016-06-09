@@ -28,7 +28,9 @@ public class Main{
 				break;
 		}
 		
-		Student s = new Student(db, 0);
+		Actions a = new Actions();
+		a.startListener(db);
+		
 //		ArrayList<String> list = new ArrayList<>();
 //		list.add("Name");
 //		list.add("CountryCode");

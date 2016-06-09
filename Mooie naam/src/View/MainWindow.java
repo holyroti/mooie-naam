@@ -14,15 +14,15 @@ public class MainWindow extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton btnHhsStuIn;
+	private JButton btnStudent;
 	private JSplitPane splitPane;
 
 	public JSplitPane getSplitPane() {
 		return splitPane;
 	}
 
-	public JButton getBtnHhsStuIn() {
-		return btnHhsStuIn;
+	public JButton getBtnStudent() {
+		return btnStudent;
 	}
 
 	public MainWindow(){
@@ -35,13 +35,9 @@ public class MainWindow extends JFrame{
 		splitPane.setLeftComponent(panel);
 		panel.setLayout(new GridLayout(5, 1, 0, 0));
 		
-		JButton btnExcStuIn = new JButton("Buitenlandse student invoeren");
-		btnExcStuIn.setToolTipText("Klik om een nieuwe buitenlandse student met zijn gegevens in te voeren");
-		panel.add(btnExcStuIn);
-		
-		btnHhsStuIn = new JButton("Binnenlandse student invoeren");
-		btnHhsStuIn.setToolTipText("Klik om een nieuwe binnenlandse student met zijn gegevens in te voeren");
-		panel.add(btnHhsStuIn);
+		btnStudent = new JButton("Nieuwe student invoeren");
+		btnStudent.setToolTipText("Klik om een nieuwe student met zijn gegevens in te voeren");
+		panel.add(btnStudent);
 		
 		JButton btnStuSearch = new JButton("Student opzoeken");
 		btnStuSearch.setToolTipText("Klik om een student te zoeken zodat je deze kunt: wijzigen, inschrijven, bekijken of vinden");

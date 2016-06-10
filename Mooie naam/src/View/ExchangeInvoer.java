@@ -5,6 +5,54 @@ import javax.swing.JTextField;
 import java.awt.GridLayout;
 
 public class ExchangeInvoer extends BinnenlandInvoer {
+	public JTextField getTxtFieldStraat() {
+		return txtFieldStraat;
+	}
+
+	public void setTxtFieldStraat(JTextField txtFieldStraat) {
+		this.txtFieldStraat = txtFieldStraat;
+	}
+
+	public JTextField getTxtFieldHuisnr() {
+		return txtFieldHuisnr;
+	}
+
+	public void setTxtFieldHuisnr(JTextField txtFieldHuisnr) {
+		this.txtFieldHuisnr = txtFieldHuisnr;
+	}
+
+	public JTextField getTxtFieldToe() {
+		return txtFieldToe;
+	}
+
+	public void setTxtFieldToe(JTextField txtFieldToe) {
+		this.txtFieldToe = txtFieldToe;
+	}
+
+	public JTextField getTxtFieldPost() {
+		return txtFieldPost;
+	}
+
+	public void setTxtFieldPost(JTextField txtFieldPost) {
+		this.txtFieldPost = txtFieldPost;
+	}
+
+	public JTextField getTxtFieldWoonplaats() {
+		return txtFieldWoonplaats;
+	}
+
+	public void setTxtFieldWoonplaats(JTextField txtFieldWoonplaats) {
+		this.txtFieldWoonplaats = txtFieldWoonplaats;
+	}
+
+	public JTextField getTxtFieldLandvanherkomst() {
+		return txtFieldLandvanherkomst;
+	}
+
+	public void setTxtFieldLandvanherkomst(JTextField txtFieldLandvanherkomst) {
+		this.txtFieldLandvanherkomst = txtFieldLandvanherkomst;
+	}
+
 	private JTextField txtFieldStraat;
 	private JTextField txtFieldHuisnr;
 	private JTextField txtFieldToe;

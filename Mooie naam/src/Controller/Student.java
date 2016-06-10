@@ -53,15 +53,18 @@ public class Student {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         if(!invoer.getTxtFieldEmailadres().getText().isEmpty() && !invoer.getTxtFieldGeslacht().getText().isEmpty() && !invoer.getTxtFieldId().getText().isEmpty() && !invoer.getTxtFieldVoornaam().getText().isEmpty() && !invoer.getTxtFieldAchternaam().getText().isEmpty() && !invoer.getTxtFieldOpleiding().getText().isEmpty()){
-                        db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + Integer.parseInt(invoer.getTxtFieldId().getText()) + ","
-                                + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + ","
-                                + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + ","
-                                + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + ","
-                                + "'" + invoer.getTxtFieldGeslacht().getText() + "'" + ","
-                                + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + ","
-                                + "'" + invoer.getTxtFieldOpleiding().getText() + "'" + ","
-                                + "'" + invoer.getTxtFieldOpleiding().getText() + "'"
+                        db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + Integer.parseInt(invoer.getTxtFieldId().getText()) + "," //id
+                                + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," 		//voornaam
+                                + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + ","	//tussenvoegsel
+                                + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + ","	//achternaam
+                                + "'" + invoer.getTxtFieldGeslacht().getText() + "'" + ","		//geslacht, moet een radiobuttongroup worden
+                                + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + ","	//emailadres
+                                + "'" + invoer.getTxtFieldOpleiding().getText() + "'" + ","		//opleiding
+                                + "'" + invoer.getTxtFieldUniversiteit().getText() + "'"		//universiteit
                                 + ")");
+                        db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "(" +
+                                Integer.parseInt("30") + "," + //30 placeholder
+                                "'" + invoer.getTxtFieldTel().getText() + "'" + ")");
                         } else {
                         	System.out.println("Gelieve alle velden in te vullen");
                         }
@@ -74,5 +77,32 @@ public class Student {
 	private void maakExchangeStudent() {
 		ExchangeInvoer invoer = new ExchangeInvoer();
 		Main.mainWindow.getSplitPane().setRightComponent(invoer);
+		invoer.getBtnOk().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!invoer.getTxtFieldStraat().getText().isEmpty() && !invoer.getTxtFieldPost().getText().isEmpty() && !invoer.getTxtFieldHuisnr().getText().isEmpty() && !invoer.getTxtFieldUniversiteit().getText().isEmpty() && !invoer.getTxtFieldLandvanherkomst().getText().isEmpty() && !invoer.getTxtFieldWoonplaats().getText().isEmpty() && !invoer.getTxtFieldEmailadres().getText().isEmpty() && !invoer.getTxtFieldGeslacht().getText().isEmpty() && !invoer.getTxtFieldVoornaam().getText().isEmpty() && !invoer.getTxtFieldAchternaam().getText().isEmpty()){
+                    db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + Integer.parseInt(invoer.getTxtFieldId().getText()) + "," //id
+                            + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," 		//voornaam
+                            + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + ","	//tussenvoegsel
+                            + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + ","	//achternaam
+                            + "'" + invoer.getTxtFieldGeslacht().getText() + "'" + ","		//geslacht, moet een radiobuttongroup worden
+                            + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + ","	//emailadres
+                            + "'" + invoer.getTxtFieldStraat().getText() + "'" + ","		//straat
+                            + "'" + invoer.getTxtFieldWoonplaats().getText() + "'" + ","	//woonplaats
+                            + "'" + invoer.getTxtFieldLandvanherkomst().getText() + "'" + "," //land
+                            + "'" + invoer.getTxtFieldUniversiteit().getText() + "'"		//universiteit
+                            + "'" + invoer.getTxtFieldHuisnr().getText() + "'" + ","		//huisnr
+                            + "'" + invoer.getTxtFieldToe().getText() + "'" + ","			//toevoeging
+                            + "'" + invoer.getTxtFieldPost().getText() + "'" + ","			//postcode
+                            + ")");
+                    db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "(" +
+                            Integer.parseInt("30") + "," + //30 placeholder
+                            "'" + invoer.getTxtFieldTel().getText() + "'" + ")");
+                    } else {
+                    	System.out.println("Gelieve alle velden in te vullen");
+                    }
+			}
+		});
 	}
 }

@@ -10,6 +10,10 @@ import java.awt.Insets;
 import java.awt.GridLayout;
 
 public class BinnenlandInvoer extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtFieldId;
 	private JTextField txtFieldVoornaam;
 	private JTextField txtFieldTussenvoegsel;
@@ -18,6 +22,87 @@ public class BinnenlandInvoer extends JPanel {
 	private JTextField txtFieldEmailadres;
 	private JTextField txtFieldOpleiding;
 	private JTextField txtFieldUniversiteit;
+	public JTextField getTxtFieldTel() {
+		return txtFieldTel;
+	}
+
+	public void setTxtFieldTel(JTextField txtFieldTel) {
+		this.txtFieldTel = txtFieldTel;
+	}
+
+	public JLabel getLabelVoornaam() {
+		return labelVoornaam;
+	}
+
+	public void setLabelVoornaam(JLabel labelVoornaam) {
+		this.labelVoornaam = labelVoornaam;
+	}
+
+	public JLabel getLabelTussenvoegsel() {
+		return labelTussenvoegsel;
+	}
+
+	public void setLabelTussenvoegsel(JLabel labelTussenvoegsel) {
+		this.labelTussenvoegsel = labelTussenvoegsel;
+	}
+
+	public JLabel getLabelAchternaam() {
+		return labelAchternaam;
+	}
+
+	public void setLabelAchternaam(JLabel labelAchternaam) {
+		this.labelAchternaam = labelAchternaam;
+	}
+
+	public JLabel getLabelUniversiteit() {
+		return labelUniversiteit;
+	}
+
+	public void setLabelUniversiteit(JLabel labelUniversiteit) {
+		this.labelUniversiteit = labelUniversiteit;
+	}
+
+	public JLabel getLabelTel() {
+		return labelTel;
+	}
+
+	public void setLabelTel(JLabel labelTel) {
+		this.labelTel = labelTel;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setTxtFieldUniversiteit(JTextField txtFieldUniversiteit) {
+		this.txtFieldUniversiteit = txtFieldUniversiteit;
+	}
+
+	public void setLabelId(JLabel labelId) {
+		this.labelId = labelId;
+	}
+
+	public void setLabelGeslacht(JLabel labelGeslacht) {
+		this.labelGeslacht = labelGeslacht;
+	}
+
+	public void setLabelEmailadres(JLabel labelEmailadres) {
+		this.labelEmailadres = labelEmailadres;
+	}
+
+	public void setLabelOpleiding(JLabel labelOpleiding) {
+		this.labelOpleiding = labelOpleiding;
+	}
+
+	public void setBtnOk(JButton btnOk) {
+		this.btnOk = btnOk;
+	}
+
+	public void setBtnCancel(JButton btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	private JTextField txtFieldTel;
 
 	private JLabel labelId;
 	private JLabel labelVoornaam;
@@ -27,7 +112,12 @@ public class BinnenlandInvoer extends JPanel {
 	private JLabel labelEmailadres;
 	private JLabel labelOpleiding;
 	private JLabel labelUniversiteit;
+	private JLabel labelTel;
 
+	public JTextField getTxtFieldUniversiteit(){
+		return txtFieldUniversiteit;
+	}
+	
 	public JTextField getTxtFieldVoornaam() {
 		return txtFieldVoornaam;
 	}
@@ -80,6 +170,7 @@ public class BinnenlandInvoer extends JPanel {
 		labelEmailadres = new JLabel("Emailadres");
 		labelOpleiding = new JLabel("Opleiding");
 		labelUniversiteit = new JLabel("Universiteit");
+		labelTel = new JLabel("Telefoonnummer");
 		txtFieldVoornaam = new JTextField();
 		txtFieldTussenvoegsel = new JTextField();
 		txtFieldAchternaam = new JTextField();
@@ -88,6 +179,7 @@ public class BinnenlandInvoer extends JPanel {
 		txtFieldId = new JTextField();
 		txtFieldOpleiding = new JTextField();
 		txtFieldUniversiteit = new JTextField();
+		txtFieldTel = new JTextField();
 		
 		add(labelVoornaam);
 		add(txtFieldVoornaam);
@@ -103,6 +195,8 @@ public class BinnenlandInvoer extends JPanel {
 		add(txtFieldOpleiding);
 		add(labelUniversiteit);
 		add(txtFieldUniversiteit);
+		add(labelTel);
+		add(txtFieldTel);
 
 		btnOk = new JButton("Ok");
 		add(btnOk);

@@ -288,5 +288,9 @@ public class BinnenlandInvoer extends JPanel {
 	public JButton getBtnCancel() {
 		return btnCancel;
 	}
+        
+        public boolean isFilled(){
+            return !getTxtFieldEmailadres().getText().isEmpty() && !getTxtFieldGeslacht().getText().isEmpty() && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty() && !getTxtFieldOpleiding().getText().isEmpty();
+        }
 
 }

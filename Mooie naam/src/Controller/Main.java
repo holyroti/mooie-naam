@@ -1,8 +1,6 @@
 package Controller;
 
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-
 import View.MainWindow;
 
 public class Main{

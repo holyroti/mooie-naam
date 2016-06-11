@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -22,6 +23,30 @@ public class Actions {
     public static int n;
 
     public void startListener(Database db) {
+    	
+    	Main.mainWindow.getBtnOplSearch().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Moet nog een gui voor gemaakt worden.
+				String s = JOptionPane.showInputDialog("Naam van opleiding");
+				ResultSet rs = db.executeStatement("SELECT Opleiding.naam as naamopleiding, Opleiding.type, Contactpersoon.* FROM Opleiding"
+						+ " JOIN Contactpersoon on Opleiding.contactpersoon = Contactpersoon.id"
+						+ " AND Opleiding.naam = " + "'" + s + "'");
+				try {
+					rs.next();
+					System.out.println(rs.getString("naamopleiding"));
+					System.out.println(rs.getString("type"));
+					System.out.println(rs.getString("emailadres"));
+					System.out.println(rs.getString("telefoonnummer"));
+					System.out.println(rs.getString("naam"));
+					System.out.println(rs.getString("geslacht"));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+    	
         Main.mainWindow.getBtnStudent().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

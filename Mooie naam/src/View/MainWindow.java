@@ -15,10 +15,15 @@ public class MainWindow extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton btnStudent;
-        private JButton btnStuSearch;
+    private JButton btnStuSearch;
+    private JButton btnOplSearch;
+    private JButton btnGegOpvragen;
 	private JSplitPane splitPane;
         
-
+	public JButton getBtnOplSearch() {
+		return btnOplSearch;
+	}
+	
 	public JSplitPane getSplitPane() {
 		return splitPane;
 	}
@@ -45,11 +50,11 @@ public class MainWindow extends JFrame{
 		btnStuSearch.setToolTipText("Klik om een student te zoeken zodat je deze kunt: wijzigen, inschrijven, bekijken of vinden");
 		panel.add(btnStuSearch);
 		
-		JButton btnOplSearch = new JButton("Opleiding opzoeken");
+		btnOplSearch = new JButton("Opleiding opzoeken");
 		btnOplSearch.setToolTipText("Klik om een opleiding op te zoeken zodat je er een kunt toevoegen of bekijken");
 		panel.add(btnOplSearch);
 		
-		JButton btnGegOpvragen = new JButton("Gegevens opvragen");
+		btnGegOpvragen = new JButton("Gegevens opvragen");
 		btnGegOpvragen.setToolTipText("Klik om verschillende overzichten te kunnen bekijken");
 		panel.add(btnGegOpvragen);
 		

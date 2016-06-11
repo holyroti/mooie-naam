@@ -3,6 +3,7 @@ package Controller;
 import Model.StudentModel;
 import View.BinnenlandInvoer;
 import View.StudentenOpties;
+import View.OpleidingZoeken;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,13 +29,18 @@ public class Actions {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Moet nog een gui voor gemaakt worden.
+				OpleidingZoeken opleidingZoeken = new OpleidingZoeken();
+				Main.mainWindow.getSplitPane().setRightComponent(opleidingZoeken);
 				String s = JOptionPane.showInputDialog("Naam van opleiding");
-				ResultSet rs = db.executeStatement("SELECT Opleiding.naam as naamopleiding, Opleiding.type, Contactpersoon.* FROM Opleiding"
+				ResultSet rs = db.executeStatement("SELECT Opleiding.naam as naamopleiding, Opleiding.type, Opleiding.id, Contactpersoon.* FROM Opleiding"
 						+ " JOIN Contactpersoon on Opleiding.contactpersoon = Contactpersoon.id"
 						+ " AND Opleiding.naam = " + "'" + s + "'");
 				try {
 					rs.next();
+					opleidingZoeken.getTxtId().setText(rs.getString("id"));
+					opleidingZoeken.getTxtNaamOpleiding().setText(rs.getString("naamopleiding"));
+					opleidingZoeken.getTxtType().setText(rs.getString("type"));
+					opleidingZoeken.getTxtContact().setText("naam");
 					System.out.println(rs.getString("naamopleiding"));
 					System.out.println(rs.getString("type"));
 					System.out.println(rs.getString("emailadres"));

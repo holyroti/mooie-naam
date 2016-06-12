@@ -40,7 +40,7 @@ public class Actions {
 					opleidingZoeken.getTxtId().setText(rs.getString("id"));
 					opleidingZoeken.getTxtNaamOpleiding().setText(rs.getString("naamopleiding"));
 					opleidingZoeken.getTxtType().setText(rs.getString("type"));
-					opleidingZoeken.getTxtContact().setText("naam");
+					opleidingZoeken.getTxtContact().setText(rs.getString("naam"));
 					System.out.println(rs.getString("naamopleiding"));
 					System.out.println(rs.getString("type"));
 					System.out.println(rs.getString("emailadres"));
@@ -61,10 +61,12 @@ public class Actions {
 							ResultSet rsid = db.executeStatement("SELECT id FROM Contactpersoon WHERE naam = " + "'" + opleidingZoeken.getTxtContact().getText() + "'");
 							
 							rsid.next();
-							db.executeInsertStatement("INSERT INTO Opleiding VALUES (" + Integer.parseInt(opleidingZoeken.getTxtId().getText()) + "," +
-							"'" + opleidingZoeken.getTxtNaamOpleiding().getText() + "'" + "," +
-							"'" + opleidingZoeken.getTxtType().getText() + "'" + "," + 
-							Integer.parseInt(rsid.getString("id")) + ")");
+							System.out.println(rsid.getString("id"));
+							db.executeInsertStatement("UPDATE Opleiding SET " +
+							"naam='" + opleidingZoeken.getTxtNaamOpleiding().getText() + "'" + ", " +
+							"type='" + opleidingZoeken.getTxtType().getText() + "'" + ", " + 
+							"contactpersoon=" + Integer.parseInt(rsid.getString("id")) +
+							" WHERE id=" + Integer.parseInt(opleidingZoeken.getTxtId().getText()));
 							rsid.close();
 						} catch (SQLException e2) {
 							System.out.println("Gelieve naam opnieuw na te kijken");

@@ -47,9 +47,40 @@ public class Actions {
 					System.out.println(rs.getString("telefoonnummer"));
 					System.out.println(rs.getString("naam"));
 					System.out.println(rs.getString("geslacht"));
+					rs.close();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
+				
+				opleidingZoeken.getBtnOk().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						try{ 
+							ResultSet rsid = db.executeStatement("SELECT id FROM Contactpersoon WHERE naam = " + "'" + opleidingZoeken.getTxtContact().getText() + "'");
+							
+							rsid.next();
+							db.executeInsertStatement("INSERT INTO Opleiding VALUES (" + Integer.parseInt(opleidingZoeken.getTxtId().getText()) + "," +
+							"'" + opleidingZoeken.getTxtNaamOpleiding().getText() + "'" + "," +
+							"'" + opleidingZoeken.getTxtType().getText() + "'" + "," + 
+							Integer.parseInt(rsid.getString("id")) + ")");
+							rsid.close();
+						} catch (SQLException e2) {
+							System.out.println("Gelieve naam opnieuw na te kijken");
+							e2.printStackTrace();
+						}
+					}
+				});
+				
+				opleidingZoeken.getBtnCancel().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 			}
 		});
     	

@@ -34,7 +34,7 @@ public class Actions {
 				String s = JOptionPane.showInputDialog("Naam van opleiding");
 				ResultSet rs = db.executeStatement("SELECT Opleiding.naam as naamopleiding, Opleiding.type, Opleiding.id, Contactpersoon.* FROM Opleiding"
 						+ " JOIN Contactpersoon on Opleiding.contactpersoon = Contactpersoon.id"
-						+ " AND Opleiding.naam = " + "'" + s + "'");
+						+ " WHERE Opleiding.naam = " + "'" + s + "'");
 				try {
 					rs.next();
 					opleidingZoeken.getTxtId().setText(rs.getString("id"));

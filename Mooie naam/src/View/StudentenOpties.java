@@ -1,11 +1,7 @@
 package View;
 
-import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -15,15 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import javax.swing.BoxLayout;
-import net.miginfocom.swing.MigLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Dimension;
-import java.awt.Rectangle;
 
 public class StudentenOpties extends JPanel {
 	private JComboBox<String> comboBox;

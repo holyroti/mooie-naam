@@ -101,8 +101,6 @@ public class Actions {
             public void actionPerformed(ActionEvent ae) {
                 StudentenOpties optiesPane = new StudentenOpties();
                 Main.mainWindow.getSplitPane().setRightComponent(optiesPane);
-                BinnenlandInvoer invoer = new BinnenlandInvoer();
-                optiesPane.add(invoer);
                 HashMap<String, StudentModel> map = new HashMap<>();
                 optiesPane.getTxtFieldNaam().addActionListener(new ActionListener() {
                     @Override
@@ -127,14 +125,14 @@ public class Actions {
                     public void mouseClicked(MouseEvent me) {
                         if (me.getClickCount() == 2) {
                             StudentModel studentModel = map.get(optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0));
-                            invoer.getTxtFieldAchternaam().setText(studentModel.getAchternaam());
-                            invoer.getTxtFieldEmailadres().setText(studentModel.getEmailadres());
-                            invoer.getTxtFieldGeslacht().setText(studentModel.getGeslacht());
-                            invoer.getTxtFieldOpleiding().setText(studentModel.getOpleiding());
-                            invoer.getTxtFieldTussenvoegsel().setText(studentModel.getTussenvoegsel());
-                            invoer.getTxtFieldUniversiteit().setText(studentModel.getUniversiteit());
-                            invoer.getTxtFieldVoornaam().setText(studentModel.getVoornaam());
-                            invoer.getTxtFieldId().setText(studentModel.getId());
+                            optiesPane.getInvoer().getTxtFieldAchternaam().setText(studentModel.getAchternaam());
+                            optiesPane.getInvoer().getTxtFieldEmailadres().setText(studentModel.getEmailadres());
+                            optiesPane.getInvoer().getTxtFieldGeslacht().setText(studentModel.getGeslacht());
+                            optiesPane.getInvoer().getTxtFieldOpleiding().setText(studentModel.getOpleiding());
+                            optiesPane.getInvoer().getTxtFieldTussenvoegsel().setText(studentModel.getTussenvoegsel());
+                            optiesPane.getInvoer().getTxtFieldUniversiteit().setText(studentModel.getUniversiteit());
+                            optiesPane.getInvoer().getTxtFieldVoornaam().setText(studentModel.getVoornaam());
+                            optiesPane.getInvoer().getTxtFieldId().setText(studentModel.getId());
                         }
                     }
 
@@ -158,18 +156,18 @@ public class Actions {
                         //To change body of generated methods, choose Tools | Templates.
                     }
                 });
-                invoer.getBtnOk().addActionListener(new ActionListener() {
+                optiesPane.getInvoer().getBtnOk().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                        if(invoer.isFilled())
-                         db.executeInsertStatement("UPDATE HHS_student SET naam='" + invoer.getTxtFieldVoornaam().getText()
-                                 + "'," + "tussenvoegsel='" + invoer.getTxtFieldTussenvoegsel() .getText()
-                                 + "'," + "achternaam='" + invoer.getTxtFieldAchternaam().getText()
-                                 + "'," + "geslacht='" + invoer.getTxtFieldGeslacht().getText()
-                                 + "'," + "emailadres='" + invoer.getTxtFieldEmailadres().getText()
-                                 + "'," + "opleiding='" + invoer.getTxtFieldOpleiding().getText()
-                                 + "'," + "universiteit='" + invoer.getTxtFieldUniversiteit().getText() + "'"
-                                 + " WHERE id=" + invoer.getTxtFieldId().getText()
+                        if(optiesPane.getInvoer().isFilled())
+                         db.executeInsertStatement("UPDATE HHS_student SET naam='" + optiesPane.getInvoer().getTxtFieldVoornaam().getText()
+                                 + "'," + "tussenvoegsel='" + optiesPane.getInvoer().getTxtFieldTussenvoegsel() .getText()
+                                 + "'," + "achternaam='" + optiesPane.getInvoer().getTxtFieldAchternaam().getText()
+                                 + "'," + "geslacht='" + optiesPane.getInvoer().getTxtFieldGeslacht().getText()
+                                 + "'," + "emailadres='" + optiesPane.getInvoer().getTxtFieldEmailadres().getText()
+                                 + "'," + "opleiding='" + optiesPane.getInvoer().getTxtFieldOpleiding().getText()
+                                 + "'," + "universiteit='" + optiesPane.getInvoer().getTxtFieldUniversiteit().getText() + "'"
+                                 + " WHERE id=" + optiesPane.getInvoer().getTxtFieldId().getText()
                                  );
                     }
                 });

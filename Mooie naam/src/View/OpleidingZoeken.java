@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,27 +21,27 @@ public class OpleidingZoeken extends JPanel {
         this.txtId = txtId;
     }
 
-    public JTextField getTxtNaamOpleiding() {
+    public JComboBox<String> getTxtNaamOpleiding() {
         return txtNaamOpleiding;
     }
 
-    public void setTxtNaamOpleiding(JTextField txtNaamOpleiding) {
+    public void setTxtNaamOpleiding(JComboBox txtNaamOpleiding) {
         this.txtNaamOpleiding = txtNaamOpleiding;
     }
 
-    public JTextField getTxtType() {
+    public JComboBox<String> getTxtType() {
         return txtType;
     }
 
-    public void setTxtType(JTextField txtType) {
+    public void setTxtType(JComboBox txtType) {
         this.txtType = txtType;
     }
 
-    public JTextField getTxtContact() {
+    public JComboBox<String> getTxtContact() {
         return txtContact;
     }
 
-    public void setTxtContact(JTextField txtContact) {
+    public void setTxtContact(JComboBox txtContact) {
         this.txtContact = txtContact;
     }
 
@@ -61,9 +62,9 @@ public class OpleidingZoeken extends JPanel {
     }
 
     private JTextField txtId;
-    private JTextField txtNaamOpleiding;
-    private JTextField txtType;
-    private JTextField txtContact;
+    private JComboBox<String> txtNaamOpleiding;
+    private JComboBox<String> txtType;
+    private JComboBox<String> txtContact;
 
     private JLabel lblId;
     private JLabel lblNaamOpleiding;
@@ -79,9 +80,10 @@ public class OpleidingZoeken extends JPanel {
 
         txtId = new JTextField();
         txtId.setEditable(false);
-        txtNaamOpleiding = new JTextField();
-        txtType = new JTextField();
-        txtContact = new JTextField();
+        txtNaamOpleiding = new JComboBox<>();
+        txtNaamOpleiding.addItem("Choose one");
+        txtType = new JComboBox<>();
+        txtContact = new JComboBox<>();
 
         lblId = new JLabel("    ID");
         lblNaamOpleiding = new JLabel("    Naam Opleiding");

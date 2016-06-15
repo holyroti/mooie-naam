@@ -13,7 +13,19 @@ import javax.swing.table.DefaultTableModel;
 public class GegevensOpvragen extends JPanel{
     
     JButton BtnOverzicht1 = new JButton("Overzicht 1");
-    JButton BtnOverzicht2 = new JButton("Overzicht 2");
+    public JButton getBtnOverzicht1() {
+		return BtnOverzicht1;
+	}
+
+	public JButton getBtnOverzicht2() {
+		return BtnOverzicht2;
+	}
+
+	public JButton getBtnOverzicht3() {
+		return BtnOverzicht3;
+	}
+
+	JButton BtnOverzicht2 = new JButton("Overzicht 2");
     JButton BtnOverzicht3 = new JButton("Overzicht 3");
     
     private JTable table;

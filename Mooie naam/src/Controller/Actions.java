@@ -213,15 +213,53 @@ public class Actions {
                 });
             }
         });
-
+        
         Main.mainWindow.getBtnGegOpvragen().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GegevensOpvragen gegOpvragen = new GegevensOpvragen();
                 Main.mainWindow.getSplitPane().setRightComponent(gegOpvragen);
+                
+                gegOpvragen.getBtnOverzicht1().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						String naamOpleiding = JOptionPane.showInputDialog("Naam van opleiding");
+						String inschrijfdatum = JOptionPane.showInputDialog("Jaar");
+						ResultSet rsid = db.executeStatement("SELECT id FROM Opleiding WHERE naam = '" + naamOpleiding + "'");
+						ResultSet rs;
+						try {
+							rsid.next();
+							rs = db.executeStatement("SELECT count(id) as aantal_Inschrijvingen FROM EXC_inschrijving_onderwijseenheid WHERE studie = " + Integer.parseInt(rsid.getString("id")) +
+									" AND inschrijfdatum like '%" + inschrijfdatum + "%'" );
+							rsid.close();
+							
+							rs.next();
+							System.out.println(rs.getString("aantal_Inschrijvingen"));
+							rs.close();
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							try {
+								rsid.close();
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							try {
+								rsid.close();
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+						}
+					}
+				});
             }
-
         });
-
     }
 }

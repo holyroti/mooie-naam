@@ -259,6 +259,40 @@ public class Actions {
 						}
 					}
 				});
+                
+                gegOpvragen.getBtnOverzicht2().addActionListener(new ActionListener() {
+					//Not complete
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						String onderwijsType = JOptionPane.showInputDialog("Naam van Onderwijseenheid");
+						String inschrijfdatum = JOptionPane.showInputDialog("Jaar");
+						
+						ResultSet rsid = db.executeStatement("SELECT Onderwijseenheid.id FROM Onderwijseenheid"
+								+ " JOIN Opleiding on Onderwijseenheid.opleiding = Opleiding.id"
+								+ " WHERE ");
+					}
+				});
+                
+                gegOpvragen.getBtnOverzicht3().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						ResultSet rs = db.executeStatement("SELECT land, count(*) as aantal FROM Stage"
+								+ " GROUP BY land"
+								+ " ORDER BY aantal DESC"
+								+ " LIMIT 1");
+						try {
+							rs.next();
+							System.out.println(rs.getString("land"));
+							System.out.println(rs.getString("aantal"));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
             }
         });
     }

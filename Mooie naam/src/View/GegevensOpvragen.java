@@ -27,8 +27,13 @@ public class GegevensOpvragen extends JPanel{
 
 	JButton BtnOverzicht2 = new JButton("Overzicht 2");
     JButton BtnOverzicht3 = new JButton("Overzicht 3");
+    JButton BtnOverzicht4 = new JButton("Overzicht 4");
     
-    private JTable table;
+    public JButton getBtnOverzicht4() {
+		return BtnOverzicht4;
+	}
+
+	private JTable table;
     private DefaultTableModel tableModel;
     
     public GegevensOpvragen(){
@@ -58,6 +63,11 @@ public class GegevensOpvragen extends JPanel{
         BtnOverzicht3.setForeground(new Color(0x00284d));
         BtnOverzicht3.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         add(BtnOverzicht3);
+        BtnOverzicht4.setBounds(20, 400, 200, 50);
+        BtnOverzicht4.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        BtnOverzicht4.setForeground(new Color(0x00284d));
+        BtnOverzicht4.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        add(BtnOverzicht4);
         tbl.setBounds(250, 20, 740, 620);
         add(tbl);
         

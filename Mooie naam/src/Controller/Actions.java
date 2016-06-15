@@ -268,9 +268,23 @@ public class Actions {
 						String onderwijsType = JOptionPane.showInputDialog("Naam van Onderwijseenheid");
 						String inschrijfdatum = JOptionPane.showInputDialog("Jaar");
 						
-						ResultSet rsid = db.executeStatement("SELECT Onderwijseenheid.id FROM Onderwijseenheid"
-								+ " JOIN Opleiding on Onderwijseenheid.opleiding = Opleiding.id"
-								+ " WHERE ");
+						ResultSet rs = db.executeStatement("SELECT COUNT(EXC_inschrijving_onderwijseenheid.studie) AS aantal, Onderwijseenheid.type,"
+								+ " EXTRACT(YEAR FROM EXC_inschrijving_onderwijseenheid.inschrijfdatum) as jaar"
+								+ " FROM EXC_inschrijving_onderwijseenheid"
+								+ " JOIN Onderwijseenheid ON Onderwijseenheid.id = EXC_inschrijving_onderwijseenheid.id"
+								+ " WHERE Onderwijseenheid.type = '" + onderwijsType + "'"
+								+ " AND inschrijfdatum like '%" + inschrijfdatum + "%'"
+								+ "	GROUP BY TYPE, inschrijfdatum");
+						
+						try {
+							rs.next();
+							System.out.println(rs.getString("aantal"));
+							System.out.println(rs.getString("type"));
+							System.out.println(rs.getString("jaar"));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				});
                 
@@ -286,6 +300,33 @@ public class Actions {
 						try {
 							rs.next();
 							System.out.println(rs.getString("land"));
+							System.out.println(rs.getString("aantal"));
+							rs.close();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							try {
+								rs.close();
+							} catch (SQLException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+						}
+					}
+				});
+                
+                gegOpvragen.getBtnOverzicht4().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						ResultSet rs = db.executeStatement("SELECT landvherkomst, count(*) as aantal FROM EXC_student"
+								+ " GROUP BY landvherkomst"
+								+ " ORDER BY aantal DESC"
+								+ " LIMIT 1");
+						try {
+							rs.next();
+							System.out.println(rs.getString("landvherkomst"));
 							System.out.println(rs.getString("aantal"));
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block

@@ -47,8 +47,11 @@ public class StudentenOpties extends JPanel {
 		rBtnV = new JRadioButton();
 		rBtnM = new JRadioButton();
 		chckbxNaam = new JCheckBox();
+                chckbxNaam.setBackground(null);
 		chckbxId = new JCheckBox();
+                chckbxId.setBackground(null);
 		chckbxGeslacht = new JCheckBox();
+                chckbxGeslacht.setBackground(null);
 
 		txtFieldNaam = new JTextField();
 		txtFieldId = new JTextField();

@@ -54,18 +54,20 @@ public class Actions {
                     while (typeRs.next()) {
                         opleidingZoeken.getTxtType().addItem(typeRs.getString("type"));
                     }
-                    while(naamRs.next()){
+                    while (naamRs.next()) {
                         opleidingZoeken.getTxtContact().addItem(naamRs.getString("naam"));
                     }
-                    
+
                     opleidingZoeken.getTxtNaamOpleiding().addItemListener(new ItemListener() {
                         @Override
                         public void itemStateChanged(ItemEvent ie) {
                             if (ItemEvent.SELECTED == ie.getStateChange()) {
-                                OpleidingModel selectedOpleiding = opleidingMap.get((String)ie.getItem());
-                                opleidingZoeken.getTxtId().setText(selectedOpleiding.getId());
-                                opleidingZoeken.getTxtType().setSelectedItem(selectedOpleiding.getType());
-                                opleidingZoeken.getTxtContact().setSelectedItem(selectedOpleiding.getContactpersoonNaam());
+                                if (!ie.getItem().equals("Choose one")) {
+                                    OpleidingModel selectedOpleiding = opleidingMap.get((String) ie.getItem());
+                                    opleidingZoeken.getTxtId().setText(selectedOpleiding.getId());
+                                    opleidingZoeken.getTxtType().setSelectedItem(selectedOpleiding.getType());
+                                    opleidingZoeken.getTxtContact().setSelectedItem(selectedOpleiding.getContactpersoonNaam());
+                                }
                             }
                         }
                     });
@@ -89,22 +91,24 @@ public class Actions {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO Auto-generated method stub
-                        try {
-                            ResultSet rsid = db.executeStatement("SELECT id FROM Contactpersoon WHERE naam = " + "'" + (String) opleidingZoeken.getTxtContact().getSelectedItem()+ "'");
+                        if(!opleidingZoeken.getTxtNaamOpleiding().getSelectedItem().equals("Choose one"))  {
+                            // TODO Auto-generated method stub
+                            try {
+                                ResultSet rsid = db.executeStatement("SELECT id FROM Contactpersoon WHERE naam = " + "'" + (String) opleidingZoeken.getTxtContact().getSelectedItem() + "'");
 
-                            rsid.next();
-                            System.out.println(rsid.getString("id"));
-                            db.executeInsertStatement("UPDATE Opleiding SET "
-                                    + "naam='" + (String) opleidingZoeken.getTxtNaamOpleiding().getSelectedItem() + "'" + ", "
-                                    + "type='" + (String) opleidingZoeken.getTxtType().getSelectedItem() + "'" + ", "
-                                    + "contactpersoon=" + Integer.parseInt(rsid.getString("id"))
-                                    + " WHERE id=" + Integer.parseInt(opleidingZoeken.getTxtId().getText()));
-                            rsid.close();
-                        } catch (SQLException e2) {
-                            System.out.println("Gelieve naam opnieuw na te kijken");
-                            e2.printStackTrace();
-                        }
+                                rsid.next();
+                                System.out.println(rsid.getString("id"));
+                                db.executeInsertStatement("UPDATE Opleiding SET "
+                                        + "naam='" + (String) opleidingZoeken.getTxtNaamOpleiding().getSelectedItem() + "'" + ", "
+                                        + "type='" + (String) opleidingZoeken.getTxtType().getSelectedItem() + "'" + ", "
+                                        + "contactpersoon=" + Integer.parseInt(rsid.getString("id"))
+                                        + " WHERE id=" + Integer.parseInt(opleidingZoeken.getTxtId().getText()));
+                                rsid.close();
+                            } catch (SQLException e2) {
+                                System.out.println("Gelieve naam opnieuw na te kijken");
+                                e2.printStackTrace();
+                            }
+                        }else{JOptionPane.showMessageDialog(null, "You havent chosen an opleiding", "Choose an opleiding", JOptionPane.WARNING_MESSAGE);}
                     }
                 });
 

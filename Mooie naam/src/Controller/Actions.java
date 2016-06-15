@@ -2,6 +2,7 @@ package Controller;
 
 import Model.StudentModel;
 import View.BinnenlandInvoer;
+import View.GegevensOpvragen;
 import View.StudentenOpties;
 import View.OpleidingZoeken;
 import java.awt.Frame;
@@ -101,6 +102,8 @@ public class Actions {
             public void actionPerformed(ActionEvent ae) {
                 StudentenOpties optiesPane = new StudentenOpties();
                 Main.mainWindow.getSplitPane().setRightComponent(optiesPane);
+                BinnenlandInvoer invoer = new BinnenlandInvoer();
+                optiesPane.add(invoer);
                 HashMap<String, StudentModel> map = new HashMap<>();
                 optiesPane.getTxtFieldNaam().addActionListener(new ActionListener() {
                     @Override
@@ -173,6 +176,18 @@ public class Actions {
                 });
             }
         });
-
+        
+        Main.mainWindow.getBtnGegOpvragen().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GegevensOpvragen gegOpvragen = new GegevensOpvragen();
+                Main.mainWindow.getSplitPane().setRightComponent(gegOpvragen);
+            }
+        
+        
+        });
+        
+        
+        
     }
 }

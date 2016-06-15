@@ -9,10 +9,11 @@ public class Main{
 	
 	public static void main (String[] args){
 		
-		mainWindow.setVisible(true);
+		mainWindow.setTitle("HHS International Office");
 		mainWindow.setSize(1280, 720);
-		mainWindow.setDefaultCloseOperation(1);
+		mainWindow.setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
 		mainWindow.setLocationRelativeTo(null);
+                mainWindow.setVisible(true);
 		
 		Database db = new Database("jdbc:mysql://meru.hhs.nl/15025713", "15025713", "raiHepha3j");
 		switch (db.state) {

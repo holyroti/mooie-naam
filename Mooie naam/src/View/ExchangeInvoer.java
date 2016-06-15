@@ -1,8 +1,11 @@
 package View;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.GridLayout;
 
 public class ExchangeInvoer extends BinnenlandInvoer {
 	public JTextField getTxtFieldStraat() {
@@ -69,34 +72,46 @@ public class ExchangeInvoer extends BinnenlandInvoer {
 
 	public ExchangeInvoer() {
 		super();
-		super.setLayout(new GridLayout(0, 2, 0, 20));
+		super.setLayout(new GridLayout(0, 2, 10, 7));
 		super.remove(super.getBtnOk());
 		super.remove(super.getBtnCancel());
 		GridLayout gridLayout = (GridLayout) getLayout();
-		gridLayout.setVgap(10);
-		lblStraat = new JLabel("Straat");
+                
+		lblStraat = new JLabel("    Straat");
 		txtFieldStraat = new JTextField();
-		lblHuisnr = new JLabel("Huisnummer");
+		lblHuisnr = new JLabel("    Huisnummer");
 		txtFieldHuisnr = new JTextField();
-		lblToe = new JLabel("Toevoeging");
+		lblToe = new JLabel("    Toevoeging");
 		txtFieldToe = new JTextField();
-		lblPost = new JLabel("Postcode");
+		lblPost = new JLabel("    Postcode");
 		txtFieldPost = new JTextField();
-		lblLandvanherkomst = new JLabel("Land van herkosmt");
+		lblLandvanherkomst = new JLabel("    Land van herkomst");
 		txtFieldLandvanherkomst = new JTextField();
-		lblWoonplaats = new JLabel("Woonplaats");
+		lblWoonplaats = new JLabel("    Woonplaats");
 		txtFieldWoonplaats = new JTextField();
 		
+		lblWoonplaats.setFont(new Font("Century Gothic", Font.BOLD, 17));
+		lblWoonplaats.setForeground(new Color(0xA5C3F7));
 		add(lblWoonplaats);
 		add(txtFieldWoonplaats);
+		lblStraat.setFont(new Font("Century Gothic", Font.BOLD, 17));
+		lblStraat.setForeground(new Color(0xA5C3F7));
 		add(lblStraat);
 		add(txtFieldStraat);
+		lblHuisnr.setFont(new Font("Century Gothic", Font.BOLD, 17));
+		lblHuisnr.setForeground(new Color(0xA5C3F7));
 		add(lblHuisnr);
 		add(txtFieldHuisnr);
+		lblToe.setFont(new Font("Century Gothic", Font.BOLD, 17));
+		lblToe.setForeground(new Color(0xA5C3F7));
 		add(lblToe);
 		add(txtFieldToe);
+		lblPost.setFont(new Font("Century Gothic", Font.BOLD, 17));
+		lblPost.setForeground(new Color(0xA5C3F7));
 		add(lblPost);
 		add(txtFieldPost);
+		lblLandvanherkomst.setFont(new Font("Century Gothic", Font.BOLD, 17));
+		lblLandvanherkomst.setForeground(new Color(0xA5C3F7));
 		add(lblLandvanherkomst);
 		add(txtFieldLandvanherkomst);
 		

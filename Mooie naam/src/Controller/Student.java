@@ -1,15 +1,23 @@
 package Controller;
 
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import Model.ExcStudentModel;
+import Model.OpleidingModel;
+import Model.StageModel;
+import Model.StudentModel;
 import View.BinnenlandInvoer;
 import View.ExchangeInvoer;
+import View.StudentenOpties;
 
 public class Student {
 
@@ -30,22 +38,6 @@ public class Student {
                 maakExchangeStudent();
                 break;
         }
-    }
-
-    public void zoekStudent(ArrayList<String> row) {
-//		ResultSet rs = db.executeStatement("SELECT Name, CountryCode, Population FROM city WHERE Name = '" + name + "'");
-//		int len = row.size();
-//		try {
-//			while(rs.next()) {
-//				for(int i=0; i<len; i++) {
-//					System.out.println(rs.getString(row.get(i)));
-//				}
-//			}
-//			rs.close();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
     }
 
     private void maakBinnenlandStudent() {
@@ -171,5 +163,118 @@ public class Student {
     			+ " WHERE id = " + invoer.getTxtFieldId().getText());
     	
     	Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+    }
+    
+    public void inschrijvenStudie(StudentenOpties optiesPane) {
+    	ResultSet rs = db.executeStatement("select * from Opleiding;");
+		try {
+			rs.last();
+			OpleidingModel[] comps = new OpleidingModel[rs.getRow()];
+			rs.beforeFirst();
+			while (rs.next()) {
+				comps[rs.getRow() - 1] = new OpleidingModel(rs.getString("id"),
+						rs.getString("naam"), rs.getString("type"), rs.getString("contactpersoon"));
+			}
+			Object selectedStudie = JOptionPane.showInputDialog(null, "Kies studie",
+					"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
+			if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+					.getClass().getName().equals(StudentModel.class.getName().toString())) {
+				db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
+						+ optiesPane.getTableModel()
+								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+						+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
+						+ new Date(System.currentTimeMillis()).toString() + "')");
+			} else {
+				db.executeInsertStatement("insert into EXC_inschrijving_onderwijseenheid VALUES ("
+						+ optiesPane.getTableModel()
+								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+						+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
+						+ new Date(System.currentTimeMillis()).toString() + "')");
+			}
+			JOptionPane.showMessageDialog(null, "Student is ingeschreven");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void inschrijvenStage(StudentenOpties optiesPane) {
+    	ResultSet rs = db.executeStatement("select * from Stage;");
+		try {
+			rs.last();
+			StageModel[] comps = new StageModel[rs.getRow()];
+			rs.beforeFirst();
+			while (rs.next()) {
+				comps[rs.getRow() - 1] = new StageModel(rs.getString("id"),
+						rs.getString("bedrijfsnaam"), rs.getString("straat"), rs.getString("stad"),
+						rs.getString("land"), rs.getString("postcode"), rs.getString("toevoeging"),
+						rs.getString("huisnummer"));
+			}
+			Object selectedStudie = JOptionPane.showInputDialog(null, "Kies stage",
+					"Inschrijving stage", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
+			if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+					.getClass().getName().equals(StudentModel.class.getName().toString())) {
+				db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES ("
+						+ optiesPane.getTableModel()
+								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+						+ "," + ((StageModel) selectedStudie).getId() + ",'"
+						+ new Date(System.currentTimeMillis()).toString() + "')");
+			} else {
+				db.executeInsertStatement("insert into EXC_inschrijving_stage VALUES ("
+						+ optiesPane.getTableModel()
+								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+						+ "," + ((StageModel) selectedStudie).getId() + ",'"
+						+ new Date(System.currentTimeMillis()).toString() + "')");
+			}
+			JOptionPane.showMessageDialog(null, "Student is ingeschreven");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void locatieExcStudent(StudentenOpties optiesPane) {
+    	ResultSet rs = db.executeStatement("select * from EXC_student");
+		try {
+			rs.last();
+			ExcStudentModel[] comps = new ExcStudentModel[rs.getRow()];
+			rs.beforeFirst();
+			while (rs.next()) {
+				comps[rs.getRow() - 1] = new ExcStudentModel(rs.getString("id"),
+						rs.getString("voornaam"), rs.getString("tussenvoegsel"),
+						rs.getString("achternaam"), rs.getString("geslacht"),
+						rs.getString("emailadres"), rs.getString("straat"),
+						rs.getString("woonplaats"), rs.getString("landvherkomst"),
+						rs.getString("universiteit"), rs.getString("huisnummer"),
+						rs.getString("toevoeging"), rs.getString("postcode"));
+			}
+			ExcStudentModel excStudent = comps[Integer.parseInt((String) optiesPane.getTableModel()
+					.getValueAt(optiesPane.getTable().getSelectedRow(), 0)) - 1];
+			JOptionPane.showMessageDialog(null,
+					"Locatie student: " + excStudent.getStraat() + " " + excStudent.getHuisnr()
+							+ " " + excStudent.getWoonplaats(),
+					"Locatie", JOptionPane.INFORMATION_MESSAGE);
+			;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void overzichtInschrijvingen(StudentenOpties optiesPane) {
+    	String id = ((StudentModel) optiesPane.getTableModel()
+				.getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId();
+		ResultSet rs = db.executeStatement(
+				"SELECT HHS_student.id, Opleiding.naam, Onderwijseenheid.studiepunt FROM HHS_inschrijving_onderwijseenheid    JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id  JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid    JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id WHERE  HHS_student.id =" + id);
+		try {
+			StringBuilder sb = new StringBuilder();
+			while (rs.next()) {
+				sb.append("Opleiding: " + rs.getString("naam") + "\tAantal studiepunten: "
+						+ rs.getString("studiepunt") + "\n");
+			}
+			JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 }

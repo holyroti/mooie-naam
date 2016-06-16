@@ -17,6 +17,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
+import com.mysql.jdbc.EscapeTokenizer;
+
 import Model.ExcStudentModel;
 import Model.OpleidingModel;
 import Model.StageModel;
@@ -156,21 +158,46 @@ public class Actions {
 				Main.mainWindow.getSplitPane().setRightComponent(optiesPane);
 				BinnenlandInvoer invoer = new BinnenlandInvoer();
 				HashMap<String, StudentModel> map = new HashMap<>();
+				HashMap<String, ExcStudentModel> exMap = new HashMap<>();
 				MouseListener wijzigMouseListener = new MouseListener() {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
-							System.out.println(optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName());
-							StudentModel studentModel = map.get(
-									((StudentModel)optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
-							invoer.getTxtFieldAchternaam().setText(studentModel.getAchternaam());
-							invoer.getTxtFieldEmailadres().setText(studentModel.getEmailadres());
-							invoer.getTxtFieldGeslacht().setText(studentModel.getGeslacht());
-							invoer.getTxtFieldOpleiding().setText(studentModel.getOpleiding());
-							invoer.getTxtFieldTussenvoegsel().setText(studentModel.getTussenvoegsel());
-							invoer.getTxtFieldUniversiteit().setText(studentModel.getUniversiteit());
-							invoer.getTxtFieldVoornaam().setText(studentModel.getVoornaam());
-							invoer.getTxtFieldId().setText(studentModel.getId());
+							String type = optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName();
+							
+							if (type.equals("Model.StudentModel")) {
+								View.BinnenlandInvoer invoer = new BinnenlandInvoer();
+								StudentModel studentModel = map.get(
+										((StudentModel)optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
+								invoer.getTxtFieldId().setText(studentModel.getId());
+								invoer.getTxtFieldVoornaam().setText(studentModel.getVoornaam());
+								invoer.getTxtFieldTussenvoegsel().setText(studentModel.getTussenvoegsel());
+								invoer.getTxtFieldAchternaam().setText(studentModel.getAchternaam());
+								invoer.getTxtFieldEmailadres().setText(studentModel.getEmailadres());
+								invoer.getTxtFieldGeslacht().setText(studentModel.getGeslacht());
+								invoer.getTxtFieldOpleiding().setText(studentModel.getOpleiding());
+								invoer.getTxtFieldTel().setText("placeholder");
+								invoer.getTxtFieldUniversiteit().setText(studentModel.getUniversiteit());
+								Main.mainWindow.getSplitPane().setRightComponent(invoer);
+							} else {
+								View.ExchangeInvoer invoer = new ExchangeInvoer();
+								ExcStudentModel excModel = exMap.get(((ExcStudentModel)optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
+								invoer.getTxtFieldVoornaam().setText(excModel.getVoornaam());
+								invoer.getTxtFieldAchternaam().setText(excModel.getAchternaam());
+								invoer.getTxtFieldTussenvoegsel().setText(excModel.getTussenvoegsel());
+								invoer.getTxtFieldEmailadres().setText(excModel.getEmailadres());
+								invoer.getTxtFieldGeslacht().setText(excModel.getGeslacht());
+								invoer.getTxtFieldHuisnr().setText(excModel.getHuisnr());
+								invoer.getTxtFieldId().setText(excModel.getId());
+								invoer.getTxtFieldLandvanherkomst().setText(excModel.getLand());
+								invoer.getTxtFieldStraat().setText(excModel.getStraat());
+								invoer.getTxtFieldWoonplaats().setText(excModel.getWoonplaats());
+								invoer.getTxtFieldUniversiteit().setText(excModel.getUniversiteit());
+								invoer.getTxtFieldPost().setText(excModel.getPostcode());
+								invoer.getTxtFieldTel().setText("placeholder");
+								invoer.getTxtFieldToe().setText(excModel.getToevoeging());
+								Main.mainWindow.getSplitPane().setRightComponent(invoer);
+							}
 						}
 					}
 
@@ -501,6 +528,7 @@ public class Actions {
 										rsex.getString("woonplaats"), rsex.getString("landvherkomst"),
 										rsex.getString("universiteit"), rsex.getString("huisnummer"),
 										rsex.getString("toevoeging"), rsex.getString("postcode"));
+								exMap.put(excStudentModel.getId(), excStudentModel);
 								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()+ excStudentModel.getAchternaam()+excStudentModel.getGeslacht()+excStudentModel.getId());
 //								 map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()

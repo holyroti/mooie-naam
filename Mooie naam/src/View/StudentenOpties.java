@@ -225,4 +225,64 @@ public class StudentenOpties extends JPanel {
 		return invoer;
 	}
 
+	public void setComboBox(JComboBox<String> comboBox) {
+		this.comboBox = comboBox;
+	}
+
+	public void setChckbxNaam(JCheckBox chckbxNaam) {
+		this.chckbxNaam = chckbxNaam;
+	}
+
+	public void setChckbxId(JCheckBox chckbxId) {
+		this.chckbxId = chckbxId;
+	}
+
+	public void setChckbxGeslacht(JCheckBox chckbxGeslacht) {
+		this.chckbxGeslacht = chckbxGeslacht;
+	}
+
+	public void setTxtFieldNaam(JTextField txtFieldNaam) {
+		this.txtFieldNaam = txtFieldNaam;
+	}
+
+	public void setTxtFieldId(JTextField txtFieldId) {
+		this.txtFieldId = txtFieldId;
+	}
+
+	public void setBtnGroup(ButtonGroup btnGroup) {
+		this.btnGroup = btnGroup;
+	}
+
+	public void setrBtnV(JRadioButton rBtnV) {
+		this.rBtnV = rBtnV;
+	}
+
+	public void setrBtnM(JRadioButton rBtnM) {
+		this.rBtnM = rBtnM;
+	}
+
+	public void setLblNaam(JLabel lblNaam) {
+		this.lblNaam = lblNaam;
+	}
+
+	public void setLblGeslacht(JLabel lblGeslacht) {
+		this.lblGeslacht = lblGeslacht;
+	}
+
+	public void setLblId(JLabel lblId) {
+		this.lblId = lblId;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
+	}
+
+	public void setInvoer(BinnenlandInvoer invoer) {
+		this.invoer = invoer;
+	}
+
 }

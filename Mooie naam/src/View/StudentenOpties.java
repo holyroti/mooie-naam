@@ -64,7 +64,7 @@ public class StudentenOpties extends JPanel {
 
 		table = new JTable();
 		tableModel = new DefaultTableModel();
-		tableModel.setColumnIdentifiers(new String[] { "Naam", "Tussenvoegsel", "Achternaam", "Geslacht" });
+		tableModel.setColumnIdentifiers(new String[] {"ID", "Naam", "Tussenvoegsel", "Achternaam", "Geslacht" });
 		table.setModel(tableModel);
 		table.setDefaultEditor(Object.class, null);
 		comboBox.addItem("Choose option");
@@ -72,7 +72,7 @@ public class StudentenOpties extends JPanel {
 		comboBox.addItem("Studie inschrijven");
 		comboBox.addItem("Stage inschrijven");
 		comboBox.addItem("Inschrijving wijzigen");
-		comboBox.addItem("locatie");
+		comboBox.addItem("Locatie");
 		comboBox.addItem("Onderwijs overzicht");
 
 		JScrollPane tbl = new JScrollPane(table);

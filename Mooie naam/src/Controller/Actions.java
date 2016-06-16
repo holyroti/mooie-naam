@@ -15,10 +15,12 @@ import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import Model.ExcStudentModel;
 import Model.OpleidingModel;
 import Model.StageModel;
 import Model.StudentModel;
 import View.BinnenlandInvoer;
+import View.ExchangeInvoer;
 import View.GegevensOpvragen;
 import View.OpleidingZoeken;
 import View.StudentenOpties;
@@ -265,8 +267,12 @@ public class Actions {
 								}
 								Object selectedStudie = JOptionPane.showInputDialog(null, "Kies stage",
 										"Inschrijving stage", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
-								 db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES (" + optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),0) + "," + ((StageModel) selectedStudie).getId() + ",'" + new Date(System.currentTimeMillis()).toString() +"')");
-								 JOptionPane.showMessageDialog(null, "Student is ingeschreven");
+								db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES ("
+										+ optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),
+												0)
+										+ "," + ((StageModel) selectedStudie).getId() + ",'"
+										+ new Date(System.currentTimeMillis()).toString() + "')");
+								JOptionPane.showMessageDialog(null, "Student is ingeschreven");
 
 							} catch (SQLException e) {
 								e.printStackTrace();
@@ -315,11 +321,21 @@ public class Actions {
 											rs.getString("land"), rs.getString("postcode"), rs.getString("toevoeging"),
 											rs.getString("huisnummer"));
 								}
-//								Object selectedStudie = JOptionPane.showInputDialog(null, "Kies stage",
-//										"Inschrijving stage", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
-//								 db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES (" + optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),0) + "," + ((StageModel) selectedStudie).getId() + ",'" + new Date(System.currentTimeMillis()).toString() +"')");
-//								 JOptionPane.showMessageDialog(null, "Student is ingeschreven");
-								
+								// Object selectedStudie =
+								// JOptionPane.showInputDialog(null, "Kies
+								// stage",
+								// "Inschrijving stage",
+								// JOptionPane.PLAIN_MESSAGE, null, comps,
+								// comps[0]);
+								// db.executeInsertStatement("insert into
+								// HHS_inschrijving_stage VALUES (" +
+								// optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),0)
+								// + "," + ((StageModel) selectedStudie).getId()
+								// + ",'" + new
+								// Date(System.currentTimeMillis()).toString()
+								// +"')");
+								// JOptionPane.showMessageDialog(null, "Student
+								// is ingeschreven");
 
 							} catch (SQLException e) {
 								e.printStackTrace();
@@ -351,8 +367,72 @@ public class Actions {
 						// choose Tools | Templates.
 					}
 				};
-				
-				optiesPane.getTxtFieldNaam().addActionListener(new ActionListener() {
+
+				MouseListener locatieMouseListener = new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent me) {
+						if (me.getClickCount() == 2) {
+							// Date date = new Date(System.currentTimeMillis());
+							// System.out.println(date);
+							ResultSet rs = db.executeStatement("select * from Stage;");
+							try {
+								rs.last();
+								StageModel[] comps = new StageModel[rs.getRow()];
+								rs.beforeFirst();
+								while (rs.next()) {
+									comps[rs.getRow() - 1] = new StageModel(rs.getString("id"),
+											rs.getString("bedrijfsnaam"), rs.getString("straat"), rs.getString("stad"),
+											rs.getString("land"), rs.getString("postcode"), rs.getString("toevoeging"),
+											rs.getString("huisnummer"));
+								}
+								// Object selectedStudie =
+								// JOptionPane.showInputDialog(null, "Kies
+								// stage",
+								// "Inschrijving stage",
+								// JOptionPane.PLAIN_MESSAGE, null, comps,
+								// comps[0]);
+								// db.executeInsertStatement("insert into
+								// HHS_inschrijving_stage VALUES (" +
+								// optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),0)
+								// + "," + ((StageModel) selectedStudie).getId()
+								// + ",'" + new
+								// Date(System.currentTimeMillis()).toString()
+								// +"')");
+								// JOptionPane.showMessageDialog(null, "Student
+								// is ingeschreven");
+
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+
+						}
+					}
+
+					@Override
+					public void mousePressed(MouseEvent me) {
+						// To change body of generated methods,
+						// choose Tools | Templates.
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent me) {
+						// To change body of generated methods,
+						// choose Tools | Templates.
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent me) {
+
+					}
+
+					@Override
+					public void mouseExited(MouseEvent me) {
+						// To change body of generated methods,
+						// choose Tools | Templates.
+					}
+				};
+
+				ActionListener zoekListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
 						ResultSet rs = db.executeStatement("SELECT * FROM HHS_student WHERE naam LIKE'%"
@@ -376,7 +456,39 @@ public class Actions {
 							e.printStackTrace();
 						}
 					}
-				});
+				};
+
+				ActionListener zoekExcListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent ae) {
+						ResultSet rs = db.executeStatement("SELECT * FROM EXC_student WHERE voornaam LIKE'%"
+								+ optiesPane.getTxtFieldNaam().getText() + "%'");
+						try {
+							optiesPane.getTableModel().setDataVector(null,
+									new String[] { "ID", "Naam", "Tussenvoegsel", "Achternaam", "Geslacht" });
+							while (rs.next()) {
+								ExcStudentModel excStudentModel = new ExcStudentModel(rs.getString("id"),
+										rs.getString("voornaam"), rs.getString("tussenvoegsel"),
+										rs.getString("achternaam"), rs.getString("geslacht"),
+										rs.getString("emailadres"), rs.getString("universiteit"),
+										rs.getString("straat"), rs.getString("woonplaats"),
+										rs.getString("landvherkomst"), rs.getString("huisnummer"),
+										rs.getString("toevoeging"), rs.getString("postcode"));
+								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getAchternaam()+ excStudentModel.getId()+excStudentModel.getTussenvoegsel()+excStudentModel.getGeslacht());
+								// map.put(studentModel.getId(), studentModel);
+								optiesPane.getTableModel()
+										.addRow(new String[] { excStudentModel.getId(), excStudentModel.getVoornaam(),
+												excStudentModel.getVoornaam(), excStudentModel.getAchternaam(),
+												excStudentModel.getGeslacht() });
+							}
+							rs.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				};
+
+				optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 
 				optiesPane.getComboBox().addItemListener(new ItemListener() {
 
@@ -412,22 +524,25 @@ public class Actions {
 								optiesPane.getTable().addMouseListener(studieInschrijvingMouseListener);
 							} else if (e.getItem().equals("Stage inschrijven")) {
 								optiesPane.getTable().addMouseListener(stageInschrijvingMouseListener);
-							}else if (e.getItem().equals("Inschrijving wijzigen")) {
+							} else if (e.getItem().equals("Inschrijving wijzigen")) {
 								optiesPane.getTable().addMouseListener(InschrijvingWijzigenMouseListener);
+							} else if (e.getItem().equals("Locatie")) {
+								optiesPane.getTxtFieldNaam().addActionListener(zoekExcListener);
 							}
 						} else {
 							if (e.getItem().equals("Wijzigen")) {
 								optiesPane.getTable().removeMouseListener(wijzigMouseListener);
 								optiesPane.remove(invoer);
 								optiesPane.updateUI();
-							}
-							if (e.getItem().equals("Studie inschrijven")) {
+							} else if (e.getItem().equals("Studie inschrijven")) {
 								optiesPane.getTable().removeMouseListener(studieInschrijvingMouseListener);
-							}
-							if (e.getItem().equals("Stage inschrijven")) {
+							} else if (e.getItem().equals("Stage inschrijven")) {
 								optiesPane.getTable().removeMouseListener(stageInschrijvingMouseListener);
-							}if (e.getItem().equals("Inschrijving wijzigen")) {
+							} else if (e.getItem().equals("Inschrijving wijzigen")) {
 								optiesPane.getTable().removeMouseListener(InschrijvingWijzigenMouseListener);
+							} else if (e.getItem().equals("Locatie")) {
+								optiesPane.getTxtFieldNaam().removeActionListener(zoekExcListener);
+								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 							}
 						}
 					}

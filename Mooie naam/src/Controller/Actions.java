@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 import Model.ExcStudentModel;
 import Model.OpleidingModel;
@@ -446,6 +447,7 @@ public class Actions {
 										rs.getString("tussenvoegsel"), rs.getString("achternaam"),
 										rs.getString("geslacht"), rs.getString("emailadres"), rs.getString("opleiding"),
 										rs.getString("universiteit"));
+								System.out.println(studentModel.getVoornaam() + studentModel.getTussenvoegsel() + studentModel.getAchternaam() + studentModel.getGeslacht() + studentModel.getId());
 								map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()
 										.addRow(new String[] { rs.getString("ID"), rs.getString("naam"),
@@ -461,7 +463,7 @@ public class Actions {
 				ActionListener zoekExcListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
-						ResultSet rs = db.executeStatement("SELECT * FROM EXC_student WHERE voornaam LIKE'%"
+						ResultSet rs = db.executeStatement("SELECT * FROM EXC_student WHERE voornaam LIKE '%"
 								+ optiesPane.getTxtFieldNaam().getText() + "%'");
 						try {
 							optiesPane.getTableModel().setDataVector(null,
@@ -470,25 +472,22 @@ public class Actions {
 								ExcStudentModel excStudentModel = new ExcStudentModel(rs.getString("id"),
 										rs.getString("voornaam"), rs.getString("tussenvoegsel"),
 										rs.getString("achternaam"), rs.getString("geslacht"),
-										rs.getString("emailadres"), rs.getString("universiteit"),
-										rs.getString("straat"), rs.getString("woonplaats"),
-										rs.getString("landvherkomst"), rs.getString("huisnummer"),
+										rs.getString("emailadres"), rs.getString("straat"),
+										rs.getString("woonplaats"), rs.getString("landvherkomst"),
+										rs.getString("universiteit"), rs.getString("huisnummer"),
 										rs.getString("toevoeging"), rs.getString("postcode"));
-								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getAchternaam()+ excStudentModel.getId()+excStudentModel.getTussenvoegsel()+excStudentModel.getGeslacht());
-								// map.put(studentModel.getId(), studentModel);
+								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()+ excStudentModel.getAchternaam()+excStudentModel.getGeslacht()+excStudentModel.getId());
+//								 map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()
-										.addRow(new String[] { excStudentModel.getId(), excStudentModel.getVoornaam(),
-												excStudentModel.getVoornaam(), excStudentModel.getAchternaam(),
-												excStudentModel.getGeslacht() });
+										.addRow(new String[] { rs.getString("id"), rs.getString("voornaam"),
+												rs.getString("tussenvoegsel"), rs.getString("achternaam"),
+												rs.getString("geslacht") });
 							}
-							rs.close();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				};
-
-				optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 
 				optiesPane.getComboBox().addItemListener(new ItemListener() {
 

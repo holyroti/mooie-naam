@@ -57,6 +57,7 @@ public class Student {
             rs.next();
             String sid = rs.getString("max(id)");
             id = Integer.parseInt(sid) + 1;
+            System.out.println(id);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -114,8 +115,8 @@ public class Student {
                             + "'" + invoer.getTxtFieldUniversiteit().getText() + "'" //universiteit
                             + "'" + invoer.getTxtFieldHuisnr().getText() + "'" + "," //huisnr
                             + "'" + invoer.getTxtFieldToe().getText() + "'" + "," //toevoeging
-                            + "'" + invoer.getTxtFieldPost().getText() + "'" + "," //postcode
-                            + ")");
+                            + "'" + invoer.getTxtFieldPost().getText() + "'" //postcode
+                            + ");");
                     db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
                             + id + ","
                             + "'" + invoer.getTxtFieldTel().getText() + "'" + ")");

@@ -375,33 +375,22 @@ public class Actions {
 						if (me.getClickCount() == 2) {
 							// Date date = new Date(System.currentTimeMillis());
 							// System.out.println(date);
-							ResultSet rs = db.executeStatement("select * from Stage;");
+							ResultSet rs = db.executeStatement("select * from EXC_student;");
 							try {
 								rs.last();
-								StageModel[] comps = new StageModel[rs.getRow()];
+								ExcStudentModel[] comps = new ExcStudentModel[rs.getRow()];
 								rs.beforeFirst();
 								while (rs.next()) {
-									comps[rs.getRow() - 1] = new StageModel(rs.getString("id"),
-											rs.getString("bedrijfsnaam"), rs.getString("straat"), rs.getString("stad"),
-											rs.getString("land"), rs.getString("postcode"), rs.getString("toevoeging"),
-											rs.getString("huisnummer"));
+									comps[rs.getRow() - 1] = new ExcStudentModel(rs.getString("id"),
+											rs.getString("voornaam"), rs.getString("tussenvoegsel"),
+											rs.getString("achternaam"), rs.getString("geslacht"),
+											rs.getString("emailadres"), rs.getString("straat"),
+											rs.getString("woonplaats"), rs.getString("landvherkomst"),
+											rs.getString("universiteit"), rs.getString("huisnummer"),
+											rs.getString("toevoeging"), rs.getString("postcode"));
 								}
-								// Object selectedStudie =
-								// JOptionPane.showInputDialog(null, "Kies
-								// stage",
-								// "Inschrijving stage",
-								// JOptionPane.PLAIN_MESSAGE, null, comps,
-								// comps[0]);
-								// db.executeInsertStatement("insert into
-								// HHS_inschrijving_stage VALUES (" +
-								// optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),0)
-								// + "," + ((StageModel) selectedStudie).getId()
-								// + ",'" + new
-								// Date(System.currentTimeMillis()).toString()
-								// +"')");
-								// JOptionPane.showMessageDialog(null, "Student
-								// is ingeschreven");
-
+								ExcStudentModel  excStudent = comps[ Integer.parseInt((String) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)) - 1];
+								JOptionPane.showMessageDialog(null, "Locatie student: " + excStudent.getStraat()+ " " + excStudent.getHuisnr()+ " "  + excStudent.getWoonplaats(), "Locatie", JOptionPane.INFORMATION_MESSAGE);;
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -526,6 +515,7 @@ public class Actions {
 							} else if (e.getItem().equals("Inschrijving wijzigen")) {
 								optiesPane.getTable().addMouseListener(InschrijvingWijzigenMouseListener);
 							} else if (e.getItem().equals("Locatie")) {
+								optiesPane.getTable().addMouseListener(locatieMouseListener);
 								optiesPane.getTxtFieldNaam().addActionListener(zoekExcListener);
 							}
 						} else {
@@ -542,6 +532,7 @@ public class Actions {
 							} else if (e.getItem().equals("Locatie")) {
 								optiesPane.getTxtFieldNaam().removeActionListener(zoekExcListener);
 								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
+								optiesPane.getTable().removeMouseListener(locatieMouseListener);
 							}
 						}
 					}

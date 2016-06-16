@@ -13,7 +13,7 @@ public class Main{
 		mainWindow.setSize(1280, 720);
 		mainWindow.setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
 		mainWindow.setLocationRelativeTo(null);
-                mainWindow.setVisible(true);
+        mainWindow.setVisible(true);
 		
 		Database db = new Database("jdbc:mysql://meru.hhs.nl/15025713", "15025713", "raiHepha3j");
 		switch (db.state) {

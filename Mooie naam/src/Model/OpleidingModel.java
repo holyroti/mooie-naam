@@ -78,4 +78,10 @@ public class OpleidingModel {
         this.contactpersoonNaam = contactpersoonNaam;
     }
     
+    @Override
+    public String toString() {
+    	// TODO Auto-generated method stub
+    	return naam;
+    }
+    
 }

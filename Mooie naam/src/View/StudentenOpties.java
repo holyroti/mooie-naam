@@ -67,7 +67,7 @@ public class StudentenOpties extends JPanel {
 		tableModel.setColumnIdentifiers(new String[] { "Naam", "Tussenvoegsel", "Achternaam", "Geslacht" });
 		table.setModel(tableModel);
 		table.setDefaultEditor(Object.class, null);
-
+		comboBox.addItem("Choose option");
 		comboBox.addItem("Wijzigen");
 		comboBox.addItem("Studie inschrijven");
 		comboBox.addItem("Stage inschrijven");
@@ -103,9 +103,9 @@ public class StudentenOpties extends JPanel {
 		tbl.setBounds(20, 110, 960, 215);
 		// zou iets van een if statement moeten worden in actions van als
 		// wijzigingen gekozen en als student geselecteerd dan:
-		invoer.changeLayout();
-		invoer.setBounds(40, 335, 890, 310);
-		add(invoer);
+//		invoer.changeLayout();
+//		invoer.setBounds(40, 335, 890, 310);
+//		add(invoer);
 
 		add(rBtnM);
 		add(rBtnV);

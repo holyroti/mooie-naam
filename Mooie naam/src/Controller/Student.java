@@ -66,7 +66,7 @@ public class Student {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (invoer.isFilled()) {
-                    db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + id + "," //id
+                    db.executeInsertStatement("INSERT INTO HHS_student VALUES" + "(" + id + "," //id
                             + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," //voornaam
                             + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," //tussenvoegsel
                             + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," //achternaam
@@ -75,7 +75,7 @@ public class Student {
                             + "'" + invoer.getTxtFieldOpleiding().getText() + "'" + "," //opleiding
                             + "'" + invoer.getTxtFieldUniversiteit().getText() + "'" //universiteit
                             + ")");
-                    db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
+                    db.executeInsertStatement("INSERT INTO HHS_student_tel VALUES" + "("
                             + id + ","
                             + "'" + invoer.getTxtFieldTel().getText() + "'" + ")");
                 } else {
@@ -103,21 +103,21 @@ public class Student {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 if (!invoer.getTxtFieldStraat().getText().isEmpty() && !invoer.getTxtFieldPost().getText().isEmpty() && !invoer.getTxtFieldHuisnr().getText().isEmpty() && !invoer.getTxtFieldUniversiteit().getText().isEmpty() && !invoer.getTxtFieldLandvanherkomst().getText().isEmpty() && !invoer.getTxtFieldWoonplaats().getText().isEmpty() && !invoer.getTxtFieldEmailadres().getText().isEmpty() && !invoer.getTxtFieldGeslacht().getText().isEmpty() && !invoer.getTxtFieldVoornaam().getText().isEmpty() && !invoer.getTxtFieldAchternaam().getText().isEmpty()) {
-                    db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + id + "," //id
-                            + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," //voornaam
-                            + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," //tussenvoegsel
-                            + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," //achternaam
-                            + "'" + invoer.getTxtFieldGeslacht().getText() + "'" + "," //geslacht, moet een radiobuttongroup worden
-                            + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + "," //emailadres
-                            + "'" + invoer.getTxtFieldStraat().getText() + "'" + "," //straat
-                            + "'" + invoer.getTxtFieldWoonplaats().getText() + "'" + "," //woonplaats
-                            + "'" + invoer.getTxtFieldLandvanherkomst().getText() + "'" + "," //land
-                            + "'" + invoer.getTxtFieldUniversiteit().getText() + "'" //universiteit
-                            + "'" + invoer.getTxtFieldHuisnr().getText() + "'" + "," //huisnr
-                            + "'" + invoer.getTxtFieldToe().getText() + "'" + "," //toevoeging
-                            + "'" + invoer.getTxtFieldPost().getText() + "'" //postcode
-                            + ");");
-                    db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
+                    db.executeInsertStatement("INSERT INTO EXC_student VALUES " + "(" + id + "," //id
+                            + " '" + invoer.getTxtFieldVoornaam().getText() + "'" + "," //voornaam
+                            + " '" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," //tussenvoegsel
+                            + " '" + invoer.getTxtFieldAchternaam().getText() + "'" + "," //achternaam
+                            + " '" + invoer.getTxtFieldGeslacht().getText() + "'" + "," //geslacht, moet een radiobuttongroup worden
+                            + " '" + invoer.getTxtFieldEmailadres().getText() + "'" + "," //emailadres
+                            + " '" + invoer.getTxtFieldStraat().getText() + "'" + "," //straat
+                            + " '" + invoer.getTxtFieldWoonplaats().getText() + "'" + "," //woonplaats
+                            + " '" + invoer.getTxtFieldLandvanherkomst().getText() + "'" + "," //land
+                            + " '" + invoer.getTxtFieldUniversiteit().getText() + "'" + "," //universiteit
+                            + " '" + invoer.getTxtFieldHuisnr().getText() + "'" + "," //huisnr
+                            + " '" + invoer.getTxtFieldToe().getText() + "'" + "," //toevoeging
+                            + " '" + invoer.getTxtFieldPost().getText() + "'" //postcode
+                            + ")");
+                    db.executeInsertStatement("INSERT INTO EXC_student_tel VALUES" + "("
                             + id + ","
                             + "'" + invoer.getTxtFieldTel().getText() + "'" + ")");
                 } else {

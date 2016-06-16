@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
     private JButton btnOplSearch;
     private JButton btnGegOpvragen;
     private JSplitPane splitPane;
+    private JPanel rightPanel;
 
     public MainWindow() {
         addMenuBar();
@@ -38,7 +39,7 @@ public class MainWindow extends JFrame {
         gl.setHgap(20);
         panel.setLayout(gl);
         
-        JPanel rightPanel = new JPanel();
+        rightPanel = new JPanel();
 
         splitPane = new JSplitPane();
         splitPane.setDividerSize(1);
@@ -146,4 +147,7 @@ public class MainWindow extends JFrame {
         return btnStuSearch;
     }
 
+	public JPanel getRightPanel() {
+		return rightPanel;
+	}
 }

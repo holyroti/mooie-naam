@@ -21,7 +21,9 @@ public class OpleidingModel {
         this.type = type;
         this.contactpersoonNaam = contactpersoonNaam;
     }
-
+	public OpleidingModel() {
+		// TODO Auto-generated constructor stub
+	}
     /**
      * @return the id
      */

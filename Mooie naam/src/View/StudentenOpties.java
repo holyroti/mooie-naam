@@ -71,7 +71,6 @@ public class StudentenOpties extends JPanel {
 		comboBox.addItem("Wijzigen");
 		comboBox.addItem("Studie inschrijven");
 		comboBox.addItem("Stage inschrijven");
-		comboBox.addItem("Inschrijving wijzigen");
 		comboBox.addItem("Locatie Exchange Student");
 		comboBox.addItem("Onderwijs overzicht");
 

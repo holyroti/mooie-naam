@@ -39,103 +39,134 @@ public class Actions {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HashMap<String, OpleidingModel> opleidingMap = new HashMap<>();
-				OpleidingZoeken opleidingZoeken = new OpleidingZoeken();
-				Main.mainWindow.getSplitPane().setRightComponent(opleidingZoeken);
-				// String s = JOptionPane.showInputDialog("Naam van opleiding");
-				// ResultSet rs = db.executeStatement("SELECT Opleiding.naam as
-				// naamopleiding, Opleiding.type, Opleiding.id, Contactpersoon.*
-				// FROM Opleiding"
-				// + " JOIN Contactpersoon on Opleiding.contactpersoon =
-				// Contactpersoon.id"
-				// + " WHERE Opleiding.naam = " + "'" + s + "'");
-				ResultSet rs = db.executeStatement(
-						"SELECT Opleiding.id, Opleiding.naam, Opleiding.type, Contactpersoon.naam AS Contactpersoon\n"
-								+ "FROM Opleiding\n"
-								+ "JOIN Contactpersoon ON Contactpersoon.id = Opleiding.contactpersoon;");
-				ResultSet typeRs = db.executeStatement("SELECT DISTINCT Opleiding.type FROM Opleiding;");
-				ResultSet naamRs = db.executeStatement("SELECT DISTINCT Contactpersoon.naam FROM Contactpersoon;");
+				// HashMap<String, OpleidingModel> opleidingMap = new
+				// HashMap<>();
+				// OpleidingZoeken opleidingZoeken = new OpleidingZoeken();
+				// Main.mainWindow.getSplitPane().setRightComponent(opleidingZoeken);
+				// ResultSet rs = db.executeStatement(
+				// "SELECT Opleiding.id, Opleiding.naam, Opleiding.type,
+				// Contactpersoon.naam AS Contactpersoon\n"
+				// + "FROM Opleiding\n"
+				// + "JOIN Contactpersoon ON Contactpersoon.id =
+				// Opleiding.contactpersoon;");
+				// ResultSet typeRs = db.executeStatement("SELECT DISTINCT
+				// Opleiding.type FROM Opleiding;");
+				// ResultSet naamRs = db.executeStatement("SELECT DISTINCT
+				// Contactpersoon.naam FROM Contactpersoon;");
+				// try {
+				// while (rs.next()) {
+				// OpleidingModel opleiding = new
+				// OpleidingModel(rs.getString("id"), rs.getString("naam"),
+				// rs.getString("type"), rs.getString("Contactpersoon"));
+				// opleidingMap.put(opleiding.getNaam(), opleiding);
+				// opleidingZoeken.getTxtNaamOpleiding().addItem(rs.getString("naam"));
+				// }
+				// while (typeRs.next()) {
+				// opleidingZoeken.getTxtType().addItem(typeRs.getString("type"));
+				// }
+				// while (naamRs.next()) {
+				// opleidingZoeken.getTxtContact().addItem(naamRs.getString("naam"));
+				// }
+				//
+				// opleidingZoeken.getTxtNaamOpleiding().addItemListener(new
+				// ItemListener() {
+				// @Override
+				// public void itemStateChanged(ItemEvent ie) {
+				// if (ItemEvent.SELECTED == ie.getStateChange()) {
+				// if (!ie.getItem().equals("Choose one")) {
+				// OpleidingModel selectedOpleiding = opleidingMap.get((String)
+				// ie.getItem());
+				// opleidingZoeken.getTxtId().setText(selectedOpleiding.getId());
+				// opleidingZoeken.getTxtType().setSelectedItem(selectedOpleiding.getType());
+				// opleidingZoeken.getTxtContact()
+				// .setSelectedItem(selectedOpleiding.getContactpersoonNaam());
+				// }
+				// }
+				// }
+				// });
+				// rs.close();
+				// typeRs.close();
+				// } catch (SQLException e1) {
+				// e1.printStackTrace();
+				// }
+				ResultSet rs = db.executeStatement("SELECT max(id) FROM Onderwijseenheid;");
+				ResultSet rs2 = db.executeStatement("SELECT Opleiding.naam, Opleiding.id FROM Opleiding;");
+				OpleidingModel[] opleidngen = null;
+				int id = 0;
 				try {
-					while (rs.next()) {
-						OpleidingModel opleiding = new OpleidingModel(rs.getString("id"), rs.getString("naam"),
-								rs.getString("type"), rs.getString("Contactpersoon"));
-						opleidingMap.put(opleiding.getNaam(), opleiding);
-						opleidingZoeken.getTxtNaamOpleiding().addItem(rs.getString("naam"));
-					}
-					while (typeRs.next()) {
-						opleidingZoeken.getTxtType().addItem(typeRs.getString("type"));
-					}
-					while (naamRs.next()) {
-						opleidingZoeken.getTxtContact().addItem(naamRs.getString("naam"));
-					}
+					rs2.last();
 
-					opleidingZoeken.getTxtNaamOpleiding().addItemListener(new ItemListener() {
-						@Override
-						public void itemStateChanged(ItemEvent ie) {
-							if (ItemEvent.SELECTED == ie.getStateChange()) {
-								if (!ie.getItem().equals("Choose one")) {
-									OpleidingModel selectedOpleiding = opleidingMap.get((String) ie.getItem());
-									opleidingZoeken.getTxtId().setText(selectedOpleiding.getId());
-									opleidingZoeken.getTxtType().setSelectedItem(selectedOpleiding.getType());
-									opleidingZoeken.getTxtContact()
-											.setSelectedItem(selectedOpleiding.getContactpersoonNaam());
-								}
-							}
-						}
-					});
-					// opleidingZoeken.getTxtId().setText(rs.getString("id"));
-					// opleidingZoeken.getTxtNaamOpleiding().setText(rs.getString("naamopleiding"));
-					// opleidingZoeken.getTxtType().setText(rs.getString("type"));
-					// opleidingZoeken.getTxtContact().setText(rs.getString("Contactpersoon"));
-					// System.out.println(rs.getString("naamopleiding"));
-					// System.out.println(rs.getString("type"));
-					// System.out.println(rs.getString("emailadres"));
-					// System.out.println(rs.getString("telefoonnummer"));
-					// System.out.println(rs.getString("naam"));
-					// System.out.println(rs.getString("geslacht"));
-					rs.close();
-					typeRs.close();
+					opleidngen = new OpleidingModel[rs2.getRow()];
+					rs2.beforeFirst();
+					while (rs2.next()) {
+						opleidngen[rs2.getRow() - 1] = new OpleidingModel();
+						opleidngen[rs2.getRow() - 1].setId(rs2.getString("id"));
+						opleidngen[rs2.getRow() - 1].setNaam(rs2.getString("naam"));
+					}
+					rs.next();
+					id = Integer.parseInt(rs.getString("max(id)"));
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-
-				opleidingZoeken.getBtnOk().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if (!opleidingZoeken.getTxtNaamOpleiding().getSelectedItem().equals("Choose one")) {
-							// TODO Auto-generated method stub
-							try {
-								ResultSet rsid = db.executeStatement("SELECT id FROM Contactpersoon WHERE naam = " + "'"
-										+ (String) opleidingZoeken.getTxtContact().getSelectedItem() + "'");
-
-								rsid.next();
-								System.out.println(rsid.getString("id"));
-								db.executeInsertStatement("UPDATE Opleiding SET " + "naam='"
-										+ (String) opleidingZoeken.getTxtNaamOpleiding().getSelectedItem() + "'" + ", "
-										+ "type='" + (String) opleidingZoeken.getTxtType().getSelectedItem() + "'"
-										+ ", " + "contactpersoon=" + Integer.parseInt(rsid.getString("id"))
-										+ " WHERE id=" + Integer.parseInt(opleidingZoeken.getTxtId().getText()));
-								rsid.close();
-							} catch (SQLException e2) {
-								System.out.println("Gelieve naam opnieuw na te kijken");
-								e2.printStackTrace();
-							}
-						} else {
-							JOptionPane.showMessageDialog(null, "You havent chosen an opleiding", "Choose an opleiding",
-									JOptionPane.WARNING_MESSAGE);
-						}
-					}
-				});
-
-				opleidingZoeken.getBtnCancel().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-
-					}
-				});
+				Object[] types = { "MINOR", "MAJOR" };
+				String naam = JOptionPane.showInputDialog("Geef naam");
+				String type = (String) JOptionPane.showInputDialog(null, "Choose type", "Type",
+						JOptionPane.QUESTION_MESSAGE, null, types, types[0]);
+				String punten = JOptionPane.showInputDialog("Geef aantal studiepunten");
+				Object opleiding =  JOptionPane.showInputDialog(null, "Choose opleiding", "Opleiding",
+						JOptionPane.QUESTION_MESSAGE, null, opleidngen, opleidngen[0]);
+				
+				
+				db.executeInsertStatement("INSERT INTO Onderwijseenheid VALUES("+ (id+1) + ",'" + type + "','" + punten + "','" + ((OpleidingModel)opleiding).getId() + "')");
+				// opleidingZoeken.getBtnOk().addActionListener(new
+				// ActionListener() {
+				//
+				// @Override
+				// public void actionPerformed(ActionEvent e) {
+				// if
+				// (!opleidingZoeken.getTxtNaamOpleiding().getSelectedItem().equals("Choose
+				// one")) {
+				// // TODO Auto-generated method stub
+				// try {
+				// ResultSet rsid = db.executeStatement("SELECT id FROM
+				// Contactpersoon WHERE naam = " + "'"
+				// + (String) opleidingZoeken.getTxtContact().getSelectedItem()
+				// + "'");
+				//
+				// rsid.next();
+				// System.out.println(rsid.getString("id"));
+				// db.executeInsertStatement("UPDATE Opleiding SET " + "naam='"
+				// + (String)
+				// opleidingZoeken.getTxtNaamOpleiding().getSelectedItem() + "'"
+				// + ", "
+				// + "type='" + (String)
+				// opleidingZoeken.getTxtType().getSelectedItem() + "'"
+				// + ", " + "contactpersoon=" +
+				// Integer.parseInt(rsid.getString("id"))
+				// + " WHERE id=" +
+				// Integer.parseInt(opleidingZoeken.getTxtId().getText()));
+				// rsid.close();
+				// } catch (SQLException e2) {
+				// System.out.println("Gelieve naam opnieuw na te kijken");
+				// e2.printStackTrace();
+				// }
+				// } else {
+				// JOptionPane.showMessageDialog(null, "You havent chosen an
+				// opleiding", "Choose an opleiding",
+				// JOptionPane.WARNING_MESSAGE);
+				// }
+				// }
+				// });
+				//
+				// opleidingZoeken.getBtnCancel().addActionListener(new
+				// ActionListener() {
+				//
+				// @Override
+				// public void actionPerformed(ActionEvent e) {
+				// // TODO Auto-generated method stub
+				//
+				// }
+				// });
 			}
 		});
 
@@ -163,12 +194,13 @@ public class Actions {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
-							String type = optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName();
-							
+							String type = optiesPane.getTableModel()
+									.getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName();
+
 							if (type.equals("Model.StudentModel")) {
 								View.BinnenlandInvoer invoer = new BinnenlandInvoer();
-								StudentModel studentModel = map.get(
-										((StudentModel)optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
+								StudentModel studentModel = map.get(((StudentModel) optiesPane.getTableModel()
+										.getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
 								invoer.getTxtFieldId().setText(studentModel.getId());
 								invoer.getTxtFieldVoornaam().setText(studentModel.getVoornaam());
 								invoer.getTxtFieldTussenvoegsel().setText(studentModel.getTussenvoegsel());
@@ -179,9 +211,20 @@ public class Actions {
 								invoer.getTxtFieldTel().setText("placeholder");
 								invoer.getTxtFieldUniversiteit().setText(studentModel.getUniversiteit());
 								Main.mainWindow.getSplitPane().setRightComponent(invoer);
+
+								invoer.getBtnOk().addActionListener(new ActionListener() {
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										Student s = new Student(db, 0);
+										s.updateHhsStudent(invoer);
+									}
+								});
 							} else {
 								View.ExchangeInvoer invoer = new ExchangeInvoer();
-								ExcStudentModel excModel = exMap.get(((ExcStudentModel)optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
+								ExcStudentModel excModel = exMap.get(((ExcStudentModel) optiesPane.getTableModel()
+										.getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
 								invoer.getTxtFieldVoornaam().setText(excModel.getVoornaam());
 								invoer.getTxtFieldAchternaam().setText(excModel.getAchternaam());
 								invoer.getTxtFieldTussenvoegsel().setText(excModel.getTussenvoegsel());
@@ -197,6 +240,16 @@ public class Actions {
 								invoer.getTxtFieldTel().setText("placeholder");
 								invoer.getTxtFieldToe().setText(excModel.getToevoeging());
 								Main.mainWindow.getSplitPane().setRightComponent(invoer);
+
+								invoer.getBtnOk().addActionListener(new ActionListener() {
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										Student s = new Student(db, 1);
+										s.updateExchangeStudent(invoer);
+									}
+								});
 							}
 						}
 					}
@@ -241,11 +294,20 @@ public class Actions {
 								}
 								Object selectedStudie = JOptionPane.showInputDialog(null, "Kies studie",
 										"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
-								db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
-										+ optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),
-												0)
-										+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
-										+ new Date(System.currentTimeMillis()).toString() + "')");
+								if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+										.getClass().getName().equals(StudentModel.class.getName().toString())) {
+									db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
+											+ optiesPane.getTableModel()
+													.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+											+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
+											+ new Date(System.currentTimeMillis()).toString() + "')");
+								} else {
+									db.executeInsertStatement("insert into EXC_inschrijving_onderwijseenheid VALUES ("
+											+ optiesPane.getTableModel()
+													.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+											+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
+											+ new Date(System.currentTimeMillis()).toString() + "')");
+								}
 								JOptionPane.showMessageDialog(null, "Student is ingeschreven");
 
 							} catch (SQLException e) {
@@ -297,75 +359,21 @@ public class Actions {
 								}
 								Object selectedStudie = JOptionPane.showInputDialog(null, "Kies stage",
 										"Inschrijving stage", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
-								db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES ("
-										+ optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),
-												0)
-										+ "," + ((StageModel) selectedStudie).getId() + ",'"
-										+ new Date(System.currentTimeMillis()).toString() + "')");
-								JOptionPane.showMessageDialog(null, "Student is ingeschreven");
-
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-
-						}
-					}
-
-					@Override
-					public void mousePressed(MouseEvent me) {
-						// To change body of generated methods,
-						// choose Tools | Templates.
-					}
-
-					@Override
-					public void mouseReleased(MouseEvent me) {
-						// To change body of generated methods,
-						// choose Tools | Templates.
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent me) {
-
-					}
-
-					@Override
-					public void mouseExited(MouseEvent me) {
-						// To change body of generated methods,
-						// choose Tools | Templates.
-					}
-				};
-				MouseListener InschrijvingWijzigenMouseListener = new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent me) {
-						if (me.getClickCount() == 2) {
-							// Date date = new Date(System.currentTimeMillis());
-							// System.out.println(date);
-							ResultSet rs = db.executeStatement("select * from Stage;");
-							try {
-								rs.last();
-								StageModel[] comps = new StageModel[rs.getRow()];
-								rs.beforeFirst();
-								while (rs.next()) {
-									comps[rs.getRow() - 1] = new StageModel(rs.getString("id"),
-											rs.getString("bedrijfsnaam"), rs.getString("straat"), rs.getString("stad"),
-											rs.getString("land"), rs.getString("postcode"), rs.getString("toevoeging"),
-											rs.getString("huisnummer"));
+								if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+										.getClass().getName().equals(StudentModel.class.getName().toString())) {
+									db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES ("
+											+ optiesPane.getTableModel()
+													.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+											+ "," + ((StageModel) selectedStudie).getId() + ",'"
+											+ new Date(System.currentTimeMillis()).toString() + "')");
+								} else {
+									db.executeInsertStatement("insert into EXC_inschrijving_stage VALUES ("
+											+ optiesPane.getTableModel()
+													.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+											+ "," + ((StageModel) selectedStudie).getId() + ",'"
+											+ new Date(System.currentTimeMillis()).toString() + "')");
 								}
-								// Object selectedStudie =
-								// JOptionPane.showInputDialog(null, "Kies
-								// stage",
-								// "Inschrijving stage",
-								// JOptionPane.PLAIN_MESSAGE, null, comps,
-								// comps[0]);
-								// db.executeInsertStatement("insert into
-								// HHS_inschrijving_stage VALUES (" +
-								// optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(),0)
-								// + "," + ((StageModel) selectedStudie).getId()
-								// + ",'" + new
-								// Date(System.currentTimeMillis()).toString()
-								// +"')");
-								// JOptionPane.showMessageDialog(null, "Student
-								// is ingeschreven");
+								JOptionPane.showMessageDialog(null, "Student is ingeschreven");
 
 							} catch (SQLException e) {
 								e.printStackTrace();
@@ -418,8 +426,13 @@ public class Actions {
 											rs.getString("universiteit"), rs.getString("huisnummer"),
 											rs.getString("toevoeging"), rs.getString("postcode"));
 								}
-								ExcStudentModel  excStudent = comps[ Integer.parseInt((String) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)) - 1];
-								JOptionPane.showMessageDialog(null, "Locatie student: " + excStudent.getStraat()+ " " + excStudent.getHuisnr()+ " "  + excStudent.getWoonplaats(), "Locatie", JOptionPane.INFORMATION_MESSAGE);;
+								ExcStudentModel excStudent = comps[Integer.parseInt((String) optiesPane.getTableModel()
+										.getValueAt(optiesPane.getTable().getSelectedRow(), 0)) - 1];
+								JOptionPane.showMessageDialog(null,
+										"Locatie student: " + excStudent.getStraat() + " " + excStudent.getHuisnr()
+												+ " " + excStudent.getWoonplaats(),
+										"Locatie", JOptionPane.INFORMATION_MESSAGE);
+								;
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -450,21 +463,26 @@ public class Actions {
 						// choose Tools | Templates.
 					}
 				};
-				
+
 				MouseListener onderWijsOverzichtMouseListener = new MouseListener() {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
 							// Date date = new Date(System.currentTimeMillis());
 							// System.out.println(date);
-							String id = ((StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId();
-							ResultSet rs = db.executeStatement("SELECT HHS_student.id, Opleiding.naam, Onderwijseenheid.studiepunt FROM HHS_inschrijving_onderwijseenheid    JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id  JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid    JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id WHERE  HHS_student.id =" + id + ";");
+							String id = ((StudentModel) optiesPane.getTableModel()
+									.getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId();
+							ResultSet rs = db.executeStatement(
+									"SELECT HHS_student.id, Opleiding.naam, Onderwijseenheid.studiepunt FROM HHS_inschrijving_onderwijseenheid    JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id  JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid    JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id WHERE  HHS_student.id ="
+											+ id + ";");
 							try {
 								StringBuilder sb = new StringBuilder();
 								while (rs.next()) {
-									sb.append("Opleiding: " + rs.getString("naam") + "\tAantal studiepunten: " + rs.getString("studiepunt") + "\n");
+									sb.append("Opleiding: " + rs.getString("naam") + "\tAantal studiepunten: "
+											+ rs.getString("studiepunt") + "\n");
 								}
-								JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
+										JOptionPane.INFORMATION_MESSAGE);
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -495,7 +513,7 @@ public class Actions {
 						// choose Tools | Templates.
 					}
 				};
-				
+
 				ActionListener zoekListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
@@ -512,14 +530,16 @@ public class Actions {
 										rs.getString("tussenvoegsel"), rs.getString("achternaam"),
 										rs.getString("geslacht"), rs.getString("emailadres"), rs.getString("opleiding"),
 										rs.getString("universiteit"));
-								System.out.println(studentModel.getVoornaam() + studentModel.getTussenvoegsel() + studentModel.getAchternaam() + studentModel.getGeslacht() + studentModel.getId());
+								System.out.println(studentModel.getVoornaam() + studentModel.getTussenvoegsel()
+										+ studentModel.getAchternaam() + studentModel.getGeslacht()
+										+ studentModel.getId());
 								map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()
 										.addRow(new Object[] { studentModel, rs.getString("naam"),
 												rs.getString("tussenvoegsel"), rs.getString("achternaam"),
 												rs.getString("geslacht") });
 							}
-							
+
 							while (rsex.next()) {
 								ExcStudentModel excStudentModel = new ExcStudentModel(rsex.getString("id"),
 										rsex.getString("voornaam"), rsex.getString("tussenvoegsel"),
@@ -529,8 +549,10 @@ public class Actions {
 										rsex.getString("universiteit"), rsex.getString("huisnummer"),
 										rsex.getString("toevoeging"), rsex.getString("postcode"));
 								exMap.put(excStudentModel.getId(), excStudentModel);
-								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()+ excStudentModel.getAchternaam()+excStudentModel.getGeslacht()+excStudentModel.getId());
-//								 map.put(studentModel.getId(), studentModel);
+								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()
+										+ excStudentModel.getAchternaam() + excStudentModel.getGeslacht()
+										+ excStudentModel.getId());
+								// map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()
 										.addRow(new Object[] { excStudentModel, rsex.getString("voornaam"),
 												rsex.getString("tussenvoegsel"), rsex.getString("achternaam"),
@@ -554,12 +576,14 @@ public class Actions {
 								ExcStudentModel excStudentModel = new ExcStudentModel(rs.getString("id"),
 										rs.getString("voornaam"), rs.getString("tussenvoegsel"),
 										rs.getString("achternaam"), rs.getString("geslacht"),
-										rs.getString("emailadres"), rs.getString("straat"),
-										rs.getString("woonplaats"), rs.getString("landvherkomst"),
-										rs.getString("universiteit"), rs.getString("huisnummer"),
-										rs.getString("toevoeging"), rs.getString("postcode"));
-								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()+ excStudentModel.getAchternaam()+excStudentModel.getGeslacht()+excStudentModel.getId());
-//								 map.put(studentModel.getId(), studentModel);
+										rs.getString("emailadres"), rs.getString("straat"), rs.getString("woonplaats"),
+										rs.getString("landvherkomst"), rs.getString("universiteit"),
+										rs.getString("huisnummer"), rs.getString("toevoeging"),
+										rs.getString("postcode"));
+								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()
+										+ excStudentModel.getAchternaam() + excStudentModel.getGeslacht()
+										+ excStudentModel.getId());
+								// map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()
 										.addRow(new String[] { rs.getString("id"), rs.getString("voornaam"),
 												rs.getString("tussenvoegsel"), rs.getString("achternaam"),
@@ -603,15 +627,15 @@ public class Actions {
 									}
 								});
 							} else if (e.getItem().equals("Studie inschrijven")) {
+								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(studieInschrijvingMouseListener);
 							} else if (e.getItem().equals("Stage inschrijven")) {
+								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(stageInschrijvingMouseListener);
-							} else if (e.getItem().equals("Inschrijving wijzigen")) {
-								optiesPane.getTable().addMouseListener(InschrijvingWijzigenMouseListener);
 							} else if (e.getItem().equals("Locatie Exchange Student")) {
 								optiesPane.getTable().addMouseListener(locatieMouseListener);
 								optiesPane.getTxtFieldNaam().addActionListener(zoekExcListener);
-							}else if (e.getItem().equals("Onderwijs overzicht")) {
+							} else if (e.getItem().equals("Onderwijs overzicht")) {
 								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(onderWijsOverzichtMouseListener);
 							}
@@ -622,16 +646,16 @@ public class Actions {
 								optiesPane.remove(invoer);
 								optiesPane.updateUI();
 							} else if (e.getItem().equals("Studie inschrijven")) {
+								optiesPane.getTxtFieldNaam().removeActionListener(zoekListener);
 								optiesPane.getTable().removeMouseListener(studieInschrijvingMouseListener);
 							} else if (e.getItem().equals("Stage inschrijven")) {
+								optiesPane.getTxtFieldNaam().removeActionListener(zoekListener);
 								optiesPane.getTable().removeMouseListener(stageInschrijvingMouseListener);
-							} else if (e.getItem().equals("Inschrijving wijzigen")) {
-								optiesPane.getTable().removeMouseListener(InschrijvingWijzigenMouseListener);
 							} else if (e.getItem().equals("Locatie Exchange Student")) {
 								optiesPane.getTxtFieldNaam().removeActionListener(zoekExcListener);
-								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
+
 								optiesPane.getTable().removeMouseListener(locatieMouseListener);
-							}else if (e.getItem().equals("Onderwijs overzicht")) {
+							} else if (e.getItem().equals("Onderwijs overzicht")) {
 								optiesPane.getTxtFieldNaam().removeActionListener(zoekListener);
 								optiesPane.getTable().removeMouseListener(onderWijsOverzichtMouseListener);
 							}

@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import Model.ExcStudentModel;
 import View.BinnenlandInvoer;
 import View.ExchangeInvoer;
 
@@ -66,7 +68,7 @@ public class Student {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (invoer.isFilled()) {
-                    db.executeInsertStatement("INSERT INTO HHS_student VALUES" + "(" + id + "," //id
+                    db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + id + "," //id
                             + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," //voornaam
                             + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," //tussenvoegsel
                             + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," //achternaam
@@ -75,7 +77,7 @@ public class Student {
                             + "'" + invoer.getTxtFieldOpleiding().getText() + "'" + "," //opleiding
                             + "'" + invoer.getTxtFieldUniversiteit().getText() + "'" //universiteit
                             + ")");
-                    db.executeInsertStatement("INSERT INTO HHS_student_tel VALUES" + "("
+                    db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
                             + id + ","
                             + "'" + invoer.getTxtFieldTel().getText() + "'" + ")");
                 } else {
@@ -90,7 +92,7 @@ public class Student {
     private void maakExchangeStudent() {
         ExchangeInvoer invoer = new ExchangeInvoer();
         Main.mainWindow.getSplitPane().setRightComponent(invoer);
-        ResultSet rs = db.executeStatement("SELECT max(id) FROM " + "`15025713`" + "." + student);
+        ResultSet rs = db.executeStatement("SELECT max(id) FROM " + student);
         try {
             rs.next();
             String sid = rs.getString("max(id)");
@@ -103,7 +105,7 @@ public class Student {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 if (!invoer.getTxtFieldStraat().getText().isEmpty() && !invoer.getTxtFieldPost().getText().isEmpty() && !invoer.getTxtFieldHuisnr().getText().isEmpty() && !invoer.getTxtFieldUniversiteit().getText().isEmpty() && !invoer.getTxtFieldLandvanherkomst().getText().isEmpty() && !invoer.getTxtFieldWoonplaats().getText().isEmpty() && !invoer.getTxtFieldEmailadres().getText().isEmpty() && !invoer.getTxtFieldGeslacht().getText().isEmpty() && !invoer.getTxtFieldVoornaam().getText().isEmpty() && !invoer.getTxtFieldAchternaam().getText().isEmpty()) {
-                    db.executeInsertStatement("INSERT INTO EXC_student VALUES " + "(" + id + "," //id
+                    db.executeInsertStatement("INSERT INTO " + student + " VALUES " + "(" + id + "," //id
                             + " '" + invoer.getTxtFieldVoornaam().getText() + "'" + "," //voornaam
                             + " '" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," //tussenvoegsel
                             + " '" + invoer.getTxtFieldAchternaam().getText() + "'" + "," //achternaam
@@ -117,7 +119,7 @@ public class Student {
                             + " '" + invoer.getTxtFieldToe().getText() + "'" + "," //toevoeging
                             + " '" + invoer.getTxtFieldPost().getText() + "'" //postcode
                             + ")");
-                    db.executeInsertStatement("INSERT INTO EXC_student_tel VALUES" + "("
+                    db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
                             + id + ","
                             + "'" + invoer.getTxtFieldTel().getText() + "'" + ")");
                 } else {
@@ -125,5 +127,49 @@ public class Student {
                 }
             }
         });
+    }
+    
+    public void updateExchangeStudent(ExchangeInvoer invoer) {
+    	String tussenvoegsel;
+    	if (invoer.getTxtFieldTussenvoegsel().getText() == null || invoer.getTxtFieldTussenvoegsel().getText().equals("")) {
+    		tussenvoegsel = " tussenvoegsel = null,";
+    	} else
+    		tussenvoegsel = " tussenvoegsel ='" + invoer.getTxtFieldTussenvoegsel().getText() + "',";
+    	
+    	db.executeInsertStatement("UPDATE " + student + " SET"
+    			+ " voornaam='" + invoer.getTxtFieldVoornaam().getText() + "',"
+    			+ tussenvoegsel
+    			+ " achternaam='" + invoer.getTxtFieldAchternaam().getText() + "',"
+    			+ " geslacht='" + invoer.getTxtFieldGeslacht().getText() + "',"
+    			+ " emailadres='" + invoer.getTxtFieldEmailadres().getText() + "',"
+    			+ " straat='" + invoer.getTxtFieldStraat().getText() + "',"
+    			+ " woonplaats='" + invoer.getTxtFieldWoonplaats().getText() + "',"
+    			+ " landvherkomst='" + invoer.getTxtFieldLandvanherkomst().getText() + "',"
+    			+ " universiteit='" + invoer.getTxtFieldUniversiteit().getText() + "',"
+    			+ " toevoeging='" + invoer.getTxtFieldToe().getText() + "',"
+    			+ " postcode='" + invoer.getTxtFieldPost().getText() + "'"
+    			+ " WHERE id = " + invoer.getTxtFieldId().getText());
+    	
+    	Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+    }
+    
+    public void updateHhsStudent(BinnenlandInvoer invoer) {
+    	String tussenvoegsel;
+    	if (invoer.getTxtFieldTussenvoegsel().getText() == null || invoer.getTxtFieldTussenvoegsel().getText().equals("")) {
+    		tussenvoegsel = " tussenvoegsel = null,";
+    	} else
+    		tussenvoegsel = " tussenvoegsel ='" + invoer.getTxtFieldTussenvoegsel().getText() + "',";
+    	
+    	db.executeInsertStatement("UPDATE " + student + " SET"
+    			+ " naam='" + invoer.getTxtFieldVoornaam().getText() + "',"
+    			+ tussenvoegsel
+    			+ " achternaam='" + invoer.getTxtFieldAchternaam().getText() + "',"
+    			+ " geslacht='" + invoer.getTxtFieldGeslacht().getText() + "',"
+    			+ " emailadres='" + invoer.getTxtFieldEmailadres().getText() + "',"
+    			+ " opleiding='" + invoer.getTxtFieldOpleiding().getText() + "',"
+    			+ " universiteit='" + invoer.getTxtFieldUniversiteit().getText() + "'"
+    			+ " WHERE id = " + invoer.getTxtFieldId().getText());
+    	
+    	Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
     }
 }

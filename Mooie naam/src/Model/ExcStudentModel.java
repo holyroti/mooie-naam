@@ -172,5 +172,9 @@ public class ExcStudentModel {
 		this.postcode = postcode;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return id;
+	}
 }

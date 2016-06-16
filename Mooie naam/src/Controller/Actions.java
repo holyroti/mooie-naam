@@ -159,8 +159,9 @@ public class Actions {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
+							System.out.println(optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName());
 							StudentModel studentModel = map.get(
-									optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0));
+									((StudentModel)optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId());
 							invoer.getTxtFieldAchternaam().setText(studentModel.getAchternaam());
 							invoer.getTxtFieldEmailadres().setText(studentModel.getEmailadres());
 							invoer.getTxtFieldGeslacht().setText(studentModel.getGeslacht());
@@ -375,7 +376,7 @@ public class Actions {
 						if (me.getClickCount() == 2) {
 							// Date date = new Date(System.currentTimeMillis());
 							// System.out.println(date);
-							ResultSet rs = db.executeStatement("select * from EXC_student;");
+							ResultSet rs = db.executeStatement("select * from EXC_student");
 							try {
 								rs.last();
 								ExcStudentModel[] comps = new ExcStudentModel[rs.getRow()];
@@ -427,6 +428,8 @@ public class Actions {
 					public void actionPerformed(ActionEvent ae) {
 						ResultSet rs = db.executeStatement("SELECT * FROM HHS_student WHERE naam LIKE'%"
 								+ optiesPane.getTxtFieldNaam().getText() + "%'");
+						ResultSet rsex = db.executeStatement("SELECT * FROM EXC_student WHERE voornaam LIKE '%"
+								+ optiesPane.getTxtFieldNaam().getText() + "%'");
 						try {
 							optiesPane.getTableModel().setDataVector(null,
 									new String[] { "ID", "Naam", "Tussenvoegsel", "Achternaam", "Geslacht" });
@@ -439,9 +442,25 @@ public class Actions {
 								System.out.println(studentModel.getVoornaam() + studentModel.getTussenvoegsel() + studentModel.getAchternaam() + studentModel.getGeslacht() + studentModel.getId());
 								map.put(studentModel.getId(), studentModel);
 								optiesPane.getTableModel()
-										.addRow(new String[] { rs.getString("ID"), rs.getString("naam"),
+										.addRow(new Object[] { studentModel, rs.getString("naam"),
 												rs.getString("tussenvoegsel"), rs.getString("achternaam"),
 												rs.getString("geslacht") });
+							}
+							
+							while (rsex.next()) {
+								ExcStudentModel excStudentModel = new ExcStudentModel(rsex.getString("id"),
+										rsex.getString("voornaam"), rsex.getString("tussenvoegsel"),
+										rsex.getString("achternaam"), rsex.getString("geslacht"),
+										rsex.getString("emailadres"), rsex.getString("straat"),
+										rsex.getString("woonplaats"), rsex.getString("landvherkomst"),
+										rsex.getString("universiteit"), rsex.getString("huisnummer"),
+										rsex.getString("toevoeging"), rsex.getString("postcode"));
+								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()+ excStudentModel.getAchternaam()+excStudentModel.getGeslacht()+excStudentModel.getId());
+//								 map.put(studentModel.getId(), studentModel);
+								optiesPane.getTableModel()
+										.addRow(new Object[] { excStudentModel, rsex.getString("voornaam"),
+												rsex.getString("tussenvoegsel"), rsex.getString("achternaam"),
+												rsex.getString("geslacht") });
 							}
 						} catch (Exception e) {
 							e.printStackTrace();

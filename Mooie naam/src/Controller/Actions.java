@@ -485,6 +485,7 @@ public class Actions {
 
 						if (e.getStateChange() == ItemEvent.SELECTED) {
 							if (e.getItem().equals("Wijzigen")) {
+								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								invoer.changeLayout();
 								invoer.setBounds(40, 335, 890, 310);
 								optiesPane.add(invoer);
@@ -520,6 +521,7 @@ public class Actions {
 							}
 						} else {
 							if (e.getItem().equals("Wijzigen")) {
+								optiesPane.getTxtFieldNaam().removeActionListener(zoekListener);
 								optiesPane.getTable().removeMouseListener(wijzigMouseListener);
 								optiesPane.remove(invoer);
 								optiesPane.updateUI();

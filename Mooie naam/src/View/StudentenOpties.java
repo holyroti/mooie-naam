@@ -72,7 +72,7 @@ public class StudentenOpties extends JPanel {
 		comboBox.addItem("Studie inschrijven");
 		comboBox.addItem("Stage inschrijven");
 		comboBox.addItem("Inschrijving wijzigen");
-		comboBox.addItem("Locatie");
+		comboBox.addItem("Locatie Exchange Student");
 		comboBox.addItem("Onderwijs overzicht");
 
 		JScrollPane tbl = new JScrollPane(table);

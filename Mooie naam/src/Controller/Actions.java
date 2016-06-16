@@ -1,6 +1,7 @@
 package Controller;
 
 import java.awt.Frame;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -422,7 +423,52 @@ public class Actions {
 						// choose Tools | Templates.
 					}
 				};
+				
+				MouseListener onderWijsOverzichtMouseListener = new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent me) {
+						if (me.getClickCount() == 2) {
+							// Date date = new Date(System.currentTimeMillis());
+							// System.out.println(date);
+							String id = ((StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)).getId();
+							ResultSet rs = db.executeStatement("SELECT HHS_student.id, Opleiding.naam, Onderwijseenheid.studiepunt FROM HHS_inschrijving_onderwijseenheid    JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id  JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid    JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id WHERE  HHS_student.id =" + id + ";");
+							try {
+								StringBuilder sb = new StringBuilder();
+								while (rs.next()) {
+									sb.append("Opleiding: " + rs.getString("naam") + "\tAantal studiepunten: " + rs.getString("studiepunt") + "\n");
+								}
+								JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht", JOptionPane.INFORMATION_MESSAGE);
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
 
+						}
+					}
+
+					@Override
+					public void mousePressed(MouseEvent me) {
+						// To change body of generated methods,
+						// choose Tools | Templates.
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent me) {
+						// To change body of generated methods,
+						// choose Tools | Templates.
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent me) {
+
+					}
+
+					@Override
+					public void mouseExited(MouseEvent me) {
+						// To change body of generated methods,
+						// choose Tools | Templates.
+					}
+				};
+				
 				ActionListener zoekListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent ae) {
@@ -534,9 +580,12 @@ public class Actions {
 								optiesPane.getTable().addMouseListener(stageInschrijvingMouseListener);
 							} else if (e.getItem().equals("Inschrijving wijzigen")) {
 								optiesPane.getTable().addMouseListener(InschrijvingWijzigenMouseListener);
-							} else if (e.getItem().equals("Locatie")) {
+							} else if (e.getItem().equals("Locatie Exchange Student")) {
 								optiesPane.getTable().addMouseListener(locatieMouseListener);
 								optiesPane.getTxtFieldNaam().addActionListener(zoekExcListener);
+							}else if (e.getItem().equals("Onderwijs overzicht")) {
+								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
+								optiesPane.getTable().addMouseListener(onderWijsOverzichtMouseListener);
 							}
 						} else {
 							if (e.getItem().equals("Wijzigen")) {
@@ -550,10 +599,13 @@ public class Actions {
 								optiesPane.getTable().removeMouseListener(stageInschrijvingMouseListener);
 							} else if (e.getItem().equals("Inschrijving wijzigen")) {
 								optiesPane.getTable().removeMouseListener(InschrijvingWijzigenMouseListener);
-							} else if (e.getItem().equals("Locatie")) {
+							} else if (e.getItem().equals("Locatie Exchange Student")) {
 								optiesPane.getTxtFieldNaam().removeActionListener(zoekExcListener);
 								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								optiesPane.getTable().removeMouseListener(locatieMouseListener);
+							}else if (e.getItem().equals("Onderwijs overzicht")) {
+								optiesPane.getTxtFieldNaam().removeActionListener(zoekListener);
+								optiesPane.getTable().removeMouseListener(onderWijsOverzichtMouseListener);
 							}
 						}
 					}

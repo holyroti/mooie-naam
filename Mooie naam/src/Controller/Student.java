@@ -202,10 +202,10 @@ public class Student {
     }
     
     public void inschrijvenOnderwijseenheid(StudentenOpties optiesPane) {
-    	ResultSet rs = db.executeStatement("select * from Onderwijseenheid;");
 		try {
 			try {
 				StudentModel student = (StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0);
+		    	ResultSet rs = db.executeStatement("select * from Onderwijseenheid where opleiding = " + student.getOpleiding());
 				rs.last();
 				OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
 				rs.beforeFirst();
@@ -222,6 +222,7 @@ public class Student {
 							+ new Date(System.currentTimeMillis()).toString() + "')");
 			} catch (Exception e) {
 				ExcStudentModel student = (ExcStudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0);
+		    	ResultSet rs = db.executeStatement("select * from Onderwijseenheid where opleiding = " + student.getOpleiding());
 				rs.last();
 				OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
 				rs.beforeFirst();

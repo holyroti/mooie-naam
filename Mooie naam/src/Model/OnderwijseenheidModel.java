@@ -37,6 +37,6 @@ public class OnderwijseenheidModel {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return type;
+		return type + "(" + punten + ")";
 	}
 }

@@ -204,30 +204,63 @@ public class Student {
     public void inschrijvenOnderwijseenheid(StudentenOpties optiesPane) {
     	ResultSet rs = db.executeStatement("select * from Onderwijseenheid;");
 		try {
-			rs.last();
-			OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
-			rs.beforeFirst();
-			while (rs.next()) {
-				comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
-						rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
-			}
-			Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies studie",
-					"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
-			if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
-					.getClass().getName().equals(StudentModel.class.getName().toString())) {
-				db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
-						+ optiesPane.getTableModel()
-								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
-						+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
-						+ new Date(System.currentTimeMillis()).toString() + "')");
-			} else {
+			try {
+				StudentModel student = (StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0);
+				rs.last();
+				OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
+				rs.beforeFirst();
+				while (rs.next()) {
+					comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
+							rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
+				}
+				Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies studie",
+						"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
+					db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
+							+ optiesPane.getTableModel()
+									.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+							+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
+							+ new Date(System.currentTimeMillis()).toString() + "')");
+			} catch (Exception e) {
+				ExcStudentModel student = (ExcStudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0);
+				rs.last();
+				OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
+				rs.beforeFirst();
+				while (rs.next()) {
+					comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
+							rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
+				}
+				Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies studie",
+						"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
 				db.executeInsertStatement("insert into EXC_inschrijving_onderwijseenheid VALUES ("
 						+ optiesPane.getTableModel()
 								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
 						+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
 						+ new Date(System.currentTimeMillis()).toString() + "')");
 			}
-			JOptionPane.showMessageDialog(null, "Student is ingeschreven");
+//			rs.last();
+//			OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
+//			rs.beforeFirst();
+//			while (rs.next()) {
+//				comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
+//						rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
+//			}
+//			Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies studie",
+//					"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
+//			if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+//					.getClass().getName().equals(StudentModel.class.getName().toString())) {
+//				db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
+//						+ optiesPane.getTableModel()
+//								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+//						+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
+//						+ new Date(System.currentTimeMillis()).toString() + "')");
+//			} else {
+//				db.executeInsertStatement("insert into EXC_inschrijving_onderwijseenheid VALUES ("
+//						+ optiesPane.getTableModel()
+//								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
+//						+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
+//						+ new Date(System.currentTimeMillis()).toString() + "')");
+//			}
+//			JOptionPane.showMessageDialog(null, "Student is ingeschreven");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

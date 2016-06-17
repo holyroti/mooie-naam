@@ -24,9 +24,9 @@ public class ExcStudentModel {
 	private String huisnr;
 	private String toevoeging;
 	private String postcode;
-	
-	
-	public ExcStudentModel(String id, String voornaam, String tussenvoegsel, String achternaam, String geslacht, String email, String straat, String woonplats, String land, String universitiet, String huisnr, String toevoeging, String postcode)  {
+	private String opleiding;
+
+	public ExcStudentModel(String id, String voornaam, String tussenvoegsel, String achternaam, String geslacht, String email, String straat, String woonplats, String land, String universitiet, String huisnr, String toevoeging, String postcode, String opleiding)  {
 		 this.id = id;
 		 this.voornaam = voornaam;
 		 this.tussenvoegsel = tussenvoegsel;
@@ -40,6 +40,7 @@ public class ExcStudentModel {
 		 this.huisnr = huisnr;
 		 this.toevoeging = toevoeging;
 		 this.postcode = postcode;
+		 this.opleiding = opleiding;
 	}
 
 
@@ -170,6 +171,15 @@ public class ExcStudentModel {
 
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
+	}
+	
+	public String getOpleiding() {
+		return opleiding;
+	}
+
+
+	public void setOpleiding(String opleiding) {
+		this.opleiding = opleiding;
 	}
 	
 	@Override

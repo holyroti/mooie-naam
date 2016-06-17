@@ -24,19 +24,30 @@ public class Student {
     private String student;
     private Database db;
     private int id;
+    private int nieuw;
 
-    public Student(Database db, int type) {
+    public Student(Database db, int type, int nieuw) {
         this.db = db;
+        this.nieuw = nieuw;
 
         switch (type) {
             case 0:
                 student = "HHS_student";
-                maakBinnenlandStudent();
                 break;
             case 1:
                 student = "EXC_student";
-                maakExchangeStudent();
                 break;
+        }
+        
+        switch (nieuw) {
+        case 0:
+        	maakBinnenlandStudent();
+        	break;
+        case 1:
+        	maakExchangeStudent();
+        	break;
+        case 2:
+        	System.out.println("");
         }
     }
 
@@ -45,13 +56,25 @@ public class Student {
 //            @Override
 //            public void actionPerformed(ActionEvent arg0) {
         BinnenlandInvoer invoer = new BinnenlandInvoer();
+//        invoer.getTxtFieldOpleiding()
+        
+        
         Main.mainWindow.getSplitPane().setRightComponent(invoer);
         ResultSet rs = db.executeStatement("SELECT max(id) FROM " + "`15025713`" + "." + student);
+        ResultSet rs2 = db.executeStatement("select * from Opleiding;");
         try {
             rs.next();
             String sid = rs.getString("max(id)");
             id = Integer.parseInt(sid) + 1;
             System.out.println(id);
+            
+            rs2.last();
+            OpleidingModel[] opleiding = new OpleidingModel[rs2.getRow()];
+            rs2.beforeFirst();
+			while (rs2.next()) {
+				opleiding[rs2.getRow() - 1] = new OpleidingModel(rs2.getString("id"), rs2.getString("naam"), rs2.getString("type"), rs2.getString("contactpersoon"));
+				invoer.getTxtFieldOpleiding().addItem(opleiding[rs2.getRow() -1].getNaam());
+			}
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -66,8 +89,8 @@ public class Student {
                             + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," //achternaam
                             + "'" + invoer.getTxtFieldGeslacht().getText() + "'" + "," //geslacht, moet een radiobuttongroup worden
                             + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + "," //emailadres
-                            + "'" + invoer.getTxtFieldOpleiding().getText() + "'" + "," //opleiding
-                            + "'" + invoer.getTxtFieldUniversiteit().getText() + "'" //universiteit
+                            + "'" + ((OpleidingModel)invoer.getTxtFieldOpleiding().getSelectedItem()).getId() + "'" + "," //opleiding
+                            + "'" + "Haagse Hogeschool" + "'" //universiteit
                             + ")");
                     db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
                             + id + ","
@@ -85,10 +108,20 @@ public class Student {
         ExchangeInvoer invoer = new ExchangeInvoer();
         Main.mainWindow.getSplitPane().setRightComponent(invoer);
         ResultSet rs = db.executeStatement("SELECT max(id) FROM " + student);
+        ResultSet rs2 = db.executeStatement("select * from Opleiding;");
         try {
             rs.next();
-            String sid = rs.getString("max(id)");
+            String sid = rs.getString("max(id)");	
             id = Integer.parseInt(sid) + 1;
+            
+            
+            rs2.last();
+            OpleidingModel[] opleiding = new OpleidingModel[rs2.getRow()];
+            rs2.beforeFirst();
+			while (rs2.next()) {
+				opleiding[rs2.getRow() - 1] = new OpleidingModel(rs2.getString("id"), rs2.getString("naam"), rs2.getString("type"), rs2.getString("contactpersoon"));
+				invoer.getTxtFieldOpleiding().addItem(opleiding[rs2.getRow() -1].getNaam());
+			}
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -110,6 +143,7 @@ public class Student {
                             + " '" + invoer.getTxtFieldHuisnr().getText() + "'" + "," //huisnr
                             + " '" + invoer.getTxtFieldToe().getText() + "'" + "," //toevoeging
                             + " '" + invoer.getTxtFieldPost().getText() + "'" //postcode
+                            + " ," + invoer.getTxtFieldOpleiding().getSelectedIndex() //opleiding
                             + ")");
                     db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "("
                             + id + ","
@@ -139,7 +173,8 @@ public class Student {
     			+ " landvherkomst='" + invoer.getTxtFieldLandvanherkomst().getText() + "',"
     			+ " universiteit='" + invoer.getTxtFieldUniversiteit().getText() + "',"
     			+ " toevoeging='" + invoer.getTxtFieldToe().getText() + "',"
-    			+ " postcode='" + invoer.getTxtFieldPost().getText() + "'"
+    			+ " postcode='" + invoer.getTxtFieldPost().getText() + "',"
+    			+ " opleiding=" + invoer.getTxtFieldOpleiding().getSelectedIndex()
     			+ " WHERE id = " + invoer.getTxtFieldId().getText());
     	
     	Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
@@ -158,8 +193,8 @@ public class Student {
     			+ " achternaam='" + invoer.getTxtFieldAchternaam().getText() + "',"
     			+ " geslacht='" + invoer.getTxtFieldGeslacht().getText() + "',"
     			+ " emailadres='" + invoer.getTxtFieldEmailadres().getText() + "',"
-    			+ " opleiding='" + invoer.getTxtFieldOpleiding().getText() + "',"
-    			+ " universiteit='" + invoer.getTxtFieldUniversiteit().getText() + "'"
+    			+ " opleiding='" + ((OpleidingModel)invoer.getTxtFieldOpleiding().getSelectedItem()).getId() + "',"
+    			+ " universiteit='" + "Haagse Hogeschool" + "'"
     			+ " WHERE id = " + invoer.getTxtFieldId().getText());
     	
     	Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
@@ -246,13 +281,12 @@ public class Student {
 						rs.getString("emailadres"), rs.getString("straat"),
 						rs.getString("woonplaats"), rs.getString("landvherkomst"),
 						rs.getString("universiteit"), rs.getString("huisnummer"),
-						rs.getString("toevoeging"), rs.getString("postcode"));
+						rs.getString("toevoeging"), rs.getString("postcode"), rs.getString("universiteit"));
 			}
 			ExcStudentModel excStudent = comps[Integer.parseInt((String) optiesPane.getTableModel()
 					.getValueAt(optiesPane.getTable().getSelectedRow(), 0)) - 1];
 			JOptionPane.showMessageDialog(null,
-					"Locatie student: " + excStudent.getStraat() + " " + excStudent.getHuisnr()
-							+ " " + excStudent.getWoonplaats(),
+					"Locatie student: " + excStudent.getWoonplaats() + " " + excStudent.getLand(),
 					"Locatie", JOptionPane.INFORMATION_MESSAGE);
 			;
 		} catch (SQLException e) {

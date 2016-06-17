@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
         panel.add(lbl);
 
         //panel.add(new JLabel());
-        btnStudent = new JButton("Nieuw student");
+        btnStudent = new JButton("Nieuwe student");
         btnStudent.setToolTipText("Klik om een nieuw student met zijn gegevens toe te voegen");
         //btnStudent.setBackground(new Color(0xcccccc));
         btnStudent.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));

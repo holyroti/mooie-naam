@@ -17,25 +17,34 @@ public class Opleiding {
 	}
 	
 	public void zoekOpleiding() {
-		ResultSet rs = db.executeStatement("SELECT max(id) FROM Onderwijseenheid;");
-		ResultSet rs2 = db.executeStatement("SELECT Opleiding.naam, Opleiding.id FROM Opleiding;");
+		ResultSet rsId = db.executeStatement("SELECT max(id) FROM Onderwijseenheid;");
+		ResultSet rsOpleiding = db.executeStatement("SELECT Opleiding.naam, Opleiding.id FROM Opleiding;");
+		ResultSet rsType = db.executeStatement("SELECT DISTINCT type FROM Onderwijseenheid;");
+		
 		OpleidingModel[] opleidngen = null;
+		Object[] types = null;
 		try {
-			rs2.last();
-
-			opleidngen = new OpleidingModel[rs2.getRow()];
-			rs2.beforeFirst();
-			while (rs2.next()) {
-				opleidngen[rs2.getRow() - 1] = new OpleidingModel();
-				opleidngen[rs2.getRow() - 1].setId(rs2.getString("id"));
-				opleidngen[rs2.getRow() - 1].setNaam(rs2.getString("naam"));
+			rsOpleiding.last();
+			opleidngen = new OpleidingModel[rsOpleiding.getRow()];
+			rsOpleiding.beforeFirst();
+			while (rsOpleiding.next()) {
+				opleidngen[rsOpleiding.getRow() - 1] = new OpleidingModel();
+				opleidngen[rsOpleiding.getRow() - 1].setId(rsOpleiding.getString("id"));
+				opleidngen[rsOpleiding.getRow() - 1].setNaam(rsOpleiding.getString("naam"));
 			}
-			rs.next();
-			id = Integer.parseInt(rs.getString("max(id)"));
+			rsId.next();
+			id = Integer.parseInt(rsId.getString("max(id)"));
+			
+			rsType.last();
+			types = new Object[rsType.getRow()];
+			rsType.beforeFirst();
+			while(rsType.next()){
+				types[rsType.getRow() - 1] = rsType.getString("type");
+			}
+			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		Object[] types = { "MINOR", "MAJOR" };
 //		String naam = JOptionPane.showInputDialog("Geef naam");
 		String type = (String) JOptionPane.showInputDialog(null, "Choose type", "Type",
 				JOptionPane.QUESTION_MESSAGE, null, types, types[0]);

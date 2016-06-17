@@ -12,67 +12,55 @@ import javax.swing.table.DefaultTableModel;
 
 public class GegevensOpvragen extends JPanel{
     
-    JButton BtnOverzicht1 = new JButton("Overzicht 1");
-    public JButton getBtnOverzicht1() {
-		return BtnOverzicht1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public JButton getBtnExcStudent() {
+		return btnExcStudent;
 	}
 
-	public JButton getBtnOverzicht2() {
-		return BtnOverzicht2;
+	public JButton getBtnAantalInschrijvingen() {
+		return btnAantalInschrijvingen;
 	}
 
-	public JButton getBtnOverzicht3() {
-		return BtnOverzicht3;
+	public JButton getBtnStage() {
+		return btnStage;
 	}
 
-	JButton BtnOverzicht2 = new JButton("Overzicht 2");
-    JButton BtnOverzicht3 = new JButton("Overzicht 3");
-    JButton BtnOverzicht4 = new JButton("Overzicht 4");
+    JButton btnExcStudent = new JButton("Exchange studenten per studie");
+	JButton btnAantalInschrijvingen = new JButton("Aantal inschrijvingen per onderwijseenheid (Exchange)");
+    JButton btnStage = new JButton("Meest bezochte land");
+    JButton btnExcLand = new JButton("Land meeste exchange stuenten");
     
-    public JButton getBtnOverzicht4() {
-		return BtnOverzicht4;
+    public JButton getBtnExcLand() {
+		return btnExcLand;
 	}
-
-	private JTable table;
-    private DefaultTableModel tableModel;
     
     public GegevensOpvragen(){
         setLayout(null);
         setBackground(new Color(0x395e7c));
         
-        table = new JTable();
-        tableModel = new DefaultTableModel();
-        tableModel.setColumnIdentifiers(new String[]{"..", "...", "....", "....."});
-        table.setModel(tableModel);
-        table.setDefaultEditor(Object.class, null);
-        
-        JScrollPane tbl = new JScrollPane(table);
-        
-        BtnOverzicht1.setBounds(20, 100, 200, 50);
-        BtnOverzicht1.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
-        BtnOverzicht1.setForeground(new Color(0x00284d));
-        BtnOverzicht1.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        add(BtnOverzicht1);
-        BtnOverzicht2.setBounds(20, 200, 200, 50);
-        BtnOverzicht2.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
-        BtnOverzicht2.setForeground(new Color(0x00284d));
-        BtnOverzicht2.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        add(BtnOverzicht2);
-        BtnOverzicht3.setBounds(20, 300, 200, 50);
-        BtnOverzicht3.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
-        BtnOverzicht3.setForeground(new Color(0x00284d));
-        BtnOverzicht3.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        add(BtnOverzicht3);
-        BtnOverzicht4.setBounds(20, 400, 200, 50);
-        BtnOverzicht4.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
-        BtnOverzicht4.setForeground(new Color(0x00284d));
-        BtnOverzicht4.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        add(BtnOverzicht4);
-        tbl.setBounds(250, 20, 740, 620);
-        add(tbl);
-        
+        btnExcStudent.setBounds(20, 100, 500, 50);
+        btnExcStudent.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnExcStudent.setForeground(new Color(0x00284d));
+        btnExcStudent.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        add(btnExcStudent);
+        btnAantalInschrijvingen.setBounds(20, 200, 500, 50);
+        btnAantalInschrijvingen.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnAantalInschrijvingen.setForeground(new Color(0x00284d));
+        btnAantalInschrijvingen.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        add(btnAantalInschrijvingen);
+        btnStage.setBounds(20, 300, 500, 50);
+        btnStage.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnStage.setForeground(new Color(0x00284d));
+        btnStage.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        add(btnStage);
+        btnExcLand.setBounds(20, 400, 500, 50);
+        btnExcLand.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnExcLand.setForeground(new Color(0x00284d));
+        btnExcLand.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        add(btnExcLand);        
     }
-    
-    
-	
 }

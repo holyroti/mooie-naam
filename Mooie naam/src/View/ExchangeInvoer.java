@@ -75,7 +75,6 @@ public class ExchangeInvoer extends BinnenlandInvoer {
 		super.setLayout(new GridLayout(0, 2, 10, 7));
 		super.remove(super.getBtnOk());
 		super.remove(super.getBtnCancel());
-		GridLayout gridLayout = (GridLayout) getLayout();
                 
 		lblStraat = new JLabel("    Straat");
 		txtFieldStraat = new JTextField();
@@ -115,11 +114,11 @@ public class ExchangeInvoer extends BinnenlandInvoer {
 		add(lblLandvanherkomst);
 		add(txtFieldLandvanherkomst);
 		
+		add(super.getLabelUniversiteit());
+		add(super.getTxtFieldUniversiteit());
 		add(super.getBtnOk());
 		add(super.getBtnCancel());
 		
-		super.remove(super.getTxtFieldOpleiding());
-		super.remove(super.getLabelOpleiding());
 
 	}
 

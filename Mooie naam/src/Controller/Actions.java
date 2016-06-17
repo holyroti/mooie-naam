@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -31,7 +32,7 @@ import View.StudentenOpties;
 
 public class Actions {
 
-	public static int n;
+	public int n;
 
 	public void startListener(Database db) {
 
@@ -80,7 +81,7 @@ public class Actions {
 				Object[] options = { "HHS Student", "Exchange Student" };
 				n = JOptionPane.showOptionDialog(frame, "Wat voor student wilt u invoeren", "Student",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				Student s = new Student(db, n);
+				Student s = new Student(db, n, n);
 			}
 		});
 		Main.mainWindow.getBtnStuSearch().addActionListener(new ActionListener() {
@@ -109,9 +110,8 @@ public class Actions {
 								invoer.getTxtFieldAchternaam().setText(studentModel.getAchternaam());
 								invoer.getTxtFieldEmailadres().setText(studentModel.getEmailadres());
 								invoer.getTxtFieldGeslacht().setText(studentModel.getGeslacht());
-								invoer.getTxtFieldOpleiding().setText(studentModel.getOpleiding());
+								invoer.getTxtFieldOpleiding().setSelectedItem(studentModel.getOpleiding());
 								invoer.getTxtFieldTel().setText("placeholder");
-								invoer.getTxtFieldUniversiteit().setText(studentModel.getUniversiteit());
 								Main.mainWindow.getSplitPane().setRightComponent(invoer);
 
 								invoer.getBtnOk().addActionListener(new ActionListener() {
@@ -119,7 +119,7 @@ public class Actions {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										Student s = new Student(db, 0);
+										Student s = new Student(db, 0, 0);
 										s.updateHhsStudent(invoer);
 									}
 								});
@@ -137,10 +137,10 @@ public class Actions {
 								invoer.getTxtFieldLandvanherkomst().setText(excModel.getLand());
 								invoer.getTxtFieldStraat().setText(excModel.getStraat());
 								invoer.getTxtFieldWoonplaats().setText(excModel.getWoonplaats());
-								invoer.getTxtFieldUniversiteit().setText(excModel.getUniversiteit());
 								invoer.getTxtFieldPost().setText(excModel.getPostcode());
 								invoer.getTxtFieldTel().setText("placeholder");
 								invoer.getTxtFieldToe().setText(excModel.getToevoeging());
+								invoer.getTxtFieldOpleiding().setSelectedItem(excModel.getOpleiding());
 								Main.mainWindow.getSplitPane().setRightComponent(invoer);
 
 								invoer.getBtnOk().addActionListener(new ActionListener() {
@@ -148,7 +148,7 @@ public class Actions {
 									@Override
 									public void actionPerformed(ActionEvent e) {
 										// TODO Auto-generated method stub
-										Student s = new Student(db, 1);
+										Student s = new Student(db, 1, 1);
 										s.updateExchangeStudent(invoer);
 									}
 								});
@@ -185,7 +185,7 @@ public class Actions {
 						if (me.getClickCount() == 2) {
 							// Date date = new Date(System.currentTimeMillis());
 							// System.out.println(date);
-							Student s = new Student(db, 0);
+							Student s = new Student(db, 0, 2);
 							s.inschrijvenStudie(optiesPane);
 						}
 					}
@@ -217,7 +217,7 @@ public class Actions {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
-							Student s = new Student(db, 0);
+							Student s = new Student(db, 0, 2);
 							s.inschrijvenStage(optiesPane);
 						}
 					}
@@ -250,7 +250,7 @@ public class Actions {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
-							Student s = new Student(db, 1);
+							Student s = new Student(db, 1, 2);
 							s.locatieExcStudent(optiesPane);
 						}
 					}
@@ -283,7 +283,7 @@ public class Actions {
 					@Override
 					public void mouseClicked(MouseEvent me) {
 						if (me.getClickCount() == 2) {
-							Student s = new Student(db, 0);
+							Student s = new Student(db, 0, 2);
 							s.overzichtInschrijvingen(optiesPane);
 						}
 					}
@@ -345,7 +345,7 @@ public class Actions {
 										rsex.getString("emailadres"), rsex.getString("straat"),
 										rsex.getString("woonplaats"), rsex.getString("landvherkomst"),
 										rsex.getString("universiteit"), rsex.getString("huisnummer"),
-										rsex.getString("toevoeging"), rsex.getString("postcode"));
+										rsex.getString("toevoeging"), rsex.getString("postcode"), rsex.getString("universiteit"));
 								exMap.put(excStudentModel.getId(), excStudentModel);
 								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()
 										+ excStudentModel.getAchternaam() + excStudentModel.getGeslacht()
@@ -377,7 +377,7 @@ public class Actions {
 										rs.getString("emailadres"), rs.getString("straat"), rs.getString("woonplaats"),
 										rs.getString("landvherkomst"), rs.getString("universiteit"),
 										rs.getString("huisnummer"), rs.getString("toevoeging"),
-										rs.getString("postcode"));
+										rs.getString("postcode"), rs.getString("universiteit"));
 								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()
 										+ excStudentModel.getAchternaam() + excStudentModel.getGeslacht()
 										+ excStudentModel.getId());
@@ -401,29 +401,7 @@ public class Actions {
 						if (e.getStateChange() == ItemEvent.SELECTED) {
 							if (e.getItem().equals("Wijzigen")) {
 								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
-								invoer.changeLayout();
-								invoer.setBounds(40, 335, 890, 310);
-								optiesPane.add(invoer);
-								optiesPane.updateUI();
-
 								optiesPane.getTable().addMouseListener(wijzigMouseListener);
-								invoer.getBtnOk().addActionListener(new ActionListener() {
-									@Override
-									public void actionPerformed(ActionEvent ae) {
-										if (invoer.isFilled()) {
-											db.executeInsertStatement("UPDATE HHS_student SET naam='"
-													+ invoer.getTxtFieldVoornaam().getText() + "'," + "tussenvoegsel='"
-													+ invoer.getTxtFieldTussenvoegsel().getText() + "',"
-													+ "achternaam='" + invoer.getTxtFieldAchternaam().getText() + "',"
-													+ "geslacht='" + invoer.getTxtFieldGeslacht().getText() + "',"
-													+ "emailadres='" + invoer.getTxtFieldEmailadres().getText() + "',"
-													+ "opleiding='" + invoer.getTxtFieldOpleiding().getText() + "',"
-													+ "universiteit='" + invoer.getTxtFieldUniversiteit().getText()
-													+ "'" + " WHERE id=" + invoer.getTxtFieldId().getText());
-											optiesPane.getTxtFieldNaam().postActionEvent();
-										}
-									}
-								});
 							} else if (e.getItem().equals("Studie inschrijven")) {
 								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(studieInschrijvingMouseListener);
@@ -470,59 +448,82 @@ public class Actions {
 				GegevensOpvragen gegOpvragen = new GegevensOpvragen();
 				Main.mainWindow.getSplitPane().setRightComponent(gegOpvragen);
 
-				gegOpvragen.getBtnOverzicht1().addActionListener(new ActionListener() {
+				gegOpvragen.getBtnExcStudent().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						String naamOpleiding = JOptionPane.showInputDialog("Naam van opleiding");
-						String inschrijfdatum = JOptionPane.showInputDialog("Jaar");
-						ResultSet rsid = db
-								.executeStatement("SELECT id FROM Opleiding WHERE naam = '" + naamOpleiding + "'");
-						ResultSet rs;
 						try {
-							rsid.next();
-							rs = db.executeStatement(
-									"SELECT count(id) as aantal_Inschrijvingen FROM EXC_inschrijving_onderwijseenheid WHERE studie = "
-											+ Integer.parseInt(rsid.getString("id")) + " AND inschrijfdatum like '%"
-											+ inschrijfdatum + "%'");
-							rsid.close();
-
-							rs.next();
-							System.out.println(rs.getString("aantal_Inschrijvingen"));
-							rs.close();
+							ResultSet rsNaam = db.executeStatement("SELECT DISTINCT naam FROM Opleiding;");
+							Object[] naam = null;
+							rsNaam.last();
+							naam = new Object[rsNaam.getRow()];
+							rsNaam.beforeFirst();
+							while(rsNaam.next()){
+								naam[rsNaam.getRow() - 1] = rsNaam.getString("naam");
+							}
+							String naamOpleiding = (String) JOptionPane.showInputDialog(null, "Kies opleiding", "Naam van opleiding", JOptionPane.QUESTION_MESSAGE, null, naam, naam[0]);
+							rsNaam.close();
+							
+							ResultSet rsStudent = db.executeStatement("select EXC_student.voornaam, EXC_student.landvherkomst from EXC_student" +
+									" join Opleiding on EXC_student.opleiding = Opleiding.id" +
+								    " where Opleiding.naam = '" + naamOpleiding + "'");
+							StringBuilder sb = new StringBuilder();
+							while(rsStudent.next()) {
+								sb.append(rsStudent.getString("voornaam") + ": " + rsStudent.getString("landvherkomst") + "\n");
+							}
+							JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
+									JOptionPane.INFORMATION_MESSAGE);
 						} catch (NumberFormatException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
-							try {
-								rsid.close();
-							} catch (SQLException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
-							try {
-								rsid.close();
-							} catch (SQLException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
 						}
 					}
 				});
 
-				gegOpvragen.getBtnOverzicht2().addActionListener(new ActionListener() {
+				gegOpvragen.getBtnAantalInschrijvingen().addActionListener(new ActionListener() {
 					// Not complete
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						String onderwijsType = JOptionPane.showInputDialog("Naam van Onderwijseenheid");
-						String inschrijfdatum = JOptionPane.showInputDialog("Jaar");
+						ResultSet rsType = db.executeStatement("SELECT DISTINCT type FROM Onderwijseenheid;");
+						Object[] type = null;
+						try {
+							rsType.last();
+							type = new Object[rsType.getRow()];
+							rsType.beforeFirst();
+							while(rsType.next()){
+								type[rsType.getRow() - 1] = rsType.getString("type");
+							}
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+
+						String onderwijsType = (String) JOptionPane.showInputDialog(null, "Kies opleiding", "Naam van Onderwijseenheid", JOptionPane.QUESTION_MESSAGE, null, type, type[0]);
+						
+						ResultSet rsJaar = db.executeStatement("select distinct extract(year from inschrijfdatum) as jaar from EXC_inschrijving_onderwijseenheid"
+								+ "	join Onderwijseenheid on EXC_inschrijving_onderwijseenheid.onderwijseenheid = Onderwijseenheid.id"
+								+ " where Onderwijseenheid.type = '" + onderwijsType + "'");
+						Object[] jaar = null;
+						try {
+							rsJaar.last();
+							jaar = new Object[rsJaar.getRow()];
+							rsJaar.beforeFirst();
+							while(rsJaar.next()){
+								jaar[rsJaar.getRow() - 1] = rsJaar.getString("jaar");
+							}
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						
+						String inschrijfdatum = (String) JOptionPane.showInputDialog(null, "Kies jaar", "Kies een schooljaar", JOptionPane.QUESTION_MESSAGE, null, jaar, jaar[0]);
 
 						ResultSet rs = db.executeStatement(
-								"SELECT COUNT(EXC_inschrijving_onderwijseenheid.studie) AS aantal, Onderwijseenheid.type,"
+								"SELECT COUNT(EXC_inschrijving_onderwijseenheid.onderwijseenheid) AS aantal, Onderwijseenheid.type,"
 										+ " EXTRACT(YEAR FROM EXC_inschrijving_onderwijseenheid.inschrijfdatum) as jaar"
 										+ " FROM EXC_inschrijving_onderwijseenheid"
 										+ " JOIN Onderwijseenheid ON Onderwijseenheid.id = EXC_inschrijving_onderwijseenheid.id"
@@ -532,17 +533,17 @@ public class Actions {
 
 						try {
 							rs.next();
-							System.out.println(rs.getString("aantal"));
-							System.out.println(rs.getString("type"));
-							System.out.println(rs.getString("jaar"));
+							JOptionPane.showMessageDialog(null, rs.getString("aantal") + "\n" + rs.getString("type") + "\n" + rs.getString("jaar"));
+							rs.close();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
+							JOptionPane.showConfirmDialog(null, "Jaar nakijken");
 						}
 					}
 				});
 
-				gegOpvragen.getBtnOverzicht3().addActionListener(new ActionListener() {
+				gegOpvragen.getBtnStage().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -567,7 +568,7 @@ public class Actions {
 					}
 				});
 
-				gegOpvragen.getBtnOverzicht4().addActionListener(new ActionListener() {
+				gegOpvragen.getBtnExcLand().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -22,7 +23,7 @@ public class BinnenlandInvoer extends JPanel {
     private JTextField txtFieldAchternaam;
     private JTextField txtFieldGeslacht;
     private JTextField txtFieldEmailadres;
-    private JTextField txtFieldOpleiding;
+    private JComboBox<String> txtFieldOpleiding;
     private JTextField txtFieldUniversiteit;
     
     private JTextField txtFieldTel;
@@ -63,7 +64,7 @@ public class BinnenlandInvoer extends JPanel {
         txtFieldGeslacht = new JTextField();
         txtFieldEmailadres = new JTextField();
         txtFieldId = new JTextField();
-        txtFieldOpleiding = new JTextField();
+        txtFieldOpleiding = new JComboBox<String>();
         txtFieldUniversiteit = new JTextField();
         txtFieldTel = new JTextField();
         
@@ -104,8 +105,6 @@ public class BinnenlandInvoer extends JPanel {
         add(txtFieldOpleiding);
         labelUniversiteit.setFont(new Font("Century Gothic", Font.BOLD, 17));
         labelUniversiteit.setForeground(new Color(0xA5C3F7));
-        add(labelUniversiteit);
-        add(txtFieldUniversiteit);
         labelTel.setFont(new Font("Century Gothic", Font.BOLD, 17));
         labelTel.setForeground(new Color(0xA5C3F7));
         add(labelTel);
@@ -179,7 +178,7 @@ public class BinnenlandInvoer extends JPanel {
         this.txtFieldEmailadres = txtFieldEmailadres;
     }
 
-    public void setTxtFieldOpleiding(JTextField txtFieldOpleiding) {
+    public void setTxtFieldOpleiding(JComboBox<String> txtFieldOpleiding) {
         this.txtFieldOpleiding = txtFieldOpleiding;
     }
     
@@ -214,7 +213,7 @@ public class BinnenlandInvoer extends JPanel {
     /**
      * @return the txtFieldOpleiding
      */
-    public JTextField getTxtFieldOpleiding() {
+    public JComboBox<String> getTxtFieldOpleiding() {
         return txtFieldOpleiding;
     }
 
@@ -348,7 +347,7 @@ public class BinnenlandInvoer extends JPanel {
     }
     
     public boolean isFilled() {
-        return !getTxtFieldEmailadres().getText().isEmpty() && !getTxtFieldGeslacht().getText().isEmpty() && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty() && !getTxtFieldOpleiding().getText().isEmpty();
+        return !getTxtFieldEmailadres().getText().isEmpty() && !getTxtFieldGeslacht().getText().isEmpty() && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty();
     }
     
     

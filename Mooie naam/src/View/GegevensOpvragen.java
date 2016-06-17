@@ -32,7 +32,7 @@ public class GegevensOpvragen extends JPanel{
     JButton btnExcStudent = new JButton("Exchange studenten per studie");
 	JButton btnAantalInschrijvingen = new JButton("Aantal inschrijvingen per onderwijseenheid (Exchange)");
     JButton btnStage = new JButton("Meest bezochte land");
-    JButton btnExcLand = new JButton("Land meeste exchange stuenten");
+    JButton btnExcLand = new JButton("Land meeste exchange studenten");
     
     public JButton getBtnExcLand() {
 		return btnExcLand;

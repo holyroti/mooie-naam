@@ -80,7 +80,7 @@ public class MainWindow extends JFrame {
         btnStuSearch.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         panel.add(btnStuSearch);
 
-        btnOplSearch = new JButton("Opleiding opties");
+        btnOplSearch = new JButton("Onderwijseenhied toevoegen");
         btnOplSearch.setToolTipText("Klik voor het opzoeken van een opleiding om er een kunt te kunnen toevoegen of bekijken");
         btnOplSearch.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
         btnOplSearch.setForeground(new Color(0x00284d));

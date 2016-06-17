@@ -186,7 +186,7 @@ public class Actions {
 							// Date date = new Date(System.currentTimeMillis());
 							// System.out.println(date);
 							Student s = new Student(db, 0, 2);
-							s.inschrijvenStudie(optiesPane);
+							s.inschrijvenOnderwijseenheid(optiesPane);
 						}
 					}
 
@@ -533,7 +533,7 @@ public class Actions {
 
 						try {
 							rs.next();
-							JOptionPane.showMessageDialog(null, rs.getString("aantal") + "\n" + rs.getString("type") + "\n" + rs.getString("jaar"));
+							JOptionPane.showMessageDialog(null, "aantal inschrijvingen: " + rs.getString("aantal") + "\n" + rs.getString("type") + "\n" + rs.getString("jaar"));
 							rs.close();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -552,8 +552,7 @@ public class Actions {
 								+ " GROUP BY land" + " ORDER BY aantal DESC" + " LIMIT 1");
 						try {
 							rs.next();
-							System.out.println(rs.getString("land"));
-							System.out.println(rs.getString("aantal"));
+							JOptionPane.showMessageDialog(null, "Land: " + rs.getString("land") + "\n" + "Aantal: " + rs.getString("aantal"));
 							rs.close();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -577,8 +576,7 @@ public class Actions {
 								+ " GROUP BY landvherkomst" + " ORDER BY aantal DESC" + " LIMIT 1");
 						try {
 							rs.next();
-							System.out.println(rs.getString("landvherkomst"));
-							System.out.println(rs.getString("aantal"));
+							JOptionPane.showMessageDialog(null, "Land: " + rs.getString("landvherkomst") + "\n" + "Aantal: " + rs.getString("aantal"));
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

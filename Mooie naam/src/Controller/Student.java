@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import Model.ExcStudentModel;
+import Model.OnderwijseenheidModel;
 import Model.OpleidingModel;
 import Model.StageModel;
 import Model.StudentModel;
@@ -200,30 +201,30 @@ public class Student {
     	Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
     }
     
-    public void inschrijvenStudie(StudentenOpties optiesPane) {
-    	ResultSet rs = db.executeStatement("select * from Opleiding;");
+    public void inschrijvenOnderwijseenheid(StudentenOpties optiesPane) {
+    	ResultSet rs = db.executeStatement("select * from Onderwijseenheid;");
 		try {
 			rs.last();
-			OpleidingModel[] comps = new OpleidingModel[rs.getRow()];
+			OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
 			rs.beforeFirst();
 			while (rs.next()) {
-				comps[rs.getRow() - 1] = new OpleidingModel(rs.getString("id"),
-						rs.getString("naam"), rs.getString("type"), rs.getString("contactpersoon"));
+				comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
+						rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
 			}
-			Object selectedStudie = JOptionPane.showInputDialog(null, "Kies studie",
+			Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies studie",
 					"Inschrijving studie", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
 			if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0)
 					.getClass().getName().equals(StudentModel.class.getName().toString())) {
 				db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
 						+ optiesPane.getTableModel()
 								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
-						+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
+						+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
 						+ new Date(System.currentTimeMillis()).toString() + "')");
 			} else {
 				db.executeInsertStatement("insert into EXC_inschrijving_onderwijseenheid VALUES ("
 						+ optiesPane.getTableModel()
 								.getValueAt(optiesPane.getTable().getSelectedRow(), 0)
-						+ "," + ((OpleidingModel) selectedStudie).getId() + ",'"
+						+ "," + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
 						+ new Date(System.currentTimeMillis()).toString() + "')");
 			}
 			JOptionPane.showMessageDialog(null, "Student is ingeschreven");

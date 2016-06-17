@@ -17,20 +17,9 @@ import javax.swing.table.DefaultTableModel;
 public class StudentenOpties extends JPanel {
 
 	private JComboBox<String> comboBox;
-	private JCheckBox chckbxNaam;
-	private JCheckBox chckbxId;
-	private JCheckBox chckbxGeslacht;
-
-	private JTextField txtFieldNaam;
-	private JTextField txtFieldId;
-
-	private ButtonGroup btnGroup;
-	private JRadioButton rBtnV;
-	private JRadioButton rBtnM;
 
 	private JLabel lblNaam;
-	private JLabel lblGeslacht;
-	private JLabel lblId;
+	private JTextField txtFieldNaam;
 
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -44,21 +33,8 @@ public class StudentenOpties extends JPanel {
 
 		comboBox = new JComboBox<String>();
 
-		rBtnV = new JRadioButton();
-		rBtnM = new JRadioButton();
-		chckbxNaam = new JCheckBox();
-                chckbxNaam.setBackground(null);
-		chckbxId = new JCheckBox();
-                chckbxId.setBackground(null);
-		chckbxGeslacht = new JCheckBox();
-                chckbxGeslacht.setBackground(null);
-
 		txtFieldNaam = new JTextField();
-		txtFieldId = new JTextField();
-		btnGroup = new ButtonGroup();
 		lblNaam = new JLabel("Naam");
-		lblGeslacht = new JLabel("Geslacht");
-		lblId = new JLabel("Id");
 
 		invoer = new BinnenlandInvoer();
 
@@ -76,28 +52,13 @@ public class StudentenOpties extends JPanel {
 
 		JScrollPane tbl = new JScrollPane(table);
 
-		lblGeslacht.setFont(new Font("Century Gothic", Font.BOLD, 17));
-		lblGeslacht.setForeground(new Color(0xA5C3F7));
 		lblNaam.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		lblNaam.setForeground(new Color(0xA5C3F7));
-		lblId.setFont(new Font("Century Gothic", Font.BOLD, 17));
-		lblId.setForeground(new Color(0xA5C3F7));
 
 		comboBox.setBounds(20, 20, 250, 50);
-
-		chckbxGeslacht.setBounds(380, 18, 20, 20);
-		chckbxNaam.setBounds(380, 35, 20, 20);
-		chckbxId.setBounds(380, 53, 20, 20);
-
-		lblGeslacht.setBounds(410, 18, 100, 20);
 		lblNaam.setBounds(410, 35, 100, 20);
-		lblId.setBounds(410, 53, 100, 20);
-
-		rBtnM.setBounds(540, 18, 20, 20);
-		rBtnV.setBounds(665, 18, 20, 20);
 
 		txtFieldNaam.setBounds(540, 35, 250, 20);
-		txtFieldId.setBounds(540, 53, 250, 20);
 
 		tbl.setBounds(20, 110, 960, 215);
 		// zou iets van een if statement moeten worden in actions van als
@@ -106,20 +67,10 @@ public class StudentenOpties extends JPanel {
 //		invoer.setBounds(40, 335, 890, 310);
 //		add(invoer);
 
-		add(rBtnM);
-		add(rBtnV);
 		add(comboBox);
-		add(chckbxGeslacht);
-		add(chckbxId);
-		add(chckbxNaam);
-		add(txtFieldId);
 		add(txtFieldNaam);
-		add(lblGeslacht);
-		add(lblId);
 		add(lblNaam);
 		add(tbl);
-		btnGroup.add(rBtnV);
-		btnGroup.add(rBtnM);
 	}
 
 	/**
@@ -130,27 +81,6 @@ public class StudentenOpties extends JPanel {
 	}
 
 	/**
-	 * @return the chckbxNaam
-	 */
-	public JCheckBox getChckbxNaam() {
-		return chckbxNaam;
-	}
-
-	/**
-	 * @return the chckbxId
-	 */
-	public JCheckBox getChckbxId() {
-		return chckbxId;
-	}
-
-	/**
-	 * @return the chckbxGeslacht
-	 */
-	public JCheckBox getChckbxGeslacht() {
-		return chckbxGeslacht;
-	}
-
-	/**
 	 * @return the txtFieldNaam
 	 */
 	public JTextField getTxtFieldNaam() {
@@ -158,52 +88,10 @@ public class StudentenOpties extends JPanel {
 	}
 
 	/**
-	 * @return the txtFieldId
-	 */
-	public JTextField getTxtFieldId() {
-		return txtFieldId;
-	}
-
-	/**
-	 * @return the btnGroup
-	 */
-	public ButtonGroup getBtnGroup() {
-		return btnGroup;
-	}
-
-	/**
-	 * @return the rBtnV
-	 */
-	public JRadioButton getrBtnV() {
-		return rBtnV;
-	}
-
-	/**
-	 * @return the rBtnM
-	 */
-	public JRadioButton getrBtnM() {
-		return rBtnM;
-	}
-
-	/**
 	 * @return the lblNaam
 	 */
 	public JLabel getLblNaam() {
 		return lblNaam;
-	}
-
-	/**
-	 * @return the lblGeslacht
-	 */
-	public JLabel getLblGeslacht() {
-		return lblGeslacht;
-	}
-
-	/**
-	 * @return the lblId
-	 */
-	public JLabel getLblId() {
-		return lblId;
 	}
 
 	/**
@@ -228,48 +116,12 @@ public class StudentenOpties extends JPanel {
 		this.comboBox = comboBox;
 	}
 
-	public void setChckbxNaam(JCheckBox chckbxNaam) {
-		this.chckbxNaam = chckbxNaam;
-	}
-
-	public void setChckbxId(JCheckBox chckbxId) {
-		this.chckbxId = chckbxId;
-	}
-
-	public void setChckbxGeslacht(JCheckBox chckbxGeslacht) {
-		this.chckbxGeslacht = chckbxGeslacht;
-	}
-
 	public void setTxtFieldNaam(JTextField txtFieldNaam) {
 		this.txtFieldNaam = txtFieldNaam;
 	}
 
-	public void setTxtFieldId(JTextField txtFieldId) {
-		this.txtFieldId = txtFieldId;
-	}
-
-	public void setBtnGroup(ButtonGroup btnGroup) {
-		this.btnGroup = btnGroup;
-	}
-
-	public void setrBtnV(JRadioButton rBtnV) {
-		this.rBtnV = rBtnV;
-	}
-
-	public void setrBtnM(JRadioButton rBtnM) {
-		this.rBtnM = rBtnM;
-	}
-
 	public void setLblNaam(JLabel lblNaam) {
 		this.lblNaam = lblNaam;
-	}
-
-	public void setLblGeslacht(JLabel lblGeslacht) {
-		this.lblGeslacht = lblGeslacht;
-	}
-
-	public void setLblId(JLabel lblId) {
-		this.lblId = lblId;
 	}
 
 	public void setTable(JTable table) {

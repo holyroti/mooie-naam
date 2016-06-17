@@ -408,7 +408,7 @@ public class Actions {
 							} else if (e.getItem().equals("Stage inschrijven")) {
 								optiesPane.getTxtFieldNaam().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(stageInschrijvingMouseListener);
-							} else if (e.getItem().equals("Locatie Exchange Student")) {
+							} else if (e.getItem().equals("Locatie Student")) {
 								optiesPane.getTable().addMouseListener(locatieMouseListener);
 								optiesPane.getTxtFieldNaam().addActionListener(zoekExcListener);
 							} else if (e.getItem().equals("Onderwijs overzicht")) {
@@ -427,7 +427,7 @@ public class Actions {
 							} else if (e.getItem().equals("Stage inschrijven")) {
 								optiesPane.getTxtFieldNaam().removeActionListener(zoekListener);
 								optiesPane.getTable().removeMouseListener(stageInschrijvingMouseListener);
-							} else if (e.getItem().equals("Locatie Exchange Student")) {
+							} else if (e.getItem().equals("Locatie Student")) {
 								optiesPane.getTxtFieldNaam().removeActionListener(zoekExcListener);
 
 								optiesPane.getTable().removeMouseListener(locatieMouseListener);

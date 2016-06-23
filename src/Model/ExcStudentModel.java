@@ -25,6 +25,7 @@ public class ExcStudentModel {
 	private String toevoeging;
 	private String postcode;
 	private String opleiding;
+        private String tel;
 
 	public ExcStudentModel(String id, String voornaam, String tussenvoegsel, String achternaam, String geslacht, String email, String straat, String woonplats, String land, String universitiet, String huisnr, String toevoeging, String postcode, String opleiding)  {
 		 this.id = id;
@@ -187,4 +188,18 @@ public class ExcStudentModel {
 		// TODO Auto-generated method stub
 		return id;
 	}
+
+    /**
+     * @return the tel
+     */
+    public String getTel() {
+        return tel;
+    }
+
+    /**
+     * @param tel the tel to set
+     */
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 }

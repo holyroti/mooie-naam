@@ -29,6 +29,8 @@ import View.GegevensOpvragen;
 import View.MainWindow;
 import View.OpleidingZoeken;
 import View.StudentenOpties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Actions {
 
@@ -143,7 +145,17 @@ public class Actions {
                                                                 System.out.println("P{LEIDIN: "+ studentModel.getOpleiding());
 								invoer.getTxtFieldOpleiding()
 										.setSelectedItem(opleidingIdMap.get(studentModel.getOpleiding()).getNaam());
-								invoer.getTxtFieldTel().setText("placeholder");
+                                                                ResultSet tel = db.executeStatement("select telefoonnummer from HHS_student_tel where id = '" + studentModel.getId() + "'");
+                                                                StringBuilder sb = new StringBuilder();
+                                                                try {
+                                                                    while (tel.next()) {
+                                                                        sb.append(tel.getString("telefoonnummer")).append(",");
+                                                                    }
+                                                                } catch (SQLException ex) {
+                                                                    Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
+                                                                }
+                                                                studentModel.setTel(sb.toString());
+								invoer.getTxtFieldTel().setText(studentModel.getTel());
 								Main.mainWindow.getSplitPane().setRightComponent(invoer);
 
 								invoer.getBtnOk().addActionListener(new ActionListener() {
@@ -153,6 +165,8 @@ public class Actions {
 										// TODO Auto-generated method stub
 										Student s = new Student(db, 0, 0);
 										s.updateHhsStudent(invoer, opleidingMap);
+                                                                                s.toevoegenTelHhs(invoer);
+                                                                                
 										JOptionPane.showMessageDialog(null, "Student gewijzigd");
 									}
 								});
@@ -206,6 +220,17 @@ public class Actions {
 										.setSelectedItem(opleidingIdMap.get(excModel.getOpleiding()).getNaam());
 								Main.mainWindow.getSplitPane().setRightComponent(invoer);
 
+                                                                ResultSet tel = db.executeStatement("select telefoonnummer from EXC_student_tel where id = '" + excModel.getId() + "'");
+                                                                StringBuilder sb = new StringBuilder();
+                                                                try {
+                                                                    while (tel.next()) {
+                                                                        sb.append(tel.getString("telefoonnummer")).append(",");
+                                                                    }
+                                                                } catch (SQLException ex) {
+                                                                    Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
+                                                                }
+                                                                excModel.setTel(sb.toString());
+								invoer.getTxtFieldTel().setText(excModel.getTel());
 								invoer.getBtnOk().addActionListener(new ActionListener() {
 
 									@Override
@@ -213,6 +238,7 @@ public class Actions {
 										// TODO Auto-generated method stub
 										Student s = new Student(db, 1, 1);
 										s.updateExchangeStudent(invoer,opleidingMap);
+                                                                                s.toevoegenTelExc(invoer);
 										JOptionPane.showMessageDialog(null, "Student gewijzigd");
 									}
 								});

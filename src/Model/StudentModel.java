@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author mrctje
@@ -18,6 +20,7 @@ public class StudentModel {
     private String emailadres;
     private String opleiding;
     private String universiteit;
+    private String tel;
 
     public StudentModel(String id, String voornaam, String tussenvoegsel, String achternaam, String geslacht, String emailadres, String opleiding, String universiteit) {
         this.id = id;
@@ -146,5 +149,19 @@ public class StudentModel {
     public String toString() {
     	// TODO Auto-generated method stub
     	return id;
+    }
+
+    /**
+     * @return the tel
+     */
+    public String getTel() {
+        return tel;
+    }
+
+    /**
+     * @param tel the tel to set
+     */
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 }

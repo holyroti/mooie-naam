@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -19,9 +18,7 @@ import Model.StageModel;
 import Model.StudentModel;
 import View.BinnenlandInvoer;
 import View.ExchangeInvoer;
-import View.MainWindow;
 import View.StudentenOpties;
-import java.util.Map;
 
 public class Student {
 
@@ -56,12 +53,7 @@ public class Student {
 	}
 
 	private void maakBinnenlandStudent() {
-		// Main.mainWindow.getBtnStudent().addActionListener(new
-		// ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent arg0) {
 		BinnenlandInvoer invoer = new BinnenlandInvoer();
-		// invoer.getTxtFieldOpleiding()
 
 		Main.mainWindow.getSplitPane().setRightComponent(invoer);
 		ResultSet rs = db.executeStatement("SELECT max(id) FROM " + "`15025713`" + "." + student);
@@ -71,7 +63,7 @@ public class Student {
 			rs.next();
 			String sid = rs.getString("max(id)");
 			id = Integer.parseInt(sid) + 1;
-			System.out.println(id);
+                        invoer.getTxtFieldId().setText(Integer.toString(id));
 
 			rs2.last();
 			OpleidingModel[] opleiding = new OpleidingModel[rs2.getRow()];
@@ -94,18 +86,13 @@ public class Student {
 							+ "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," // voornaam
 							+ "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," // tussenvoegsel
 							+ "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," // achternaam
-							+ "'" + invoer.getTxtFieldGeslacht().getText() + "'" + "," // geslacht,
-																						// moet
-																						// een
-																						// radiobuttongroup
-																						// worden
+							+ "'" + invoer.getTxtFieldGeslacht().getText() + "'" + "," // geslacht
 							+ "'" + invoer.getTxtFieldEmailadres().getText() + "'" + "," // emailadres
 							+ "'" + opleidingMap.get(invoer.getTxtFieldOpleiding().getSelectedItem()).getId() + "'"
 							+ "," // opleiding
 							+ "'" + "Haagse Hogeschool" + "'" // universiteit
 							+ ")");
-					db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "(" + id + "," + "'"
-							+ invoer.getTxtFieldTel().getText() + "'" + ")");
+                                        toevoegenTelHhs(invoer);
 				} else {
 					System.out.println("Gelieve alle velden in te vullen");
 				}
@@ -132,6 +119,7 @@ public class Student {
 			rs.next();
 			String sid = rs.getString("max(id)");
 			id = Integer.parseInt(sid) + 1;
+                        invoer.getTxtFieldId().setText(Integer.toString(id));
 
 			rs2.last();
 			OpleidingModel[] opleiding = new OpleidingModel[rs2.getRow()];
@@ -162,11 +150,7 @@ public class Student {
 							+ " '" + invoer.getTxtFieldVoornaam().getText() + "'" + "," // voornaam
 							+ " '" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," // tussenvoegsel
 							+ " '" + invoer.getTxtFieldAchternaam().getText() + "'" + "," // achternaam
-							+ " '" + invoer.getTxtFieldGeslacht().getText() + "'" + "," // geslacht,
-																						// moet
-																						// een
-																						// radiobuttongroup
-																						// worden
+							+ " '" + invoer.getTxtFieldGeslacht().getText() + "'" + "," // geslacht
 							+ " '" + invoer.getTxtFieldEmailadres().getText() + "'" + "," // emailadres
 							+ " '" + invoer.getTxtFieldStraat().getText() + "'" + "," // straat
 							+ " '" + invoer.getTxtFieldWoonplaats().getText() + "'" + "," // woonplaats
@@ -177,8 +161,7 @@ public class Student {
 							+ " '" + invoer.getTxtFieldPost().getText() + "'" // postcode
 							+ " ," + opleidingMap.get(invoer.getTxtFieldOpleiding().getSelectedItem()).getId() // opleiding
 							+ ")");
-					db.executeInsertStatement("INSERT INTO " + student + "_tel VALUES" + "(" + id + "," + "'"
-							+ invoer.getTxtFieldTel().getText() + "'" + ")");
+					                               toevoegenTelExc(invoer);
 				} else {
 					System.out.println("Gelieve alle velden in te vullen");
 				}
@@ -232,7 +215,66 @@ public class Student {
 
 		Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
 	}
+        
+        public void toevoegenTelHhs(BinnenlandInvoer invoer) {            
+            String tel = invoer.getTxtFieldTel().getText();
+            int nr = 0;
+            for (int i=0; i < tel.length(); i++) {
+                if (tel.charAt(i) == ',')
+                    nr++;
+            }
+            
+            String[] telnr = new String[nr];
+            StringBuilder sb = new StringBuilder();
+            int count = 0;
+            for (int i=0; i < tel.length(); i++) {
+                if (tel.charAt(i) == ',') {
+                    telnr[count] = sb.toString();
+                    sb = new StringBuilder();
+                    count++;
+                } else {
+                    sb.append(tel.charAt(i));
+                }
+            }
+            System.out.println(nr);
+            System.out.println(telnr[0]);
+            System.out.println(telnr[1]);
+            
+            db.executeInsertStatement("delete from HHS_student_tel where id ='" + invoer.getTxtFieldId().getText() + "'"); //delete all telephonenumbers from a hhs student
+            
+            for (int i=0; i < nr; i++) {
+                db.executeInsertStatement("insert into HHS_student_tel values('" + invoer.getTxtFieldId().getText() + "','" + telnr[i] + "')");
+            }
+        }
 
+        public void toevoegenTelExc(ExchangeInvoer invoer) {
+            String tel = invoer.getTxtFieldTel().getText();
+            int nr = 0;
+            for (int i=0; i < tel.length(); i++) {
+                if (tel.charAt(i) == ',')
+                    nr++;
+            }
+            
+            String[] telnr = new String[nr];
+            StringBuilder sb = new StringBuilder();
+            int count = 0;
+            for (int i=0; i < tel.length(); i++) {
+                if (tel.charAt(i) == ',') {
+                    telnr[count] = sb.toString();
+                    sb = new StringBuilder();
+                    count++;
+                } else {
+                    sb.append(tel.charAt(i));
+                }
+            }
+            
+            db.executeInsertStatement("delete from EXC_student_tel where id ='" + invoer.getTxtFieldId().getText() + "'"); //delete all telephonenumbers from a hhs student
+            
+            for (int i=0; i < nr; i++) {
+                db.executeInsertStatement("insert into EXC_student_tel values('" + invoer.getTxtFieldId().getText() + "','" + telnr[i] + "')");
+            }
+        }
+        
 	public void inschrijvenOnderwijseenheid(StudentenOpties optiesPane) {
 		try {
 			try {

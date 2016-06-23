@@ -236,9 +236,6 @@ public class Student {
                     sb.append(tel.charAt(i));
                 }
             }
-            System.out.println(nr);
-            System.out.println(telnr[0]);
-            System.out.println(telnr[1]);
             
             db.executeInsertStatement("delete from HHS_student_tel where id ='" + invoer.getTxtFieldId().getText() + "'"); //delete all telephonenumbers from a hhs student
             

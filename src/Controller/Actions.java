@@ -193,8 +193,8 @@ public class Actions {
 								invoer.getTxtFieldStraat().setText(excModel.getStraat());
 								invoer.getTxtFieldWoonplaats().setText(excModel.getWoonplaats());
 								invoer.getTxtFieldPost().setText(excModel.getPostcode());
-								invoer.getTxtFieldTel().setText("placeholder");
 								invoer.getTxtFieldToe().setText(excModel.getToevoeging());
+                                                                invoer.getTxtFieldUniversiteit().setText(excModel.getUniversiteit());
 								ResultSet rs2 = db.executeStatement("select * from Opleiding;");
 								HashMap<String, OpleidingModel> opleidingMap = new HashMap<>();
                                                                 HashMap<String, OpleidingModel> opleidingIdMap = new HashMap<>();

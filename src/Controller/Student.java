@@ -85,17 +85,20 @@ public class Student {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (invoer.isFilled()) {
-                    db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + id + "," // id
-                            + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," // voornaam
-                            + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," // tussenvoegsel
-                            + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," // achternaam
-                            + "'" + invoer.getTxtFieldGeslacht().getSelectedItem() + "'" + "," // geslacht
-                            + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + "," // emailadres
-                            + "'" + opleidingMap.get(invoer.getTxtFieldOpleiding().getSelectedItem()).getId() + "'"
-                            + "," // opleiding
-                            + "'" + "Haagse Hogeschool" + "'" // universiteit
-                            + ")");
+                  
+						db.executeInsertStatement("INSERT INTO " + student + " VALUES" + "(" + id + "," // id
+						        + "'" + invoer.getTxtFieldVoornaam().getText() + "'" + "," // voornaam
+						        + "'" + invoer.getTxtFieldTussenvoegsel().getText() + "'" + "," // tussenvoegsel
+						        + "'" + invoer.getTxtFieldAchternaam().getText() + "'" + "," // achternaam
+						        + "'" + invoer.getTxtFieldGeslacht().getSelectedItem() + "'" + "," // geslacht
+						        + "'" + invoer.getTxtFieldEmailadres().getText() + "'" + "," // emailadres
+						        + "'" + opleidingMap.get(invoer.getTxtFieldOpleiding().getSelectedItem()).getId() + "'"
+						        + "," // opleiding
+						        + "'" + "Haagse Hogeschool" + "'" // universiteit
+						        + ")");
+		
                     toevoegenTelHhs(invoer);
+                    JOptionPane.showMessageDialog(null, "Student gewijzigd");
                 } else {
                     System.out.println("Gelieve alle velden in te vullen");
                 }
@@ -164,6 +167,7 @@ public class Student {
                             + " ," + opleidingMap.get(invoer.getTxtFieldOpleiding().getSelectedItem()).getId() // opleiding
                             + ")");
                     toevoegenTelExc(invoer);
+                    JOptionPane.showMessageDialog(null, "Student gewijzigd");
                 } else {
                     System.out.println("Gelieve alle velden in te vullen");
                 }

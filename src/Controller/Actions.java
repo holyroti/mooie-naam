@@ -97,7 +97,7 @@ public class Actions {
         Main.mainWindow.getBtnStuSearch().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-
+            	
                 StudentenOpties optiesPane = new StudentenOpties();
                 Main.mainWindow.getSplitPane().setRightComponent(optiesPane);
                 BinnenlandInvoer invoer = new BinnenlandInvoer();
@@ -412,6 +412,7 @@ public class Actions {
                 ActionListener zoekListener = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
+                    	
                         ResultSet rs = db.executeStatement("SELECT * FROM HHS_student WHERE achternaam LIKE'%"
                                 + optiesPane.getTxtFieldAchternaam().getText() + "%' and naam LIKE '%" + optiesPane.getTxtFieldVoornaam().getText() + "%'");
                         ResultSet rsex = db.executeStatement("SELECT * FROM EXC_student WHERE achternaam LIKE '%"
@@ -500,14 +501,17 @@ public class Actions {
                             if (e.getItem().equals("Wijzigen")) {
                                 optiesPane.getTxtFieldAchternaam().addActionListener(zoekListener);
                                 optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
+                                optiesPane.getBtnSearch().addActionListener(zoekListener);
                                 optiesPane.getTable().addMouseListener(wijzigMouseListener);
                             } else if (e.getItem().equals("Onderwijseenheid inschrijven")) {
                                 optiesPane.getTxtFieldAchternaam().addActionListener(zoekListener);
                                 optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
+                                optiesPane.getBtnSearch().addActionListener(zoekListener);
                                 optiesPane.getTable().addMouseListener(studieInschrijvingMouseListener);
                             } else if (e.getItem().equals("Stage inschrijven")) {
                                 optiesPane.getTxtFieldAchternaam().addActionListener(zoekListener);
                                 optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
+                                optiesPane.getBtnSearch().addActionListener(zoekListener);
                                 optiesPane.getTable().addMouseListener(stageInschrijvingMouseListener);
                             } else if (e.getItem().equals("Locatie Student")) {
                                 ResultSet rsland = db.executeStatement("select distinct land from Stage");
@@ -528,32 +532,37 @@ public class Actions {
                                 }
                             } else if (e.getItem().equals("Onderwijs overzicht")) {
                                 optiesPane.getTxtFieldAchternaam().addActionListener(zoekListener);
+                                optiesPane.getBtnSearch().addActionListener(zoekListener);
                                 optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
                                 optiesPane.getTable().addMouseListener(onderWijsOverzichtMouseListener);
                             }
                         } else if (e.getItem().equals("Wijzigen")) {
                             optiesPane.getTxtFieldAchternaam().removeActionListener(zoekListener);
                             optiesPane.getTxtFieldVoornaam().removeActionListener(zoekListener);
+                            optiesPane.getBtnSearch().removeActionListener(zoekListener);
                             optiesPane.getTable().removeMouseListener(wijzigMouseListener);
                             optiesPane.remove(invoer);
                             optiesPane.updateUI();
                         } else if (e.getItem().equals("Onderwijseenheid inschrijven")) {
                             optiesPane.getTxtFieldAchternaam().removeActionListener(zoekListener);
                             optiesPane.getTxtFieldVoornaam().removeActionListener(zoekListener);
+                            optiesPane.getBtnSearch().removeActionListener(zoekListener);
                             optiesPane.getTable().removeMouseListener(studieInschrijvingMouseListener);
                         } else if (e.getItem().equals("Stage inschrijven")) {
                             optiesPane.getTxtFieldAchternaam().removeActionListener(zoekListener);
                             optiesPane.getTxtFieldVoornaam().removeActionListener(zoekListener);
+                            optiesPane.getBtnSearch().removeActionListener(zoekListener);
                             optiesPane.getTable().removeMouseListener(stageInschrijvingMouseListener);
                         } else if (e.getItem().equals("Locatie Student")) {
                         } else if (e.getItem().equals("Onderwijs overzicht")) {
                             optiesPane.getTxtFieldAchternaam().removeActionListener(zoekListener);
                             optiesPane.getTxtFieldVoornaam().removeActionListener(zoekListener);
+                            optiesPane.getBtnSearch().removeActionListener(zoekListener);
                             optiesPane.getTable().removeMouseListener(onderWijsOverzichtMouseListener);
                         }
                     }
                 });
-
+                
             }
         });
 

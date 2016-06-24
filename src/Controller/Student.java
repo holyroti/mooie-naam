@@ -412,7 +412,10 @@ public class Student {
             StringBuilder sb = new StringBuilder();
             while (rsStudent.next()) {
                 sb.append(rsStudent.getString("naam")).append(" ");
-                sb.append(rsStudent.getString("tussenvoegsel")).append(" ");
+                if(rsStudent.getString("tussenvoegsel") == null)
+                	sb.append("").append(" ");
+                else
+                	sb.append(rsStudent.getString("tussenvoegsel")).append(" ");
                 sb.append(rsStudent.getString("achternaam")).append("\n");
                 
                 ResultSet rsTel = db.executeStatement("select telefoonnummer from HHS_student_tel "

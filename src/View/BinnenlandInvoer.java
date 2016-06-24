@@ -21,7 +21,7 @@ public class BinnenlandInvoer extends JPanel {
     private JTextField txtFieldVoornaam;
     private JTextField txtFieldTussenvoegsel;
     private JTextField txtFieldAchternaam;
-    private JTextField txtFieldGeslacht;
+    private JComboBox<String> txtFieldGeslacht;
     private JTextField txtFieldEmailadres;
     private JComboBox<String> txtFieldOpleiding;
     private JTextField txtFieldUniversiteit;
@@ -61,13 +61,15 @@ public class BinnenlandInvoer extends JPanel {
         txtFieldVoornaam = new JTextField();
         txtFieldTussenvoegsel = new JTextField();
         txtFieldAchternaam = new JTextField();
-        txtFieldGeslacht = new JTextField();
+        txtFieldGeslacht = new JComboBox<>();
         txtFieldEmailadres = new JTextField();
         txtFieldId = new JTextField();
         txtFieldOpleiding = new JComboBox<String>();
         txtFieldUniversiteit = new JTextField();
         txtFieldTel = new JTextField();
-        
+        txtFieldGeslacht.addItem("M");
+         txtFieldGeslacht.addItem("V");
+          txtFieldGeslacht.addItem("O");
         lblEmpty1 = new JLabel();
         lblEmpty2 = new JLabel();
         lblEmpty3 = new JLabel();
@@ -170,7 +172,7 @@ public class BinnenlandInvoer extends JPanel {
         this.txtFieldId = txtFieldId;
     }
 
-    public void setTxtFieldGeslacht(JTextField txtFieldGeslacht) {
+    public void setTxtFieldGeslacht(JComboBox txtFieldGeslacht) {
         this.txtFieldGeslacht = txtFieldGeslacht;
     }
 
@@ -199,7 +201,7 @@ public class BinnenlandInvoer extends JPanel {
     /**
      * @return the txtFieldGeslacht
      */
-    public JTextField getTxtFieldGeslacht() {
+    public JComboBox<String> getTxtFieldGeslacht() {
         return txtFieldGeslacht;
     }
 
@@ -347,7 +349,7 @@ public class BinnenlandInvoer extends JPanel {
     }
     
     public boolean isFilled() {
-        return !getTxtFieldEmailadres().getText().isEmpty() && !getTxtFieldGeslacht().getText().isEmpty() && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty();
+        return !getTxtFieldEmailadres().getText().isEmpty()  && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty();
     }
     
     

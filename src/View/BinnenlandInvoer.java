@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -25,7 +26,7 @@ public class BinnenlandInvoer extends JPanel {
     private JTextField txtFieldEmailadres;
     private JComboBox<String> txtFieldOpleiding;
     private JTextField txtFieldUniversiteit;
-    
+
     private JTextField txtFieldTel;
 
     private JLabel labelId;
@@ -59,24 +60,29 @@ public class BinnenlandInvoer extends JPanel {
         labelTel = new JLabel("    Telefoonnummer");
 
         txtFieldVoornaam = new JTextField();
+        txtFieldVoornaam.setDocument(new JTextFieldLimit(45));
         txtFieldTussenvoegsel = new JTextField();
+        txtFieldTussenvoegsel.setDocument(new JTextFieldLimit(45));
         txtFieldAchternaam = new JTextField();
+        txtFieldAchternaam.setDocument(new JTextFieldLimit(45));
         txtFieldGeslacht = new JComboBox<>();
         txtFieldEmailadres = new JTextField();
+        txtFieldEmailadres.setDocument(new JTextFieldLimit(45));
         txtFieldId = new JTextField();
         txtFieldOpleiding = new JComboBox<String>();
         txtFieldUniversiteit = new JTextField();
+        txtFieldUniversiteit.setDocument(new JTextFieldLimit(45));
         txtFieldTel = new JTextField();
         txtFieldGeslacht.addItem("M");
-         txtFieldGeslacht.addItem("V");
-          txtFieldGeslacht.addItem("O");
+        txtFieldGeslacht.addItem("V");
+        txtFieldGeslacht.addItem("O");
         lblEmpty1 = new JLabel();
         lblEmpty2 = new JLabel();
         lblEmpty3 = new JLabel();
         lblEmpty4 = new JLabel();
         lblEmpty5 = new JLabel();
         lblEmpty6 = new JLabel();
-        
+
         add(lblEmpty1);
         add(lblEmpty2);
         add(lblEmpty3);
@@ -125,10 +131,9 @@ public class BinnenlandInvoer extends JPanel {
         btnCancel.setForeground(new Color(0x00284d));
         btnCancel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         add(btnCancel);
-        
 
     }
-    
+
     public void changeLayout() {
         this.remove(lblEmpty1);
         this.remove(lblEmpty2);
@@ -137,10 +142,8 @@ public class BinnenlandInvoer extends JPanel {
         this.remove(lblEmpty5);
         this.remove(lblEmpty6);
     }
-    
-    
-    
-        public JTextField getTxtFieldUniversiteit() {
+
+    public JTextField getTxtFieldUniversiteit() {
         return txtFieldUniversiteit;
     }
 
@@ -183,7 +186,7 @@ public class BinnenlandInvoer extends JPanel {
     public void setTxtFieldOpleiding(JComboBox<String> txtFieldOpleiding) {
         this.txtFieldOpleiding = txtFieldOpleiding;
     }
-    
+
     /**
      * @return the txtFieldId
      */
@@ -267,8 +270,8 @@ public class BinnenlandInvoer extends JPanel {
     public JButton getBtnCancel() {
         return btnCancel;
     }
-    
-        public JTextField getTxtFieldTel() {
+
+    public JTextField getTxtFieldTel() {
         return txtFieldTel;
     }
 
@@ -347,11 +350,9 @@ public class BinnenlandInvoer extends JPanel {
     public void setBtnCancel(JButton btnCancel) {
         this.btnCancel = btnCancel;
     }
-    
+
     public boolean isFilled() {
-        return !getTxtFieldEmailadres().getText().isEmpty()  && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty();
+        return !getTxtFieldEmailadres().getText().isEmpty() && !getTxtFieldVoornaam().getText().isEmpty() && !getTxtFieldAchternaam().getText().isEmpty();
     }
-    
-    
 
 }

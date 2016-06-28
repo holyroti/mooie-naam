@@ -55,16 +55,16 @@ public class Database {
 		return rs;
 	}
 	
-	public int executeInsertStatement(String statement) {
+	public void executeInsertStatement(String statement) throws SQLException{
 		try {
 			stat = con.createStatement();
 			stat.executeUpdate(statement);
 			System.out.println("Inserted information");
 			stat.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return 1;
+			//e.printStackTrace();
+                        throw e;
 		}
-		return 0;
+		
 	}
 }

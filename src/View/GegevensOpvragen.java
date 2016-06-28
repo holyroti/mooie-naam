@@ -33,6 +33,7 @@ public class GegevensOpvragen extends JPanel{
 	JButton btnAantalInschrijvingen = new JButton("Aantal inschrijvingen per onderwijseenheid (Exchange)");
     JButton btnStage = new JButton("Meest bezochte land");
     JButton btnExcLand = new JButton("Land meeste exchange studenten");
+    private JButton btnContactpersoon = new JButton("Contactpersoon van opleiding");
     
     public JButton getBtnExcLand() {
 		return btnExcLand;
@@ -61,6 +62,25 @@ public class GegevensOpvragen extends JPanel{
         btnExcLand.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
         btnExcLand.setForeground(new Color(0x00284d));
         btnExcLand.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        add(btnExcLand);        
+        add(btnExcLand);  
+        btnContactpersoon.setBounds(20, 500, 500, 50);
+        btnContactpersoon.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnContactpersoon.setForeground(new Color(0x00284d));
+        btnContactpersoon.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        add(btnContactpersoon);
+    }
+
+    /**
+     * @return the btnContactpersoon
+     */
+    public JButton getBtnContactpersoon() {
+        return btnContactpersoon;
+    }
+
+    /**
+     * @param btnContactpersoon the btnContactpersoon to set
+     */
+    public void setBtnContactpersoon(JButton btnContactpersoon) {
+        this.btnContactpersoon = btnContactpersoon;
     }
 }

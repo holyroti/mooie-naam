@@ -97,7 +97,7 @@ public class Actions {
         Main.mainWindow.getBtnStuSearch().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-            	
+
                 StudentenOpties optiesPane = new StudentenOpties();
                 Main.mainWindow.getSplitPane().setRightComponent(optiesPane);
                 BinnenlandInvoer invoer = new BinnenlandInvoer();
@@ -412,7 +412,7 @@ public class Actions {
                 ActionListener zoekListener = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
-                    	
+
                         ResultSet rs = db.executeStatement("SELECT * FROM HHS_student WHERE achternaam LIKE'%"
                                 + optiesPane.getTxtFieldAchternaam().getText() + "%' and naam LIKE '%" + optiesPane.getTxtFieldVoornaam().getText() + "%'");
                         ResultSet rsex = db.executeStatement("SELECT * FROM EXC_student WHERE achternaam LIKE '%"
@@ -562,7 +562,7 @@ public class Actions {
                         }
                     }
                 });
-                
+
             }
         });
 
@@ -718,6 +718,39 @@ public class Actions {
                         } catch (SQLException e1) {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
+                        }
+                    }
+                });
+                gegOpvragen.getBtnContactpersoon().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ResultSet rsNaam = db.executeStatement(
+                                "select naam from Opleiding");
+                        Object[] naam = null;
+                        try {
+                            rsNaam.last();
+                            naam = new Object[rsNaam.getRow()];
+                            rsNaam.beforeFirst();
+                            while (rsNaam.next()) {
+                                naam[rsNaam.getRow() - 1] = rsNaam.getString("naam");
+                            }
+                        } catch (SQLException e2) {
+                            // TODO Auto-generated catch block
+                            e2.printStackTrace();
+                        }
+                        String opleiding = (String) JOptionPane.showInputDialog(null, "Kies Opleiding", "Opleiding", JOptionPane.QUESTION_MESSAGE, null, naam, naam[0]);
+
+                        ResultSet rsContactpersoon;
+                        if (opleiding != null) {
+                            rsContactpersoon = db.executeStatement("Select Opleiding.naam, Contactpersoon.naam as contactpersoon, Contactpersoon.telefoonnummer from Opleiding\n"
+                                    + "	join Contactpersoon on Opleiding.contactpersoon = Contactpersoon.id\n"
+                                    + "	where Opleiding.contactpersoon in (select Contactpersoon.id from Contactpersoon) and Opleiding.naam = '" + opleiding + "'");
+                            try {
+                                rsContactpersoon.next();
+                                JOptionPane.showMessageDialog(null, "Contactpersoon voor " + opleiding + ": \n" + rsContactpersoon.getString("contactpersoon") + ": " + rsContactpersoon.getString("telefoonnummer"));
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 });

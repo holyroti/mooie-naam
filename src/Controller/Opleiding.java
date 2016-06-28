@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Model.OpleidingModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Opleiding {
 
@@ -55,8 +57,12 @@ public class Opleiding {
 				Object opleiding = JOptionPane.showInputDialog(null, "Choose opleiding", "Opleiding",
 						JOptionPane.QUESTION_MESSAGE, null, opleidngen, opleidngen[0]);
 				if (opleiding != null)
-					db.executeInsertStatement("INSERT INTO Onderwijseenheid VALUES(" + (id + 1) + ",'" + type + "','"
-							+ punten + "','" + ((OpleidingModel) opleiding).getId() + "')");
+					try {
+                                            db.executeInsertStatement("INSERT INTO Onderwijseenheid VALUES(" + (id + 1) + ",'" + type + "','"
+                                                    + punten + "','" + ((OpleidingModel) opleiding).getId() + "')");
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(Opleiding.class.getName()).log(Level.SEVERE, null, ex);
+                                }
 			}
 		}
 	}

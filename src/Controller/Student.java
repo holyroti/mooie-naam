@@ -428,13 +428,19 @@ public class Student {
         String id = ((StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0))
                 .getId();
         ResultSet rs = db.executeStatement(
-                "SELECT DISTINCT HHS_student.id, Opleiding.naam, Onderwijseenheid.studiepunt FROM HHS_inschrijving_onderwijseenheid JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id  JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid    JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id WHERE  HHS_student.id ="
+                "SELECT HHS_student.id, Onderwijseenheid.type, Onderwijseenheid.studiepunt, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                + "FROM HHS_inschrijving_onderwijseenheid\n"
+                + "JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id\n"
+                + "JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid\n"
+                + "JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id\n"
+                + "LEFT JOIN Onderwijseenheid_periode ON Onderwijseenheid_periode.id = Onderwijseenheid.id\n"
+                + "WHERE HHS_student.id = "
                 + id);
         try {
             StringBuilder sb = new StringBuilder();
             while (rs.next()) {
-                sb.append("Opleiding: " + rs.getString("naam") + "\tAantal studiepunten: " + rs.getString("studiepunt")
-                        + "\n");
+                sb.append("Onderwijseenheid: " + rs.getString("type") + "\tAantal studiepunten: " + rs.getString("studiepunt")
+                        + "\tPeriode: " + rs.getString("periode") + "\tSchooljaar: " + rs.getString("schooljaar") + "\n");
             }
             JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
                     JOptionPane.INFORMATION_MESSAGE);

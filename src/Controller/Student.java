@@ -311,13 +311,16 @@ public class Student {
                 StudentModel student = (StudentModel) optiesPane.getTableModel()
                         .getValueAt(optiesPane.getTable().getSelectedRow(), 0);
                 ResultSet rs = db
-                        .executeStatement("select * from Onderwijseenheid where opleiding = " + student.getOpleiding());
+                        .executeStatement("SELECT Onderwijseenheid.id, Onderwijseenheid.`type`, Onderwijseenheid.studiepunt, Onderwijseenheid.opleiding, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                                + "FROM Onderwijseenheid\n"
+                                + "JOIN Onderwijseenheid_periode ON Onderwijseenheid_periode.id = Onderwijseenheid.id\n"
+                                + "WHERE opleiding = " + student.getOpleiding());
                 rs.last();
                 OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
                 rs.beforeFirst();
                 while (rs.next()) {
                     comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
-                            rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
+                            rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")), rs.getString("periode"), rs.getString("schooljaar"));
                 }
                 Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies onderwijseenheid",
                         "Inschrijving onderwijseenheid", JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
@@ -332,13 +335,16 @@ public class Student {
                 ExcStudentModel student = (ExcStudentModel) optiesPane.getTableModel()
                         .getValueAt(optiesPane.getTable().getSelectedRow(), 0);
                 ResultSet rs = db
-                        .executeStatement("select * from Onderwijseenheid where opleiding = " + student.getOpleiding());
+                        .executeStatement("SELECT Onderwijseenheid.id, Onderwijseenheid.`type`, Onderwijseenheid.studiepunt, Onderwijseenheid.opleiding, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                                + "FROM Onderwijseenheid\n"
+                                + "JOIN Onderwijseenheid_periode ON Onderwijseenheid_periode.id = Onderwijseenheid.id\n"
+                                + "WHERE opleiding = " + student.getOpleiding());
                 rs.last();
                 OnderwijseenheidModel[] comps = new OnderwijseenheidModel[rs.getRow()];
                 rs.beforeFirst();
                 while (rs.next()) {
                     comps[rs.getRow() - 1] = new OnderwijseenheidModel(Integer.parseInt(rs.getString("id")),
-                            rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")));
+                            rs.getString("type"), Integer.parseInt(rs.getString("studiepunt")), rs.getString("periode"), rs.getString("schooljaar"));
                 }
                 Object selectedOnderwijs = JOptionPane.showInputDialog(null, "Kies studie", "Inschrijving studie",
                         JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);
@@ -356,7 +362,9 @@ public class Student {
     }
 
     public void inschrijvenStage(StudentenOpties optiesPane) {
-        ResultSet rs = db.executeStatement("select * from Stage;");
+        ResultSet rs = db.executeStatement("SELECT Stage.id, Stage.bedrijfsnaam, Stage.straat, Stage.stad, Stage.land, Stage.postcode, Stage.toevoeging, Stage.huisnummer, Stage_periode.periode, Stage_periode.schooljaar\n"
+                + "FROM Stage\n"
+                + "JOIN Stage_periode on Stage_periode.id = Stage.id");
         try {
             rs.last();
             StageModel[] comps = new StageModel[rs.getRow()];
@@ -364,7 +372,7 @@ public class Student {
             while (rs.next()) {
                 comps[rs.getRow() - 1] = new StageModel(rs.getString("id"), rs.getString("bedrijfsnaam"),
                         rs.getString("straat"), rs.getString("stad"), rs.getString("land"), rs.getString("postcode"),
-                        rs.getString("toevoeging"), rs.getString("huisnummer"));
+                        rs.getString("toevoeging"), rs.getString("huisnummer"), rs.getString("periode"), rs.getString("schooljaar"));
             }
             Object selectedStudie = JOptionPane.showInputDialog(null, "Kies stage", "Inschrijving stage",
                     JOptionPane.PLAIN_MESSAGE, null, comps, comps[0]);

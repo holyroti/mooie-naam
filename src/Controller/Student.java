@@ -20,6 +20,7 @@ import View.BinnenlandInvoer;
 import View.ExchangeInvoer;
 import View.StudentenOpties;
 import java.awt.Color;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingConstants;
@@ -388,29 +389,34 @@ public class Student {
     }
 
     public void locatieStudent(String land) {
-        ResultSet rsStudent = db.executeStatement("select HHS_inschrijving_stage.id, naam, tussenvoegsel, achternaam, telefoonnummer from HHS_inschrijving_stage "
+        ResultSet rsStudent = db.executeStatement("select HHS_inschrijving_stage.id, HHS_student.id as studentid, naam, tussenvoegsel, achternaam, telefoonnummer from HHS_inschrijving_stage "
                 + "join HHS_student on HHS_inschrijving_stage.id = HHS_student.id "
                 + "join Stage on HHS_inschrijving_stage.stage = Stage.id "
                 + "join HHS_student_tel on HHS_inschrijving_stage.id = HHS_student_tel.id "
                 + "where land = '" + land + "'");
+        HashSet<String> studentSet = new HashSet<>();
         try {
             StringBuilder sb = new StringBuilder();
             while (rsStudent.next()) {
-                sb.append(rsStudent.getString("naam")).append(" ");
-                if (rsStudent.getString("tussenvoegsel") == null) {
-                    sb.append("").append(" ");
-                } else {
-                    sb.append(rsStudent.getString("tussenvoegsel")).append(" ");
-                }
-                sb.append(rsStudent.getString("achternaam")).append("\n");
+                String id = rsStudent.getString("studentid");
+                if (!studentSet.contains(id)) {
+                    studentSet.add(id);
+                    sb.append(rsStudent.getString("naam")).append(" ");
+                    if (rsStudent.getString("tussenvoegsel") == null) {
+                        sb.append("").append(" ");
+                    } else {
+                        sb.append(rsStudent.getString("tussenvoegsel")).append(" ");
+                    }
+                    sb.append(rsStudent.getString("achternaam")).append("\n");
 
-                ResultSet rsTel = db.executeStatement("select telefoonnummer from HHS_student_tel "
-                        + "where id='" + rsStudent.getString("id") + "'");
+                    ResultSet rsTel = db.executeStatement("select telefoonnummer from HHS_student_tel "
+                            + "where id='" + rsStudent.getString("id") + "'");
 
-                while (rsTel.next()) {
-                    sb.append(rsTel.getString("telefoonnummer")).append("\n");
+                    while (rsTel.next()) {
+                        sb.append(rsTel.getString("telefoonnummer")).append("\n");
+                    }
+                    sb.append("\n");
                 }
-                sb.append("\n");
             }
             JOptionPane.showMessageDialog(null, new TextArea(sb.toString()));
         } catch (SQLException ex) {

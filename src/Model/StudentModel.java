@@ -31,6 +31,7 @@ public class StudentModel {
         this.emailadres = emailadres;
         this.opleiding = opleiding;
         this.universiteit = universiteit;
+        tel = new String();
     }
 
     /**

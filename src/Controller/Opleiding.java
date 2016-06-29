@@ -72,7 +72,7 @@ public class Opleiding {
                 null, types, types[0]);
         if (type != null) {
             String punten = JOptionPane.showInputDialog("Geef aantal studiepunten");
-            if (punten != null || !punten.isEmpty()) {
+            if (!punten.isEmpty() || punten != null) {
                 Object opleiding = JOptionPane.showInputDialog(null, "Choose opleiding", "Opleiding",
                         JOptionPane.QUESTION_MESSAGE, null, opleidngen, opleidngen[0]);
                 if (opleiding != null) {
@@ -105,7 +105,7 @@ public class Opleiding {
                             @Override
                             public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
                                 tm.setValueAt(!(Boolean) tm.getValueAt(row, column), row, column);
-                                return new JCheckBox("", (Boolean) tm.getValueAt(row, column));
+                                return new JCheckBox("", !(Boolean) tm.getValueAt(row, column));
 
                             }
 

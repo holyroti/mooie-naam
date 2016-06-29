@@ -307,7 +307,8 @@ public class Student {
 
     public void inschrijvenOnderwijseenheid(StudentenOpties optiesPane) {
         try {
-            try {
+            if (optiesPane.getTableModel()
+                    .getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName().equals(StudentModel.class.getName())) {
                 StudentModel student = (StudentModel) optiesPane.getTableModel()
                         .getValueAt(optiesPane.getTable().getSelectedRow(), 0);
                 ResultSet rs = db
@@ -331,7 +332,7 @@ public class Student {
                             + new Date(System.currentTimeMillis()).toString() + "')");
                     JOptionPane.showMessageDialog(null, "Student is ingeschreven");
                 }
-            } catch (Exception e) {
+            } else {
                 ExcStudentModel student = (ExcStudentModel) optiesPane.getTableModel()
                         .getValueAt(optiesPane.getTable().getSelectedRow(), 0);
                 ResultSet rs = db
@@ -356,7 +357,7 @@ public class Student {
                     JOptionPane.showMessageDialog(null, "Student is ingeschreven");
                 }
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

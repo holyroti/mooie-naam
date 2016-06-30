@@ -57,7 +57,7 @@ public class BinnenlandInvoer extends JPanel {
         labelEmailadres = new JLabel("    Emailadres");
         labelOpleiding = new JLabel("    Opleiding");
         labelUniversiteit = new JLabel("    Universiteit");
-        labelTel = new JLabel("    Telefoonnummer (Scheidt meerdere telnrs met \",\")");
+        labelTel = new JLabel("    Telefoonnummer (Meerder telefoonnummers schieden met een komma)");
 
         txtFieldVoornaam = new JTextField();
         txtFieldVoornaam.setDocument(new JTextFieldLimit(45));

@@ -129,8 +129,6 @@ public class Student {
                 Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
             }
         });
-        // }
-        // });
     }
 
     private void maakExchangeStudent() {

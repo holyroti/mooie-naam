@@ -18,17 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
-import Model.ExcStudentModel;
-import Model.OnderwijseenheidModel;
-import Model.OpleidingModel;
-import Model.StageModel;
-import Model.StudentModel;
-import View.BinnenlandInvoer;
-import View.ExchangeInvoer;
-import View.GegevensOpvragen;
-import View.MainWindow;
-import View.OpleidingZoeken;
-import View.StudentenOpties;
+import Model.*;
+import View.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,49 +29,82 @@ public class Actions {
 
     public void startListener(Database db) {
 
-        Main.mainWindow.getBtnOplSearch().addActionListener(new ActionListener() {
+        Main.mainWindow.getBtnOnderwijseenheid().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // naamgeving niet correct????
                 Opleiding search = new Opleiding(db);
                 search.zoekOpleiding();
-                // ResultSet rs = db.executeStatement("SELECT max(id) FROM
-                // Onderwijseenheid;");
-                // ResultSet rs2 = db.executeStatement("SELECT Opleiding.naam,
-                // Opleiding.id FROM Opleiding;");
-                // OpleidingModel[] opleidngen = null;
-                // int id = 0;
-                // try {
-                // rs2.last();
-                //
-                // opleidngen = new OpleidingModel[rs2.getRow()];
-                // rs2.beforeFirst();
-                // while (rs2.next()) {
-                // opleidngen[rs2.getRow() - 1] = new OpleidingModel();
-                // opleidngen[rs2.getRow() - 1].setId(rs2.getString("id"));
-                // opleidngen[rs2.getRow() - 1].setNaam(rs2.getString("naam"));
-                // }
-                // rs.next();
-                // id = Integer.parseInt(rs.getString("max(id)"));
-                // } catch (SQLException e1) {
-                // e1.printStackTrace();
-                // }
-                // Object[] types = { "MINOR", "MAJOR" };
-                // String naam = JOptionPane.showInputDialog("Geef naam");
-                // String type = (String) JOptionPane.showInputDialog(null,
-                // "Choose type", "Type",
-                // JOptionPane.QUESTION_MESSAGE, null, types, types[0]);
-                // String punten = JOptionPane.showInputDialog("Geef aantal
-                // studiepunten");
-                // Object opleiding = JOptionPane.showInputDialog(null, "Choose
-                // opleiding", "Opleiding",
-                // JOptionPane.QUESTION_MESSAGE, null, opleidngen,
-                // opleidngen[0]);
-                //
-                // db.executeInsertStatement("INSERT INTO Onderwijseenheid
-                // VALUES("+ (id+1) + ",'" + type + "','" + punten + "','" +
-                // ((OpleidingModel)opleiding).getId() + "')");
+            }
+        });
+
+        Main.mainWindow.getBtnContact().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame frame = new Frame();
+                Object[] options = {"Aanmaken", "Wijzigen"};
+                n = JOptionPane.showOptionDialog(frame, "Wilt u een contactpersoon wijzigen of aanamken?", "Contactpersoon",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                ContactInvoer invoer = new ContactInvoer();
+                Main.mainWindow.getSplitPane().setRightComponent(invoer);
+                if (n == 0) {
+                    invoer.getBtnOk().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ResultSet rsid = db.executeStatement("select max(id) from Contactpersoon");
+                            try {
+                                rsid.next();
+                                int iid = Integer.parseInt(rsid.getString("max(id)")) + 1;
+                                String id = Integer.toString(iid);
+                                ContactModel model = new ContactModel(id, invoer.getTxtEmail().getText(), invoer.getTxtTel().getText(), invoer.getTxtNaam().getText(), (String)invoer.getComGeslacht().getSelectedItem());
+                                Contact contact = new Contact();
+                                contact.maakContact(model, db);
+                                JOptionPane.showMessageDialog(null, "Contactpersoon is aangemaakt");
+                                Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+                    invoer.getBtnCancel().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+                        }
+                    });
+                } else {
+                    String naam = JOptionPane.showInputDialog("Naam van contactpersoon");
+                    ResultSet rs = db.executeStatement("SELECT * from Contactpersoon where naam = '" + naam + "'");
+                    String id;
+                    try {
+                        rs.next();
+                        id = rs.getString("id");
+                        invoer.getTxtEmail().setText(rs.getString("emailadres"));
+                        invoer.getTxtNaam().setText(rs.getString("naam"));
+                        invoer.getTxtTel().setText(rs.getString("telefoonnummer"));
+                        invoer.getComGeslacht().setSelectedItem((String) rs.getString("geslacht"));
+                        rs.close();
+                        invoer.getBtnOk().addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                ContactModel model = new ContactModel(id, invoer.getTxtEmail().getText(), invoer.getTxtTel().getText(), invoer.getTxtNaam().getText(), (String) invoer.getComGeslacht().getSelectedItem());
+                                Contact contact = new Contact();
+                                contact.wijzigContact(model, db, id);
+                                JOptionPane.showMessageDialog(null, "Contactpersoon is aangemaakt");
+                                Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+                            }
+                        });
+                        invoer.getBtnCancel().addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+                            }
+                        });
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         });
 
@@ -154,7 +178,7 @@ public class Actions {
                                     sb.append(tel.getString("telefoonnummer"));
                                     studentModel.setTel(sb.toString());
                                 } catch (SQLException ex) {
-                                  
+
                                     Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 invoer.getTxtFieldTel().setText(studentModel.getTel());

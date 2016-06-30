@@ -233,15 +233,14 @@ public class Opleiding {
                                             frame.dispose();
                                             
                                             db.executeInsertStatement("INSERT INTO Onderwijseenheid_periode VALUES(" + (id + 1) + ",'" + next.get(1) + "','" + jaar + "')");
+                                            JOptionPane.showMessageDialog(null, "Onderwijseenheid is aangemaakt");
                                         } catch (SQLException ex) {
                                             Logger.getLogger(Opleiding.class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                        
                                     }
                                 }
                             }
                         });
-
                     }
                 }
             }

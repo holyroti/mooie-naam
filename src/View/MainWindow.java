@@ -23,7 +23,8 @@ public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     private JButton btnStudent;
     private JButton btnStuSearch;
-    private JButton btnOplSearch;
+    private JButton btnOnderwijseenheid;
+    private JButton btnContact;
     private JButton btnGegOpvragen;
     private JSplitPane splitPane;
     private JPanel rightPanel;
@@ -34,7 +35,7 @@ public class MainWindow extends JFrame {
         getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 
         JPanel panel = new JPanel();
-        GridLayout gl = new GridLayout(8, 2);
+        GridLayout gl = new GridLayout(9, 2);
         gl.setVgap(20);
         gl.setHgap(20);
         panel.setLayout(gl);
@@ -72,6 +73,12 @@ public class MainWindow extends JFrame {
         btnStudent.setForeground(new Color(0x00284d));
         btnStudent.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         panel.add(btnStudent);
+        
+        btnContact = new JButton("Contact studie");
+        btnContact.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnContact.setForeground(new Color(0x00284d));
+        btnContact.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        panel.add(btnContact);
 
         btnStuSearch = new JButton("Student opties");
         btnStuSearch.setToolTipText("Klik voor het opzoeken van een student om deze te kunnen wijzigen of inschrijven");
@@ -80,12 +87,12 @@ public class MainWindow extends JFrame {
         btnStuSearch.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         panel.add(btnStuSearch);
 
-        btnOplSearch = new JButton("Onderwijseenhied toevoegen");
-        btnOplSearch.setToolTipText("Klik voor het opzoeken van een opleiding om er een kunt te kunnen toevoegen of bekijken");
-        btnOplSearch.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
-        btnOplSearch.setForeground(new Color(0x00284d));
-        btnOplSearch.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        panel.add(btnOplSearch);
+        btnOnderwijseenheid = new JButton("Onderwijseenhied toevoegen");
+        btnOnderwijseenheid.setToolTipText("Klik voor het opzoeken van een opleiding om er een kunt te kunnen toevoegen of bekijken");
+        btnOnderwijseenheid.setBorder(BorderFactory.createLineBorder(new Color(0x003300)));
+        btnOnderwijseenheid.setForeground(new Color(0x00284d));
+        btnOnderwijseenheid.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        panel.add(btnOnderwijseenheid);
 
         btnGegOpvragen = new JButton("Gegevens opvragen");
         btnGegOpvragen.setToolTipText("Klik om verschillende overzichten te kunnen bekijken");
@@ -123,9 +130,9 @@ public class MainWindow extends JFrame {
         setJMenuBar(menuBar);
 
     }
-
-    public JButton getBtnOplSearch() {
-        return btnOplSearch;
+    
+    public JButton getBtnOnderwijseenheid() {
+        return btnOnderwijseenheid;
     }
     
     public JButton getBtnGegOpvragen() {
@@ -150,4 +157,11 @@ public class MainWindow extends JFrame {
 	public JPanel getRightPanel() {
 		return rightPanel;
 	}
+
+    /**
+     * @return the btnContact
+     */
+    public JButton getBtnContact() {
+        return btnContact;
+    }
 }

@@ -74,7 +74,18 @@ public class Actions {
                         }
                     });
                 } else {
-                    String naam = JOptionPane.showInputDialog("Naam van contactpersoon");
+                    ResultSet rsContactpersoonNaam = db.executeStatement("select distinct naam from Contactpersoon");
+                    Object[] contacpersoonnamen = null;
+                    try{
+                    rsContactpersoonNaam.last();
+                     contacpersoonnamen = new Object[rsContactpersoonNaam.getRow()];
+                    rsContactpersoonNaam.beforeFirst();
+                    while(rsContactpersoonNaam.next()){
+                        contacpersoonnamen[rsContactpersoonNaam.getRow() - 1] = rsContactpersoonNaam.getString("naam");
+                    }
+                    }catch(SQLException ex){ex.printStackTrace();}
+                    String naam = (String) JOptionPane.showInputDialog(null, "Kies naam", "Contactpersoonnaam:", JOptionPane.QUESTION_MESSAGE, null, contacpersoonnamen, contacpersoonnamen[0]);
+                    
                     ResultSet rs = db.executeStatement("SELECT * from Contactpersoon where naam = '" + naam + "'");
                     ResultSet rsStud = db.executeStatement("SELECT naam FROM Opleiding");
                     String id;

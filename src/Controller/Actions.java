@@ -57,7 +57,7 @@ public class Actions {
                                 rsid.next();
                                 int iid = Integer.parseInt(rsid.getString("max(id)")) + 1;
                                 String id = Integer.toString(iid);
-                                ContactModel model = new ContactModel(id, invoer.getTxtEmail().getText(), invoer.getTxtTel().getText(), invoer.getTxtNaam().getText(), (String)invoer.getComGeslacht().getSelectedItem());
+                                ContactModel model = new ContactModel(id, invoer.getTxtEmail().getText(), invoer.getTxtTel().getText(), invoer.getTxtNaam().getText(), (String)invoer.getComGeslacht().getSelectedItem(), (String) invoer.getComStudie().getSelectedItem());
                                 Contact contact = new Contact();
                                 contact.maakContact(model, db);
                                 JOptionPane.showMessageDialog(null, "Contactpersoon is aangemaakt");
@@ -76,19 +76,26 @@ public class Actions {
                 } else {
                     String naam = JOptionPane.showInputDialog("Naam van contactpersoon");
                     ResultSet rs = db.executeStatement("SELECT * from Contactpersoon where naam = '" + naam + "'");
+                    ResultSet rsStud = db.executeStatement("SELECT naam FROM Opleiding");
                     String id;
                     try {
                         rs.next();
                         id = rs.getString("id");
+                        ResultSet rsCStudie = db.executeStatement("SELECT naam FROM Opleiding WHERE contactpersoon = '" + id + "'");
                         invoer.getTxtEmail().setText(rs.getString("emailadres"));
                         invoer.getTxtNaam().setText(rs.getString("naam"));
                         invoer.getTxtTel().setText(rs.getString("telefoonnummer"));
                         invoer.getComGeslacht().setSelectedItem((String) rs.getString("geslacht"));
+                        while (rsStud.next()) {
+                            invoer.getComStudie().addItem(rsStud.getString("naam"));
+                        }
+                        rsCStudie.next();
+                        invoer.getComStudie().setSelectedItem(rsCStudie.getString("naam"));
                         rs.close();
                         invoer.getBtnOk().addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                ContactModel model = new ContactModel(id, invoer.getTxtEmail().getText(), invoer.getTxtTel().getText(), invoer.getTxtNaam().getText(), (String) invoer.getComGeslacht().getSelectedItem());
+                                ContactModel model = new ContactModel(id, invoer.getTxtEmail().getText(), invoer.getTxtTel().getText(), invoer.getTxtNaam().getText(), (String) invoer.getComGeslacht().getSelectedItem(), (String) invoer.getComStudie().getSelectedItem());
                                 Contact contact = new Contact();
                                 contact.wijzigContact(model, db, id);
                                 JOptionPane.showMessageDialog(null, "Contactpersoon is aangemaakt");

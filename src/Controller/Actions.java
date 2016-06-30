@@ -152,10 +152,11 @@ public class Actions {
                                         sb.append(tel.getString("telefoonnummer")).append(",");
                                     }
                                     sb.append(tel.getString("telefoonnummer"));
+                                    studentModel.setTel(sb.toString());
                                 } catch (SQLException ex) {
+                                  
                                     Logger.getLogger(Actions.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                                studentModel.setTel(sb.toString());
                                 invoer.getTxtFieldTel().setText(studentModel.getTel());
                                 Main.mainWindow.getSplitPane().setRightComponent(invoer);
 

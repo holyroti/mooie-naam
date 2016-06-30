@@ -57,7 +57,7 @@ public class BinnenlandInvoer extends JPanel {
         labelEmailadres = new JLabel("    Emailadres");
         labelOpleiding = new JLabel("    Opleiding");
         labelUniversiteit = new JLabel("    Universiteit");
-        labelTel = new JLabel("    Telefoonnummer");
+        labelTel = new JLabel("    Telefoonnummer (Scheidt meerdere telnrs met \",\")");
 
         txtFieldVoornaam = new JTextField();
         txtFieldVoornaam.setDocument(new JTextFieldLimit(45));
@@ -67,7 +67,7 @@ public class BinnenlandInvoer extends JPanel {
         txtFieldAchternaam.setDocument(new JTextFieldLimit(45));
         txtFieldGeslacht = new JComboBox<>();
         txtFieldEmailadres = new JTextField();
-        txtFieldEmailadres.setDocument(new JTextFieldLimit(45));
+        txtFieldEmailadres.setDocument(new JTextFieldLimit(30));
         txtFieldId = new JTextField();
         txtFieldOpleiding = new JComboBox<String>();
         txtFieldUniversiteit = new JTextField();

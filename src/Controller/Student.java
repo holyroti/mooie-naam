@@ -89,6 +89,7 @@ public class Student {
         invoer.getBtnOk().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                Boolean isExecuted = true;
                 if (invoer.isFilled()) {
 
                     try {
@@ -104,13 +105,18 @@ public class Student {
                                 + ")");
                     } catch (SQLException ex) {
                         ex.printStackTrace();
+                        isExecuted = false;
                         if (ex.getMessage().contains("emailadres_UNIQUE")) {
                             invoer.getTxtFieldEmailadres().setBorder(new LineBorder(Color.RED, 2));
                         }
                     }
-
-                    toevoegenTelHhs(invoer);
-                    JOptionPane.showMessageDialog(null, "Student is aangemaakt");
+                    if (isExecuted) {
+                        Boolean isTelExecuted = toevoegenTelHhs(invoer);
+                        if (isTelExecuted) {
+                            JOptionPane.showMessageDialog(null, "Student is aangemaakt");
+                            Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+                        }
+                    }
                 } else {
                     System.out.println("Gelieve alle velden in te vullen");
                 }
@@ -155,6 +161,7 @@ public class Student {
         invoer.getBtnOk().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                Boolean isExecuted = true;
                 if (!invoer.getTxtFieldStraat().getText().isEmpty() && !invoer.getTxtFieldPost().getText().isEmpty()
                         && !invoer.getTxtFieldHuisnr().getText().isEmpty()
                         && !invoer.getTxtFieldUniversiteit().getText().isEmpty()
@@ -180,13 +187,19 @@ public class Student {
                                 + " ," + opleidingMap.get(invoer.getTxtFieldOpleiding().getSelectedItem()).getId() // opleiding
                                 + ")");
                     } catch (SQLException ex) {
+                        isExecuted = false;
                         Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
                         if (ex.getMessage().contains("emailadres")) {
                             invoer.getTxtFieldEmailadres().setBorder(new LineBorder(Color.RED, 2));
                         }
                     }
-                    toevoegenTelExc(invoer);
-                    JOptionPane.showMessageDialog(null, "Student gewijzigd");
+                    if (isExecuted) {
+                        Boolean isTelExecuted = toevoegenTelExc(invoer);
+                        if (isTelExecuted) {
+                            JOptionPane.showMessageDialog(null, "Student is aangemaakt");
+                            Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
+                        }
+                    }
                 } else {
                     System.out.println("Gelieve alle velden in te vullen");
                 }
@@ -257,7 +270,8 @@ public class Student {
         Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
     }
 
-    public void toevoegenTelHhs(BinnenlandInvoer invoer) {
+    public boolean toevoegenTelHhs(BinnenlandInvoer invoer) {
+        boolean isExecuted = true;
         String tel = invoer.getTxtFieldTel().getText();
 
         String[] telnr = tel.split(",");
@@ -272,6 +286,7 @@ public class Student {
             try {
                 db.executeInsertStatement("insert into HHS_student_tel values('" + invoer.getTxtFieldId().getText() + "','" + telnr[i] + "')");
             } catch (SQLException ex) {
+                isExecuted = false;
                 System.out.println(ex.getMessage().contains("telefoonnummer_UNIQUE"));
                 if (ex.getMessage().contains("telefoonnummer_UNIQUE")) {
                     System.out.println("HEELLOOOOOO");
@@ -279,9 +294,11 @@ public class Student {
                 }
             }
         }
+        return isExecuted;
     }
 
-    public void toevoegenTelExc(ExchangeInvoer invoer) {
+    public boolean toevoegenTelExc(ExchangeInvoer invoer) {
+        boolean isExecuted = true;
         String tel = invoer.getTxtFieldTel().getText();
 
         String[] telnr = tel.split(",");
@@ -296,6 +313,7 @@ public class Student {
             try {
                 db.executeInsertStatement("insert into EXC_student_tel values('" + invoer.getTxtFieldId().getText() + "','" + telnr[i] + "')");
             } catch (SQLException ex) {
+                isExecuted = false;
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
                 if (ex.getMessage().contains("telefoonnummer")) {
                     System.out.println("HEELLOOOOOO");
@@ -303,6 +321,7 @@ public class Student {
                 }
             }
         }
+        return isExecuted;
     }
 
     public void inschrijvenOnderwijseenheid(StudentenOpties optiesPane) {
@@ -358,7 +377,9 @@ public class Student {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (e.getMessage().contains("PRIMARY")) {
+                JOptionPane.showMessageDialog(null, "Student is al ingeschreven voor deze onderwijseenheid");
+            }
         }
     }
 
@@ -393,7 +414,9 @@ public class Student {
                 JOptionPane.showMessageDialog(null, "Student is ingeschreven");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains("PRIMARY")) {
+                JOptionPane.showMessageDialog(null, "Student is al ingeschreven voor deze stage");
+            }
         }
     }
 
@@ -434,27 +457,63 @@ public class Student {
     }
 
     public void overzichtInschrijvingen(StudentenOpties optiesPane) {
-        String id = ((StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0))
-                .getId();
-        ResultSet rs = db.executeStatement(
-                "SELECT HHS_student.id, Onderwijseenheid.type, Onderwijseenheid.studiepunt, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
-                + "FROM HHS_inschrijving_onderwijseenheid\n"
-                + "JOIN HHS_student ON HHS_student.id = HHS_inschrijving_onderwijseenheid.id\n"
-                + "JOIN Opleiding ON Opleiding.id = HHS_inschrijving_onderwijseenheid.onderwijseenheid\n"
-                + "JOIN Onderwijseenheid ON Onderwijseenheid.opleiding = Opleiding.id\n"
-                + "LEFT JOIN Onderwijseenheid_periode ON Onderwijseenheid_periode.id = Onderwijseenheid.id\n"
-                + "WHERE HHS_student.id = "
-                + id);
-        try {
-            StringBuilder sb = new StringBuilder();
-            while (rs.next()) {
-                sb.append("Onderwijseenheid: " + rs.getString("type") + "\tAantal studiepunten: " + rs.getString("studiepunt")
-                        + "\tPeriode: " + rs.getString("periode") + "\tSchooljaar: " + rs.getString("schooljaar") + "\n");
+
+        if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName() == StudentModel.class.getName()) {
+            String id = ((StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0))
+                    .getId();
+            ResultSet rs = db.executeStatement(
+                    "SELECT Onderwijseenheid.type, Onderwijseenheid.studiepunt, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                    + ",Opleiding.naam  FROM HHS_inschrijving_onderwijseenheid\n"
+                    + "JOIN HHS_student ON HHS_inschrijving_onderwijseenheid.id = HHS_student.id\n"
+                    + "JOIN Onderwijseenheid ON HHS_inschrijving_onderwijseenheid.onderwijseenheid =\n"
+                    + " Onderwijseenheid.id\n"
+                    + "JOIN Onderwijseenheid_periode ON Onderwijseenheid.id = Onderwijseenheid_periode.id\n"
+                    + "JOIN Opleiding ON HHS_student.opleiding = Opleiding.id\n"
+                    + "WHERE HHS_student.id ="
+                    + id);
+            try {
+                StringBuilder sb = new StringBuilder();
+
+                while (rs.next()) {
+                    if (rs.isFirst()) {
+                        sb.append(rs.getString("naam") + ":\n");
+                    }
+                    sb.append("Onderwijseenheid: " + rs.getString("type") + "\tAantal studiepunten: " + rs.getString("studiepunt")
+                            + "\tPeriode: " + rs.getString("periode") + "\tSchooljaar: " + rs.getString("schooljaar") + "\n");
+                }
+                JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            String id = ((ExcStudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0))
+                    .getId();
+            ResultSet rs = db.executeStatement(
+                    "SELECT Onderwijseenheid.type, Onderwijseenheid.studiepunt, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                    + ",Opleiding.naam  FROM EXC_inschrijving_onderwijseenheid\n"
+                    + "JOIN EXC_student ON EXC_inschrijving_onderwijseenheid.id = EXC_student.id\n"
+                    + "JOIN Onderwijseenheid ON EXC_inschrijving_onderwijseenheid.onderwijseenheid =\n"
+                    + " Onderwijseenheid.id\n"
+                    + "JOIN Onderwijseenheid_periode ON Onderwijseenheid.id = Onderwijseenheid_periode.id\n"
+                    + "JOIN Opleiding ON EXC_student.opleiding = Opleiding.id\n"
+                    + "WHERE EXC_student.id ="
+                    + id);
+            try {
+                StringBuilder sb = new StringBuilder();
+
+                while (rs.next()) {
+                    if (rs.isFirst()) {
+                        sb.append(rs.getString("naam") + ":\n");
+                    }
+                    sb.append("Onderwijseenheid: " + rs.getString("type") + "\tAantal studiepunten: " + rs.getString("studiepunt")
+                            + "\tPeriode: " + rs.getString("periode") + "\tSchooljaar: " + rs.getString("schooljaar") + "\n");
+                }
+                JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

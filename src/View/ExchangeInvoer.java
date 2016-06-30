@@ -109,18 +109,18 @@ public class ExchangeInvoer extends BinnenlandInvoer {
         add(txtFieldHuisnr);
         lblToe.setFont(new Font("Century Gothic", Font.BOLD, 17));
         lblToe.setForeground(new Color(0xA5C3F7));
-        txtFieldToe.setDocument(new JTextFieldLimit(45));
+        txtFieldToe.setDocument(new JTextFieldLimit(10));
         add(lblToe);
         add(txtFieldToe);
         lblPost.setFont(new Font("Century Gothic", Font.BOLD, 17));
         lblPost.setForeground(new Color(0xA5C3F7));
-        txtFieldPost.setDocument(new JTextFieldLimit(45));
+        txtFieldPost.setDocument(new JTextFieldLimit(5));
 
         add(lblPost);
         add(txtFieldPost);
         lblLandvanherkomst.setFont(new Font("Century Gothic", Font.BOLD, 17));
         lblLandvanherkomst.setForeground(new Color(0xA5C3F7));
-        txtFieldLandvanherkomst.setDocument(new JTextFieldLimit(45));
+        txtFieldLandvanherkomst.setDocument(new JTextFieldLimit(6));
 
         add(lblLandvanherkomst);
         add(txtFieldLandvanherkomst);

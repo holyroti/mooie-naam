@@ -23,11 +23,13 @@ public class ContactInvoer extends JPanel{
     private JTextField txtTel;
     private JTextField txtNaam;
     private JComboBox<String> comGeslacht;
+    private JComboBox<String> comStudie;
     
     private JLabel lblEmail;
     private JLabel lblTel;
     private JLabel lblNaam;
     private JLabel lblGeslacht;
+    private JLabel lblStudie;
     
     private JButton btnOk;
     private JButton btnCancel;
@@ -40,6 +42,7 @@ public class ContactInvoer extends JPanel{
         lblTel = new JLabel("    Telefoonnummer");
         lblNaam = new JLabel("    Naam");
         lblGeslacht = new JLabel("    Geslacht");
+        lblStudie = new JLabel("    Studie");
         
         txtEmail = new JTextField();
         txtEmail.setDocument(new JTextFieldLimit(45));
@@ -50,6 +53,7 @@ public class ContactInvoer extends JPanel{
         comGeslacht = new JComboBox<>();
         comGeslacht.addItem("M");
         comGeslacht.addItem("V");
+        comStudie = new JComboBox<>();
         
         btnOk = new JButton("Ok");
         btnCancel = new JButton("Cancel");
@@ -70,6 +74,10 @@ public class ContactInvoer extends JPanel{
         lblGeslacht.setForeground(new Color(0xA5C3F7));
         add(lblGeslacht);
         add(comGeslacht);
+        lblStudie.setFont(new Font("Century Gothic", Font.BOLD, 17));
+        lblStudie.setForeground(new Color(0xA5C3F7));
+        add(lblStudie);
+        add(comStudie);
         add(btnOk);
         add(btnCancel);
     }
@@ -212,5 +220,33 @@ public class ContactInvoer extends JPanel{
      */
     public void setBtnCancel(JButton btnCancel) {
         this.btnCancel = btnCancel;
+    }
+
+    /**
+     * @return the comStudie
+     */
+    public JComboBox<String> getComStudie() {
+        return comStudie;
+    }
+
+    /**
+     * @param comStudie the comStudie to set
+     */
+    public void setComStudie(JComboBox<String> comStudie) {
+        this.comStudie = comStudie;
+    }
+
+    /**
+     * @return the lblStudie
+     */
+    public JLabel getLblStudie() {
+        return lblStudie;
+    }
+
+    /**
+     * @param lblStudie the lblStudie to set
+     */
+    public void setLblStudie(JLabel lblStudie) {
+        this.lblStudie = lblStudie;
     }
 }

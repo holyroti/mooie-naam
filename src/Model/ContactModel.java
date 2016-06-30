@@ -15,13 +15,15 @@ public class ContactModel {
     private String tel;
     private String naam;
     private String geslacht;
+    private String studie;
     
-    public ContactModel(String id, String mail, String tel, String naam, String geslacht) {
+    public ContactModel(String id, String mail, String tel, String naam, String geslacht, String studie) {
         this.id = id;
         this.mail = mail;
         this.tel = tel;
         this.naam = naam;
         this.geslacht = geslacht;
+        this.studie = studie;
     }
 
     /**
@@ -92,6 +94,20 @@ public class ContactModel {
      */
     public void setGeslacht(String geslacht) {
         this.geslacht = geslacht;
+    }
+
+    /**
+     * @return the studie
+     */
+    public String getStudie() {
+        return studie;
+    }
+
+    /**
+     * @param studie the studie to set
+     */
+    public void setStudie(String studie) {
+        this.studie = studie;
     }
     
     

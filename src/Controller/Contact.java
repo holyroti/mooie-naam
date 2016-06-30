@@ -25,6 +25,7 @@ public class Contact {
                     "'" + model.getTel() + "'" + "," +
                     "'" + model.getNaam() + "'" + "," +
                     "'" + model.getGeslacht() + "')");
+            db.executeInsertStatement("UPDATE Opleiding SET contactpersoon ='" + model.getId() + "'" + " WHERE naam='" + model.getStudie() + "'");
         } catch (SQLException ex) {
             Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
         }

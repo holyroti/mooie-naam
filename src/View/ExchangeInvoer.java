@@ -9,7 +9,12 @@ import javax.swing.JTextField;
 
 public class ExchangeInvoer extends BinnenlandInvoer {
 
-    public JTextField getTxtFieldStraat() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public JTextField getTxtFieldStraat() {
         return txtFieldStraat;
     }
 

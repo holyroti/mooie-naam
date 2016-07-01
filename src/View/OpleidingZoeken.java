@@ -13,7 +13,12 @@ import javax.swing.JTextField;
 
 public class OpleidingZoeken extends JPanel {
 
-    public JTextField getTxtId() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public JTextField getTxtId() {
         return txtId;
     }
 
@@ -25,7 +30,7 @@ public class OpleidingZoeken extends JPanel {
         return txtNaamOpleiding;
     }
 
-    public void setTxtNaamOpleiding(JComboBox txtNaamOpleiding) {
+    public void setTxtNaamOpleiding(JComboBox<String> txtNaamOpleiding) {
         this.txtNaamOpleiding = txtNaamOpleiding;
     }
 
@@ -33,7 +38,7 @@ public class OpleidingZoeken extends JPanel {
         return txtType;
     }
 
-    public void setTxtType(JComboBox txtType) {
+    public void setTxtType(JComboBox<String> txtType) {
         this.txtType = txtType;
     }
 
@@ -41,7 +46,7 @@ public class OpleidingZoeken extends JPanel {
         return txtContact;
     }
 
-    public void setTxtContact(JComboBox txtContact) {
+    public void setTxtContact(JComboBox<String> txtContact) {
         this.txtContact = txtContact;
     }
 

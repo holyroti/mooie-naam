@@ -339,7 +339,8 @@ public class Student {
                     db.executeInsertStatement("insert into HHS_inschrijving_onderwijseenheid VALUES ("
                             + optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0) + ","
                             + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
-                            + new Date(System.currentTimeMillis()).toString() + "')");
+                            + new Date(System.currentTimeMillis()).toString() + "','"
+                            + ((OnderwijseenheidModel) selectedOnderwijs).getPeriode() + "')");
                     JOptionPane.showMessageDialog(null, "Student is ingeschreven");
                 }
             } else {
@@ -363,7 +364,8 @@ public class Student {
                     db.executeInsertStatement("insert into EXC_inschrijving_onderwijseenheid VALUES ("
                             + optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0) + ","
                             + ((OnderwijseenheidModel) selectedOnderwijs).getId() + ",'"
-                            + new Date(System.currentTimeMillis()).toString() + "')");
+                            + new Date(System.currentTimeMillis()).toString() + "','"
+                            + ((OnderwijseenheidModel) selectedOnderwijs).getPeriode() + "')");
                     JOptionPane.showMessageDialog(null, "Student is ingeschreven");
                 }
             }
@@ -485,7 +487,7 @@ public class Student {
             String id = ((StudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0))
                     .getId();
             ResultSet rs = db.executeStatement(
-                    "SELECT Onderwijseenheid.type, Onderwijseenheid.studiepunt, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                    "SELECT distinct Onderwijseenheid.type, Onderwijseenheid.studiepunt, HHS_inschrijving_onderwijseenheid.periode, Onderwijseenheid_periode.schooljaar\n"
                     + ",Opleiding.naam  FROM HHS_inschrijving_onderwijseenheid\n"
                     + "JOIN HHS_student ON HHS_inschrijving_onderwijseenheid.id = HHS_student.id\n"
                     + "JOIN Onderwijseenheid ON HHS_inschrijving_onderwijseenheid.onderwijseenheid =\n"
@@ -494,6 +496,7 @@ public class Student {
                     + "JOIN Opleiding ON HHS_student.opleiding = Opleiding.id\n"
                     + "WHERE HHS_student.id ="
                     + id);
+            
             try {
                 StringBuilder sb = new StringBuilder();
 
@@ -513,7 +516,7 @@ public class Student {
             String id = ((ExcStudentModel) optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0))
                     .getId();
             ResultSet rs = db.executeStatement(
-                    "SELECT Onderwijseenheid.type, Onderwijseenheid.studiepunt, Onderwijseenheid_periode.periode, Onderwijseenheid_periode.schooljaar\n"
+                    "SELECT distinct Onderwijseenheid.type, Onderwijseenheid.studiepunt, EXC_inschrijving_onderwijseenheid.periode, Onderwijseenheid_periode.schooljaar\n"
                     + ",Opleiding.naam  FROM EXC_inschrijving_onderwijseenheid\n"
                     + "JOIN EXC_student ON EXC_inschrijving_onderwijseenheid.id = EXC_student.id\n"
                     + "JOIN Onderwijseenheid ON EXC_inschrijving_onderwijseenheid.onderwijseenheid =\n"

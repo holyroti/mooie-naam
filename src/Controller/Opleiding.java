@@ -72,7 +72,8 @@ public class Opleiding {
                 null, types, types[0]);
         if (type != null) {
             String punten = JOptionPane.showInputDialog("Geef aantal studiepunten");
-            if (!punten.isEmpty() || punten != null) {
+            if (punten != null) {
+            	if (!punten.isEmpty()) {
                 Object opleiding = JOptionPane.showInputDialog(null, "Choose opleiding", "Opleiding",
                         JOptionPane.QUESTION_MESSAGE, null, opleidngen, opleidngen[0]);
                 if (opleiding != null) {
@@ -218,7 +219,7 @@ public class Opleiding {
                         btnOk.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                Iterator it = tm.getDataVector().iterator();
+                                Iterator<?> it = tm.getDataVector().iterator();
                                 try {
                                     db.executeInsertStatement("INSERT INTO Onderwijseenheid VALUES(" + (id + 1) + ",'" + type + "','"
                                             + punten + "','" + ((OpleidingModel) opleiding).getId() + "')");
@@ -244,6 +245,7 @@ public class Opleiding {
                         });
                     }
                 }
+            	}
             }
         }
     }

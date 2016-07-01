@@ -79,7 +79,7 @@ public class Actions {
 											(String) invoer.getComStudie().getSelectedItem());
 									Contact contact = new Contact();
 									contact.wijzigContact(model, db, rs.getString("id"));
-									JOptionPane.showMessageDialog(null, "Contactpersoon is aangemaakt");
+									JOptionPane.showMessageDialog(null, "Contactpersoon is gewijzigd");
 									Main.mainWindow.getSplitPane().setRightComponent(Main.mainWindow.getRightPanel());
 								} catch (SQLException e1) {
 									// TODO Auto-generated catch block

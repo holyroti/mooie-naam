@@ -219,21 +219,23 @@ public class Opleiding {
                         btnOk.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
+                            	Boolean runOnce = false;
                                 Iterator<?> it = tm.getDataVector().iterator();
-                                try {
-                                    db.executeInsertStatement("INSERT INTO Onderwijseenheid VALUES(" + (id + 1) + ",'" + type + "','"
-                                            + punten + "','" + ((OpleidingModel) opleiding).getId() + "')");
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(Opleiding.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+                               
                                 for (Iterator iterator = it; iterator.hasNext();) {
                                     Vector next = (Vector) iterator.next();
                                     //System.out.println(next);
                                     if ((Boolean) next.get(0)) {
-
+                                    	if(!runOnce){
+                                    		 try {
+                                    			 runOnce = true;
+                                                 db.executeInsertStatement("INSERT INTO Onderwijseenheid VALUES(" + (id + 1) + ",'" + type + "','"
+                                                         + punten + "','" + ((OpleidingModel) opleiding).getId() + "')");
+                                             } catch (SQLException ex) {
+                                                 Logger.getLogger(Opleiding.class.getName()).log(Level.SEVERE, null, ex);
+                                             }
+                                    	}
                                         try {
-                                            frame.dispose();
-                                            
                                             db.executeInsertStatement("INSERT INTO Onderwijseenheid_periode VALUES(" + (id + 1) + ",'" + next.get(1) + "','" + jaar + "')");
                                             JOptionPane.showMessageDialog(null, "Onderwijseenheid is aangemaakt");
                                         } catch (SQLException ex) {
@@ -241,7 +243,9 @@ public class Opleiding {
                                         }
                                     }
                                 }
+                                frame.dispose();
                             }
+                            
                         });
                     }
                 }

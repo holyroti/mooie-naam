@@ -30,8 +30,6 @@ public class MainWindow extends JFrame {
     private JPanel rightPanel;
 
     public MainWindow() {
-        addMenuBar();
-
         getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 
         JPanel panel = new JPanel();
@@ -104,30 +102,6 @@ public class MainWindow extends JFrame {
         panel.add(new JLabel());
         panel.add(new JLabel());
         
-
-    }
-
-    public void addMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu1 = new JMenu("Help");
-
-        JMenuItem jmenuitem = new JMenuItem("How To");
-        JMenuItem jmenuitem2 = new JMenuItem("...");
-        JMenuItem jmenuitem3 = new JMenuItem("FAQ");
-        JMenuItem jmenuitem4 = new JMenuItem("Info");
-
-//        jmenuitem.addActionListener();
-//        jmenuitem2.addActionListener();
-//        jmenuitem3.addActionListener();
-//        jmenuitem4.addActionListener(nog toevoegen);
-        menu1.add(jmenuitem);
-        menu1.add(jmenuitem2);
-        menu1.add(jmenuitem3);
-        menu1.add(jmenuitem4);
-
-        menuBar.add(menu1);
-
-        setJMenuBar(menuBar);
 
     }
     

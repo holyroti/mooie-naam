@@ -397,16 +397,19 @@ public class Student {
                     db.executeInsertStatement("insert into HHS_inschrijving_stage VALUES ("
                             + optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0) + ","
                             + ((StageModel) selectedStudie).getId() + ",'"
-                            + new Date(System.currentTimeMillis()).toString() + "')");
+                            + new Date(System.currentTimeMillis()).toString() + "','"
+                            + ((StageModel) selectedStudie).getPeriode() + "')");
                 } else {
                     db.executeInsertStatement("insert into EXC_inschrijving_stage VALUES ("
                             + optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0) + ","
                             + ((StageModel) selectedStudie).getId() + ",'"
-                            + new Date(System.currentTimeMillis()).toString() + "')");
+                            + new Date(System.currentTimeMillis()).toString() + "','"
+                            + ((StageModel) selectedStudie).getPeriode() + "')");
                 }
                 JOptionPane.showMessageDialog(null, "Student is ingeschreven");
             }
         } catch (SQLException e) {
+        	e.printStackTrace();
             if (e.getMessage().contains("PRIMARY")) {
                 JOptionPane.showMessageDialog(null, "Student is al ingeschreven voor deze stage");
             }
@@ -497,6 +500,8 @@ public class Student {
                     + "WHERE HHS_student.id ="
                     + id);
             
+            ResultSet rsStage = db.executeStatement("select Stage.bedrijfsnaam, HHS_inschrijving_stage.periode, Stage_periode.schooljaar from HHS_inschrijving_stage join Stage on HHS_inschrijving_stage.stage = Stage.id join Stage_periode on Stage.id = Stage_periode.id where HHS_inschrijving_stage.id =" + id);
+            
             try {
                 StringBuilder sb = new StringBuilder();
 
@@ -506,6 +511,10 @@ public class Student {
                     }
                     sb.append("Onderwijseenheid: " + rs.getString("type") + "\tAantal studiepunten: " + rs.getString("studiepunt")
                             + "\tPeriode: " + rs.getString("periode") + "\tSchooljaar: " + rs.getString("schooljaar") + "\n");
+                }
+                sb.append("\nStages\n");
+                while (rsStage.next()) {
+                    sb.append("Bedrijfsnaam: " + rsStage.getString("bedrijfsnaam") + "\tPeriode: " + rsStage.getString("periode") + "\tSchooljaar: " + rsStage.getString("schooljaar") + "\n");
                 }
                 JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -525,6 +534,8 @@ public class Student {
                     + "JOIN Opleiding ON EXC_student.opleiding = Opleiding.id\n"
                     + "WHERE EXC_student.id ="
                     + id);
+            
+            ResultSet rsStage = db.executeStatement("select Stage.bedrijfsnaam, EXC_inschrijving_stage.periode, Stage_periode.schooljaar from EXC_inschrijving_stage join Stage on EXC_inschrijving_stage.stage = Stage.id join Stage_periode on Stage.id = Stage_periode.id where EXC_inschrijving_stage.id =" + id);
             try {
                 StringBuilder sb = new StringBuilder();
 
@@ -534,6 +545,10 @@ public class Student {
                     }
                     sb.append("Onderwijseenheid: " + rs.getString("type") + "\tAantal studiepunten: " + rs.getString("studiepunt")
                             + "\tPeriode: " + rs.getString("periode") + "\tSchooljaar: " + rs.getString("schooljaar") + "\n");
+                }
+                sb.append("\nStages\n");
+                while (rsStage.next()) {
+                    sb.append("Bedrijfsnaam: " + rsStage.getString("bedrijfsnaam") + "\tPeriode: " + rsStage.getString("periode") + "\tSchooljaar: " + rsStage.getString("schooljaar") + "\n");
                 }
                 JOptionPane.showMessageDialog(null, new TextArea(sb.toString()), "Overzicht",
                         JOptionPane.INFORMATION_MESSAGE);

@@ -211,6 +211,7 @@ public class Opleiding {
                         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                         frame.setSize(290, 145);
                         frame.setResizable(false);
+                        frame.setLocationRelativeTo(Main.mainWindow);
 
                         btnOk.setBounds(0, 87, 283, 27);
                         frame.add(panel);

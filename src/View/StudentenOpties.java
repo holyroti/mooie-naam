@@ -1,39 +1,15 @@
 package View;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.WindowAdapter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.EventObject;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.function.Consumer;
-
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.CellEditorListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import sun.util.calendar.LocalGregorianCalendar;
 
 public class StudentenOpties extends JPanel {
 

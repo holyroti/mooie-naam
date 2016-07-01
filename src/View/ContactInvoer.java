@@ -58,14 +58,6 @@ public class ContactInvoer extends JPanel{
         btnOk = new JButton("Ok");
         btnCancel = new JButton("Cancel");
         
-        lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 17));
-        lblEmail.setForeground(new Color(0xA5C3F7));
-        add(lblEmail);
-        add(txtEmail);
-        lblTel.setFont(new Font("Century Gothic", Font.BOLD, 17));
-        lblTel.setForeground(new Color(0xA5C3F7));
-        add(lblTel);
-        add(txtTel);
         lblNaam.setFont(new Font("Century Gothic", Font.BOLD, 17));
         lblNaam.setForeground(new Color(0xA5C3F7));
         add(lblNaam);
@@ -74,10 +66,14 @@ public class ContactInvoer extends JPanel{
         lblGeslacht.setForeground(new Color(0xA5C3F7));
         add(lblGeslacht);
         add(comGeslacht);
-        lblStudie.setFont(new Font("Century Gothic", Font.BOLD, 17));
-        lblStudie.setForeground(new Color(0xA5C3F7));
-        add(lblStudie);
-        add(comStudie);
+        lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 17));
+        lblEmail.setForeground(new Color(0xA5C3F7));
+        add(lblEmail);
+        add(txtEmail);
+        lblTel.setFont(new Font("Century Gothic", Font.BOLD, 17));
+        lblTel.setForeground(new Color(0xA5C3F7));
+        add(lblTel);
+        add(txtTel);
         add(btnOk);
         add(btnCancel);
     }

@@ -222,8 +222,8 @@ public class Opleiding {
                             	Boolean runOnce = false;
                                 Iterator<?> it = tm.getDataVector().iterator();
                                
-                                for (Iterator iterator = it; iterator.hasNext();) {
-                                    Vector next = (Vector) iterator.next();
+                                for (Iterator<?> iterator = it; iterator.hasNext();) {
+                                    Vector<?> next = (Vector<?>) iterator.next();
                                     //System.out.println(next);
                                     if ((Boolean) next.get(0)) {
                                     	if(!runOnce){

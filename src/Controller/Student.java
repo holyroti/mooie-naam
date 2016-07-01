@@ -23,9 +23,6 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
 public class Student {
@@ -33,12 +30,8 @@ public class Student {
     private String student;
     private Database db;
     private int id;
-    private int nieuw;
-
     public Student(Database db, int type, int nieuw) {
         this.db = db;
-        this.nieuw = nieuw;
-
         switch (type) {
             case 0:
                 student = "HHS_student";
@@ -453,6 +446,38 @@ public class Student {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public void locatieStudent(StudentenOpties optiesPane) {
+		if (optiesPane.getTableModel().getValueAt(optiesPane.getTable().getSelectedRow(), 0).getClass().getName()
+				.equals("Model.ExcStudentModel")) {
+			JOptionPane.showMessageDialog(null, "Locatie student: Den Haag", "Locatie",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			StudentModel student = (StudentModel) optiesPane.getTableModel()
+					.getValueAt(optiesPane.getTable().getSelectedRow(), 0);
+			ResultSet rs = db.executeStatement("select Stage.stad, Stage.land from HHS_inschrijving_stage"
+					+ " join HHS_student on HHS_inschrijving_stage.id = HHS_student.id"
+					+ " join Stage on HHS_inschrijving_stage.stage = Stage.id" + " where HHS_inschrijving_stage.id = '"
+					+ student.getId() + "'");
+
+			try {
+				StringBuilder sb = new StringBuilder();
+				while (rs.next()) {
+					sb.append(rs.getString("stad") + ", " + rs.getString("land") + "\n");
+				}
+				JOptionPane.showMessageDialog(null, "Locatie student: " + sb.toString(), "Locatie",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (HeadlessException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+
 
     public void overzichtInschrijvingen(StudentenOpties optiesPane) {
 

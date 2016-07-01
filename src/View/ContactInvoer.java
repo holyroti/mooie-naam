@@ -8,6 +8,7 @@ package View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,7 +20,11 @@ import javax.swing.JTextField;
  * @author Arjun
  */
 public class ContactInvoer extends JPanel{
-    private JTextField txtEmail;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField txtEmail;
     private JTextField txtTel;
     private JTextField txtNaam;
     private JComboBox<String> comGeslacht;

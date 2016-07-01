@@ -8,20 +8,23 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-
-import javax.naming.spi.DirStateFactory.Result;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
-
-import Model.*;
-import View.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+
+import Model.ContactModel;
+import Model.ExcStudentModel;
+import Model.OpleidingModel;
+import Model.StudentModel;
+import View.BinnenlandInvoer;
+import View.ContactInvoer;
+import View.ExchangeInvoer;
+import View.GegevensOpvragen;
+import View.StudentenOpties;
 
 public class Actions {
 
@@ -107,7 +110,7 @@ public class Actions {
 				Object[] options = { "HHS Student", "Exchange Student" };
 				n = JOptionPane.showOptionDialog(frame, "Wat voor student wilt u invoeren", "Student",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				Student s = new Student(db, n, n);
+				new Student(db, n, n);
 			}
 		});
 		Main.mainWindow.getBtnStuSearch().addActionListener(new ActionListener() {
@@ -370,6 +373,10 @@ public class Actions {
 				MouseListener locatieMouseListener = new MouseListener() {
 					@Override
 					public void mouseClicked(MouseEvent me) {
+						if (me.getClickCount() == 2) {
+							Student s = new Student(db, 1, 2);
+							s.locatieStudent(optiesPane);
+						}
 
 					}
 
@@ -484,37 +491,6 @@ public class Actions {
 					}
 				};
 
-				ActionListener zoekExcListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ae) {
-						ResultSet rs = db.executeStatement("SELECT * FROM EXC_student WHERE voornaam LIKE '%"
-								+ optiesPane.getTxtFieldAchternaam().getText() + "%'");
-						try {
-							optiesPane.getTableModel().setDataVector(null,
-									new String[] { "ID", "Naam", "Tussenvoegsel", "Achternaam", "Geslacht" });
-							while (rs.next()) {
-								ExcStudentModel excStudentModel = new ExcStudentModel(rs.getString("id"),
-										rs.getString("voornaam"), rs.getString("tussenvoegsel"),
-										rs.getString("achternaam"), rs.getString("geslacht"),
-										rs.getString("emailadres"), rs.getString("straat"), rs.getString("woonplaats"),
-										rs.getString("landvherkomst"), rs.getString("universiteit"),
-										rs.getString("huisnummer"), rs.getString("toevoeging"),
-										rs.getString("postcode"), rs.getString("opleiding"));
-								System.out.println(excStudentModel.getVoornaam() + excStudentModel.getTussenvoegsel()
-										+ excStudentModel.getAchternaam() + excStudentModel.getGeslacht()
-										+ excStudentModel.getId());
-								// map.put(studentModel.getId(), studentModel);
-								optiesPane.getTableModel()
-										.addRow(new String[] { rs.getString("id"), rs.getString("voornaam"),
-												rs.getString("tussenvoegsel"), rs.getString("achternaam"),
-												rs.getString("geslacht") });
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				};
-
 				optiesPane.getComboBox().addItemListener(new ItemListener() {
 
 					@Override
@@ -536,7 +512,7 @@ public class Actions {
 								optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
 								optiesPane.getBtnSearch().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(stageInschrijvingMouseListener);
-							} else if (e.getItem().equals("Locatie Student")) {
+							} else if (e.getItem().equals("Zoek op land")) {
 								ResultSet rsland = db.executeStatement("select distinct land from Stage");
 								try {
 									rsland.last();
@@ -558,6 +534,11 @@ public class Actions {
 								optiesPane.getBtnSearch().addActionListener(zoekListener);
 								optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
 								optiesPane.getTable().addMouseListener(onderWijsOverzichtMouseListener);
+							} else if (e.getItem().equals("Locatie Student")) {
+								optiesPane.getTxtFieldAchternaam().addActionListener(zoekListener);
+								optiesPane.getBtnSearch().addActionListener(zoekListener);
+								optiesPane.getTxtFieldVoornaam().addActionListener(zoekListener);
+								optiesPane.getTable().addMouseListener(locatieMouseListener);
 							}
 						} else if (e.getItem().equals("Wijzigen")) {
 							optiesPane.getTxtFieldAchternaam().removeActionListener(zoekListener);
@@ -576,7 +557,10 @@ public class Actions {
 							optiesPane.getTxtFieldVoornaam().removeActionListener(zoekListener);
 							optiesPane.getBtnSearch().removeActionListener(zoekListener);
 							optiesPane.getTable().removeMouseListener(stageInschrijvingMouseListener);
+						} else if (e.getItem().equals("Zoek op land")) {
+
 						} else if (e.getItem().equals("Locatie Student")) {
+							optiesPane.getTable().removeMouseListener(locatieMouseListener);
 						} else if (e.getItem().equals("Onderwijs overzicht")) {
 							optiesPane.getTxtFieldAchternaam().removeActionListener(zoekListener);
 							optiesPane.getTxtFieldVoornaam().removeActionListener(zoekListener);

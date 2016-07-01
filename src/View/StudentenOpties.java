@@ -13,7 +13,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class StudentenOpties extends JPanel {
 
-    private JComboBox<String> comboBox;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private JComboBox<String> comboBox;
 
     private JLabel lblAchternaam;
     private JTextField txtFieldAchternaam;
@@ -52,6 +57,7 @@ public class StudentenOpties extends JPanel {
         comboBox.addItem("Onderwijseenheid inschrijven");
         comboBox.addItem("Stage inschrijven");
         comboBox.addItem("Locatie Student");
+        comboBox.addItem("Zoek op land");
         comboBox.addItem("Onderwijs overzicht");
 
         JScrollPane tbl = new JScrollPane(table);

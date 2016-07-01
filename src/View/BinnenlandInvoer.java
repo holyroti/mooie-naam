@@ -1,7 +1,6 @@
 package View;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -27,7 +26,7 @@ public class BinnenlandInvoer extends JPanel {
     private JComboBox<String> txtFieldOpleiding;
     private JTextField txtFieldUniversiteit;
 
-    private JTextField txtFieldTel;
+    private JTextFieldPlaceholder txtFieldTel;
 
     private JLabel labelId;
     private JLabel labelVoornaam;
@@ -57,7 +56,7 @@ public class BinnenlandInvoer extends JPanel {
         labelEmailadres = new JLabel("    Emailadres");
         labelOpleiding = new JLabel("    Opleiding");
         labelUniversiteit = new JLabel("    Universiteit");
-        labelTel = new JLabel("    Telefoonnummer (Meerder telefoonnummers schieden met een komma)");
+        labelTel = new JLabel("    Telefoonnummer");
 
         txtFieldVoornaam = new JTextField();
         txtFieldVoornaam.setDocument(new JTextFieldLimit(45));
@@ -72,7 +71,9 @@ public class BinnenlandInvoer extends JPanel {
         txtFieldOpleiding = new JComboBox<String>();
         txtFieldUniversiteit = new JTextField();
         txtFieldUniversiteit.setDocument(new JTextFieldLimit(45));
-        txtFieldTel = new JTextField();
+        txtFieldTel = new JTextFieldPlaceholder();
+        txtFieldTel.setPlaceholder("Telefoonnummers scheiden met een komma");
+        txtFieldTel.setToolTipText("Telefoonnummers scheiden met een komma");
         txtFieldGeslacht.addItem("M");
         txtFieldGeslacht.addItem("V");
         txtFieldGeslacht.addItem("O");
@@ -113,6 +114,7 @@ public class BinnenlandInvoer extends JPanel {
         add(txtFieldOpleiding);
         labelUniversiteit.setFont(new Font("Century Gothic", Font.BOLD, 17));
         labelUniversiteit.setForeground(new Color(0xA5C3F7));
+        
         labelTel.setFont(new Font("Century Gothic", Font.BOLD, 17));
         labelTel.setForeground(new Color(0xA5C3F7));
         add(labelTel);
@@ -175,7 +177,7 @@ public class BinnenlandInvoer extends JPanel {
         this.txtFieldId = txtFieldId;
     }
 
-    public void setTxtFieldGeslacht(JComboBox txtFieldGeslacht) {
+    public void setTxtFieldGeslacht(JComboBox<String> txtFieldGeslacht) {
         this.txtFieldGeslacht = txtFieldGeslacht;
     }
 
@@ -275,7 +277,7 @@ public class BinnenlandInvoer extends JPanel {
         return txtFieldTel;
     }
 
-    public void setTxtFieldTel(JTextField txtFieldTel) {
+    public void setTxtFieldTel(JTextFieldPlaceholder txtFieldTel) {
         this.txtFieldTel = txtFieldTel;
     }
 
